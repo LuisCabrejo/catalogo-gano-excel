@@ -1,4 +1,4 @@
-// --- DATABASE DE PRODUCTOS PARA EL MODAL ---
+// --- BASE DE DATOS DE PRODUCTOS ---
 const productData = {
     'ganocafe-3-en-1': {
         name: 'GANOCAFÉ 3 EN 1',
