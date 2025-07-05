@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Bienestar - Gano Excel</title>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colores Principales */
+            --primary: #0d1b2a;
+            --secondary: #415a77;
+            --accent: #e0b1cb;
+
+            /* Colores Complementarios */
+            --accent-hover: #c497b2;
+            --blue-grey: #778da9;
+            --dark-text: #1b263b;
+
+            /* Colores Neutrales */
+            --bg-light: #f8f9fa;
+            --text-primary: #212529;
+            --text-secondary: #6b7280;
+
+            /* Bordes */
+            --border-light: #dee2e6;
+            --border-medium: #e5e7eb;
+            
+            /* Especiales */
+            --info-bg: #f0f9ff;
+            --whatsapp-green: #25D366;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+       .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-weight: 900;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        nav.main-nav {
+            background-color: white;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        nav.main-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        nav.main-nav a:hover {
+            color: var(--secondary);
+        }
+
+       .welcome-section {
+            background-color: white;
+            padding: 40px 30px;
+            margin: 30px 0;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+       .welcome-section h2 {
+            font-weight: 800;
+            font-size: clamp(1.875rem, 4vw, 2.5rem);
+            line-height: 1.2;
+            color: var(--primary);
+        }
+        
+       .welcome-section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 15px auto 0;
+            color: var(--text-secondary);
+        }
+
+       .section-title-wrapper {
+            text-align: center;
+            margin: 40px 0 30px;
+        }
+        
+       .section-title-wrapper h2 {
+            font-weight: 800;
+            font-size: clamp(1.875rem, 4vw, 2.5rem);
+            line-height: 1.2;
+            color: var(--primary);
+            display: inline-block;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+        }
+
+       .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+       .info-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+       .info-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+       .info-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            flex-grow: 1;
+        }
+
+       .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+       .product-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+       .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+       .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background-color: #e0e0e0;
+        }
+
+       .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+       .product-info h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            min-height: 56px;
+        }
+        
+       .product-info .benefits {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            padding-left: 20px;
+            flex-grow: 1;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+       .product-info .benefits li {
+            margin-bottom: 8px;
+        }
+        
+       .invima-registro {
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            background-color: var(--bg-light);
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+       }
+
+       .product-actions {
+            margin-top: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+       .btn {
+            padding: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+       .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+       .btn-primary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+       .btn-secondary {
+            background-color: var(--blue-grey);
+            color: white;
+            border-color: var(--blue-grey);
+        }
+
+       .btn-secondary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+       .whatsapp-fab {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-green);
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: none; /* Oculto por defecto, se mostrará con JS */
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+       .whatsapp-fab:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.4s;
+        }
+        .modal-close {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close:hover {
+            color: #000;
+        }
+        .modal-body h3 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-top: 0;
+        }
+        .modal-body p, .modal-body ul {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .modal-body .modal-subtitle {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+        
+        footer .disclaimer {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto 15px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Descubre el Poder del Bienestar</h1>
+        <p>La Fusión Perfecta de Naturaleza y Ciencia con Gano Excel</p>
+    </header>
+
+    <nav class="main-nav">
+        <a href="#conoce-mas">Conoce Más</a>
+        <a href="#bebidas">Bebidas</a>
+        <a href="#capsulas">Cápsulas</a>
+        <a href="#cuidado-personal">Cuidado Personal</a>
+    </nav>
+
+    <div class="container">
+        <section class="welcome-section">
+            <h2>Explora una vida de bienestar</h2>
+            <p>Aquí encontrarás productos diseñados para nutrir tu cuerpo y mejorar tu día a día. Cada uno de nuestros productos combina lo mejor de la naturaleza con innovación científica. Para más información o para realizar un pedido, contacta a la persona que te compartió este catálogo.</p>
+        </section>
+
+        <section id="conoce-mas" class="info-section">
+            <div class="section-title-wrapper">
+                <h2>Los Secretos de Nuestro Bienestar</h2>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Ganoderma Lucidum</h3>
+                    <p>El núcleo de nuestra innovación. Fusionamos las 6 variedades más potentes de este hongo para crear un superalimento con más de 200 fitonutrientes, que apoya el equilibrio y las defensas naturales de tu cuerpo.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Excellium</h3>
+                    <p>Conocido como el "tónico cerebral", es el extracto del hongo joven (micelio). Rico en germanio orgánico, apoya la oxigenación y la función del sistema nervioso, promoviendo la claridad mental y la concentración.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Spirulina</h3>
+                    <p>Un superalimento completo. Esta alga es una fuente increíble de proteína vegetal, vitaminas y minerales. Es ideal para complementar la nutrición, aportar energía y apoyar los procesos de desintoxicación del cuerpo.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Cordy Gold (Cordyceps)</h3>
+                    <p>Un tesoro de la naturaleza utilizado por siglos para aumentar la energía, la resistencia y la vitalidad. Apoya la salud respiratoria y renal, siendo un aliado perfecto para un estilo de vida activo y dinámico.</p>
+                </div>
+                 <div class="info-card">
+                    <h3>Té Rooibos</h3>
+                    <p>Una infusión sudafricana naturalmente libre de cafeína y rica en antioxidantes. Es conocida por sus propiedades relajantes y su capacidad para apoyar la salud digestiva, siendo una bebida ideal para cualquier momento del día.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="bebidas" class="category-section">
+            <div class="section-title-wrapper">
+                <h2>Bebidas Enriquecidas</h2>
+            </div>
+            <div class="product-grid">
+                <article class="product-card" id="ganocafe-3-en-1">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANOCAFÉ+3+EN+1" alt="Imagen de GANOCAFÉ 3 EN 1">
+                    <div class="product-info">
+                        <h3>GANOCAFÉ 3 EN 1</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2012-0002589</div>
+                        <ul class="benefits">
+                            <li>Aporta energía y vitalidad para tu día.</li>
+                            <li>Apoya las defensas naturales del cuerpo.</li>
+                            <li>Contribuye a la reducción del estrés y la fatiga.</li>
+                            <li>Promueve un estado de ánimo positivo.</li>
+                            <li>Disfruta de un delicioso y nutritivo sabor cremoso.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="ganocafe-3-en-1">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="ganocafe-3-en-1">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="ganocafe-clasico">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANOCAFÉ+CLÁSICO" alt="Imagen de GANOCAFÉ CLÁSICO">
+                    <div class="product-info">
+                        <h3>GANOCAFÉ CLÁSICO</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2013-0002947</div>
+                        <ul class="benefits">
+                            <li>Ideal para los amantes del café negro (tinto).</li>
+                            <li>Potenciado con nutrientes para apoyar tu salud.</li>
+                            <li>Perfecto para iniciar el día con enfoque y claridad.</li>
+                            <li>Contribuye a la protección antioxidante del cuerpo.</li>
+                            <li>Apoya un metabolismo saludable.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="ganocafe-clasico">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="ganocafe-clasico">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="ganorico-latte">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANORICO+LATTE+RICO" alt="Imagen de GANORICO LATTE RICO">
+                    <div class="product-info">
+                        <h3>GANORICO LATTE RICO</h3>
+                        <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
+                        <ul class="benefits">
+                            <li>Disfruta de una experiencia de café latte premium.</li>
+                            <li>Textura espumosa y cremosa que deleita tus sentidos.</li>
+                            <li>Un gusto enriquecido para tu bienestar.</li>
+                            <li>Contribuye a un sistema digestivo saludable.</li>
+                            <li>Aporta una sensación de confort y relajación.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="ganorico-latte">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="ganorico-latte">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="ganorico-mocha">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANORICO+MOCHA+RICO" alt="Imagen de GANORICO MOCHA RICO">
+                    <div class="product-info">
+                        <h3>GANORICO MOCHA RICO</h3>
+                        <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
+                        <ul class="benefits">
+                            <li>La combinación perfecta de café y cacao saludable.</li>
+                            <li>Un sabor indulgente que apoya tu bienestar.</li>
+                            <li>Con betaglucanos para apoyar tus defensas.</li>
+                            <li>Promueve la sensación de saciedad.</li>
+                            <li>Ideal para recargar energías a media tarde.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="ganorico-mocha">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="ganorico-mocha">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="ganorico-shoko">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANORICO+SHOKO+RICO" alt="Imagen de GANORICO SHOKO RICO">
+                    <div class="product-info">
+                        <h3>GANORICO SHOKO RICO</h3>
+                        <div class="invima-registro">Registro INVIMA: NSA-0010766-2021</div>
+                        <ul class="benefits">
+                            <li>Chocolate nutritivo y delicioso para toda la familia.</li>
+                            <li>Bebida reconfortante para momentos de relajación.</li>
+                            <li>Apoya el bienestar general de forma placentera.</li>
+                            <li>Contribuye al desarrollo de huesos fuertes.</li>
+                            <li>Una opción inteligente para antojos de dulce.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="ganorico-shoko">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="ganorico-shoko">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="gano-cereal">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANO+C'REAL+SPIRULINA" alt="Imagen de ESPIRULINA GANO C'REAL">
+                    <div class="product-info">
+                        <h3>ESPIRULINA GANO C'REAL</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2014-0003291</div>
+                        <ul class="benefits">
+                            <li>Alto contenido de fibra para la salud digestiva.</li>
+                            <li>Excelente fuente de proteína vegetal.</li>
+                            <li>Promueve una nutrición completa y balanceada.</li>
+                            <li>Rico en vitaminas y minerales esenciales.</li>
+                            <li>Apoya la desintoxicación natural del organismo.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="gano-cereal">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="gano-cereal">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="oleaf-rooibos">
+                    <img src="https://via.placeholder.com/400x400.png?text=OLEAF+GANO+ROOIBOS" alt="Imagen de BEBIDA DE OLEAF GANO ROOIBOS">
+                    <div class="product-info">
+                        <h3>BEBIDA DE OLEAF GANO ROOIBOS</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2017-0004109</div>
+                        <ul class="benefits">
+                            <li>Bebida relajante para un descanso reparador.</li>
+                            <li>Naturalmente libre de cafeína.</li>
+                            <li>Rico en antioxidantes que combaten el estrés oxidativo.</li>
+                            <li>Apoya la salud del sistema nervioso.</li>
+                            <li>Contribuye a una correcta hidratación.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="oleaf-rooibos">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="oleaf-rooibos">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="chocolate-gano">
+                    <img src="https://via.placeholder.com/400x400.png?text=CHOCOLATE+GANO" alt="Imagen de CHOCOLATE GANO">
+                    <div class="product-info">
+                        <h3>CHOCOLATE GANO</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2013-0002947</div>
+                        <ul class="benefits">
+                            <li>Ofrece apoyo nutricional con delicioso sabor.</li>
+                            <li>Fórmula concentrada con extracto de Ganoderma.</li>
+                            <li>Ayuda a mejorar la circulación y salud cardiovascular.</li>
+                            <li>Contribuye a un estado de ánimo equilibrado.</li>
+                            <li>Fácil y rápido de preparar.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="chocolate-gano">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="chocolate-gano">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="luvoco">
+                    <img src="https://via.placeholder.com/400x400.png?text=LUVOCO" alt="Imagen de LUVOCO">
+                    <div class="product-info">
+                        <h3>LUVOCO</h3>
+                        <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
+                        <ul class="benefits">
+                            <li>Disfruta una experiencia de café molido gourmet.</li>
+                            <li>Calidad de café premium para preparar en casa.</li>
+                            <li>Enriquecido para fortalecer tu sistema inmune.</li>
+                            <li>Aroma y sabor intensos para conocedores.</li>
+                            <li>Apoya la función antioxidante del cuerpo.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="luvoco">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="luvoco">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="reskine-collagen">
+                    <img src="https://via.placeholder.com/400x400.png?text=RESKINE+COLLAGEN" alt="Imagen de BEBIDA DE COLÁGENO RESKINE">
+                    <div class="product-info">
+                        <h3>BEBIDA DE COLÁGENO RESKINE</h3>
+                        <div class="invima-registro">Registro INVIMA: SD20210004889</div>
+                        <ul class="benefits">
+                            <li>Apoya la elasticidad y firmeza de la piel.</li>
+                            <li>Fortalece el cabello y las uñas.</li>
+                            <li>Contribuye a una apariencia más juvenil.</li>
+                            <li>Ayuda a mantener la salud de articulaciones.</li>
+                            <li>Fórmula única con Colágeno y Ganoderma.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="reskine-collagen">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="reskine-collagen">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="capsulas" class="category-section">
+            <div class="section-title-wrapper">
+                <h2>Suplementos Potentes</h2>
+            </div>
+            <div class="product-grid">
+                <article class="product-card" id="capsulas-ganoderma">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANODERMA" alt="Imagen de Cápsulas de Ganoderma">
+                    <div class="product-info">
+                        <h3>Cápsulas de Ganoderma</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2013-0002860</div>
+                        <ul class="benefits">
+                            <li>Fortalece las defensas naturales del cuerpo.</li>
+                            <li>Potente acción antioxidante que protege las células.</li>
+                            <li>Promueve el bienestar general y el equilibrio.</li>
+                            <li>Apoya la salud del sistema circulatorio.</li>
+                            <li>Actúa como un adaptógeno natural.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="capsulas-ganoderma">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="capsulas-ganoderma">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="capsulas-excellium">
+                    <img src="https://via.placeholder.com/400x400.png?text=EXCELLIUM" alt="Imagen de CÁPSULAS EXCELLIUM">
+                    <div class="product-info">
+                        <h3>CÁPSULAS EXCELLIUM</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2013-0002822</div>
+                        <ul class="benefits">
+                            <li>Apoya la función cerebral, memoria y concentración.</li>
+                            <li>Conocido como el "tónico para el cerebro".</li>
+                            <li>Ayuda a mantener un sistema nervioso saludable.</li>
+                            <li>Promueve una óptima oxigenación celular.</li>
+                            <li>Contribuye al desarrollo y función del cerebro.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="capsulas-excellium">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="capsulas-excellium">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="capsulas-cordygold">
+                    <img src="https://via.placeholder.com/400x400.png?text=CORDYGOLD" alt="Imagen de CÁPSULAS CORDYGOLD">
+                    <div class="product-info">
+                        <h3>CÁPSULAS CORDYGOLD</h3>
+                        <div class="invima-registro">Registro INVIMA: SD2017-0004056</div>
+                        <ul class="benefits">
+                            <li>Aumenta la energía, resistencia y rendimiento físico.</li>
+                            <li>Apoya la salud del sistema respiratorio y pulmones.</li>
+                            <li>Contribuye al buen funcionamiento de los riñones.</li>
+                            <li>Mejora la vitalidad y apoya la función sexual.</li>
+                            <li>Ayuda a regular el estrés y la fatiga crónica.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="capsulas-cordygold">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="capsulas-cordygold">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+        
+        <section id="cuidado-personal" class="category-section">
+            <div class="section-title-wrapper">
+                <h2>Cuidado Personal Diario</h2>
+            </div>
+            <div class="product-grid">
+                <article class="product-card" id="gano-fresh">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANO+FRESH" alt="Imagen de PASTA DE DIENTES GANO FRESH">
+                    <div class="product-info">
+                        <h3>PASTA DE DIENTES GANO FRESH</h3>
+                        <div class="invima-registro">Notificación Sanitaria: NSOC58855-14CO</div>
+                        <ul class="benefits">
+                            <li>Promueve la salud integral de dientes y encías.</li>
+                            <li>Proporciona un aliento fresco y duradero.</li>
+                            <li>Fórmula suave, sin flúor, ideal para toda la familia.</li>
+                            <li>Ayuda a prevenir la formación de placa.</li>
+                            <li>Contribuye a calmar la sensibilidad dental.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="gano-fresh">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="gano-fresh">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="gano-soap">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANO+SOAP" alt="Imagen de JABÓN GANO">
+                    <div class="product-info">
+                        <h3>JABÓN GANO</h3>
+                        <div class="invima-registro">Notificación Sanitaria: NSOC99970-20CO</div>
+                        <ul class="benefits">
+                            <li>Nutre e hidrata la piel profundamente.</li>
+                            <li>Enriquecido con leche de cabra para mayor suavidad.</li>
+                            <li>Ayuda a equilibrar el pH natural de la piel.</li>
+                            <li>Limpia sin resecar, ideal para pieles sensibles.</li>
+                            <li>Propiedades antioxidantes que protegen la piel.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="gano-soap">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="gano-soap">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="gano-transparent-soap">
+                    <img src="https://via.placeholder.com/400x400.png?text=GANO+TRANSPARENT" alt="Imagen de JABÓN TRANSPARENTE GANO">
+                    <div class="product-info">
+                        <h3>JABÓN TRANSPARENTE GANO</h3>
+                        <div class="invima-registro">Notificación Sanitaria: NSO09915-21CO</div>
+                        <ul class="benefits">
+                            <li>Limpia suavemente la piel, eliminando impurezas.</li>
+                            <li>Con papaya para una micro-exfoliación natural.</li>
+                            <li>El aloe vera proporciona un efecto calmante.</li>
+                            <li>Ayuda a mejorar la apariencia de la piel.</li>
+                            <li>Deja una sensación de frescura y limpieza total.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="gano-transparent-soap">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="gano-transparent-soap">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="shampoo-piel-brillo">
+                    <img src="https://via.placeholder.com/400x400.png?text=PIEL&BRILLO+SHAMPOO" alt="Imagen de Champú Piel&Brillo">
+                    <div class="product-info">
+                        <h3>Champú Piel&Brillo</h3>
+                        <div class="invima-registro">Notificación Sanitaria: NSOC96485-19CO</div>
+                        <ul class="benefits">
+                            <li>Fortalece y revitaliza el cabello desde la raíz.</li>
+                            <li>Proporciona un brillo saludable y natural.</li>
+                            <li>Limpia suavemente el cuero cabelludo.</li>
+                            <li>Ayuda a nutrir el folículo piloso.</li>
+                            <li>Deja el cabello con una sensación de frescura.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="shampoo-piel-brillo">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="shampoo-piel-brillo">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="acondicionador-piel-brillo">
+                    <img src="https://via.placeholder.com/400x400.png?text=PIEL&BRILLO+ACONDICIONADOR" alt="Imagen de ACONDICIONADOR Piel&Brillo">
+                    <div class="product-info">
+                        <h3>ACONDICIONADOR Piel&Brillo</h3>
+                        <div class="invima-registro">Notificación Sanitaria: NSOC96486-19CO</div>
+                        <ul class="benefits">
+                            <li>Deja el cabello suave, sedoso y manejable.</li>
+                            <li>Facilita el peinado y reduce el frizz.</li>
+                            <li>Aporta una hidratación profunda sin ser graso.</li>
+                            <li>Sella la cutícula para un acabado pulido.</li>
+                            <li>El complemento perfecto para un cabello sano.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="acondicionador-piel-brillo">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="acondicionador-piel-brillo">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" id="exfoliante-piel-brillo">
+                    <img src="https://via.placeholder.com/400x400.png?text=PIEL&BRILLO+EXFOLIANTE" alt="Imagen de EXFOLIANTE CORPORAL Piel&Brillo">
+                    <div class="product-info">
+                        <h3>EXFOLIANTE CORPORAL Piel&Brillo</h3>
+                        <div class="invima-registro">Notificación Sanitaria: NSOC96487-19CO</div>
+                        <ul class="benefits">
+                            <li>Elimina eficazmente impurezas y células muertas.</li>
+                            <li>Renueva y suaviza la textura de la piel.</li>
+                            <li>Deja la piel con una apariencia luminosa.</li>
+                            <li>Estimula la circulación y regeneración celular.</li>
+                            <li>Prepara la piel para una mejor hidratación.</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-details" data-product-id="exfoliante-piel-brillo">Más Detalles</button>
+                            <button class="btn btn-secondary btn-share" data-product-id="exfoliante-piel-brillo">Compartir</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-body" class="modal-body">
+                <!-- Contenido se inyectará aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a id="whatsapp-button" class="whatsapp-fab" href="#" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+        </svg>
+    </a>
+
+    <footer>
+        <p class="disclaimer">
+            <strong>Aviso Importante:</strong> Este sitio es una herramienta de apoyo independiente creada para el equipo y no es un catálogo oficial de Gano Excel Colombia S.A.S. La información presentada es para fines educativos y comerciales de la red. Los productos Gano Excel son suplementos dietarios y cosméticos, no son medicamentos y no suplen una alimentación equilibrada.
+        </p>
+    </footer>
+
+    <script>
+    // --- DATABASE DE PRODUCTOS PARA EL MODAL (products.js) ---
+    const productData = {
+        'ganocafe-3-en-1': {
+            name: 'GANOCAFÉ 3 EN 1',
+            description: 'Es la bebida ideal para quienes buscan conveniencia sin sacrificar el sabor y los beneficios. Combina un café gourmet de alta calidad con crema no láctea y un toque dulce, todo enriquecido con el poderoso extracto de Ganoderma Lucidum. Es tu compañero perfecto para empezar el día con energía y bienestar.',
+            usage: 'Vierta el contenido de un sobre en una taza, agregue agua caliente (no hirviendo) y mezcle bien. Disfrute en cualquier momento del día.',
+            ingredients: ['Café instantáneo de calidad', 'Crema no láctea', 'Azúcar', 'Extracto de Ganoderma Lucidum']
+        },
+        'ganocafe-clasico': {
+            name: 'GANOCAFÉ CLÁSICO',
+            description: 'Para los puristas del café que no negocian el sabor intenso y el aroma profundo. Este café negro, tipo tinto, está potenciado con el extracto de Ganoderma Lucidum, ofreciendo una experiencia robusta que despierta tus sentidos y apoya tu bienestar con cada sorbo.',
+            usage: 'Disuelva un sobre en una taza con agua caliente. Disfrútelo solo o con su endulzante preferido.',
+            ingredients: ['Café negro instantáneo', 'Extracto de Ganoderma Lucidum']
+        },
+        'ganorico-latte': {
+            name: 'GANORICO LATTE RICO',
+            description: 'Una experiencia de cafetería premium en la comodidad de tu hogar. Este latte combina la suavidad de la leche con un café selecto, creando una bebida espumosa y deliciosa. Enriquecido con betaglucanos de Ganoderma, es un capricho que cuida de ti.',
+            usage: 'Mezcle un sobre con agua caliente para obtener un latte cremoso y espumoso al instante.',
+            ingredients: ['Café selecto', 'Crema no láctea', 'Betaglucanos de Ganoderma Lucidum']
+        },
+        'ganorico-mocha': {
+            name: 'GANORICO MOCHA RICO',
+            description: 'La fusión perfecta entre café rico y cacao indulgente, creando una bebida mocha que es tanto un placer para el paladar como un apoyo para tu bienestar. Enriquecido con los beneficios del Ganoderma Lucidum, es la opción ideal para un capricho saludable.',
+            usage: 'Vierta el contenido de un sobre en una taza, agregue agua o leche caliente y mezcle hasta obtener una bebida homogénea y deliciosa.',
+            ingredients: ['Café premium', 'Cacao en polvo', 'Crema no láctea', 'Betaglucanos de Ganoderma Lucidum']
+        },
+        'ganorico-shoko': {
+            name: 'GANORICO SHOKO RICO',
+            description: 'Un chocolate caliente que va más allá del sabor. Formulado para toda la familia, este chocolate suizo enriquecido con Ganoderma Lucidum es una bebida nutritiva y reconfortante, perfecta para cualquier momento del día.',
+            usage: 'Ideal para niños y adultos. Mezcle un sobre con leche o agua caliente para un chocolate cremoso y lleno de beneficios.',
+            ingredients: ['Cacao suizo', 'Crema no láctea', 'Azúcar', 'Extracto de Ganoderma Lucidum']
+        },
+        'gano-cereal': {
+            name: 'ESPIRULINA GANO C\'REAL',
+            description: 'El desayuno de los campeones. Este cereal combina la fibra de la avena con el poder nutricional de la Spirulina y el extracto de Ganoderma Lucidum. Es un alimento completo que te proporciona energía sostenida y una nutrición balanceada para empezar tu jornada.',
+            usage: 'Vierta el contenido en un tazón y agregue leche o su bebida vegetal preferida. También puede consumirse solo como un snack nutritivo.',
+            ingredients: ['Avena en hojuelas', 'Spirulina', 'Extracto de Ganoderma Lucidum', 'Crema no láctea']
+        },
+        'oleaf-rooibos': {
+            name: 'BEBIDA DE OLEAF GANO ROOIBOS',
+            description: 'Una infusión para calmar el cuerpo y la mente. Este té Rooibos, naturalmente libre de cafeína, está enriquecido con Ganoderma Lucidum. Sus propiedades antioxidantes y relajantes lo convierten en la bebida perfecta para finalizar el día o para un momento de pausa.',
+            usage: 'Sumerja una bolsita de té en una taza con agua caliente durante 3-5 minutos. Disfrute solo o con un toque de miel.',
+            ingredients: ['Hojas de Té Rooibos', 'Extracto de Ganoderma Lucidum']
+        },
+        'chocolate-gano': {
+            name: 'CHOCOLATE GANO',
+            description: 'Más que un simple chocolate. Esta fórmula en polvo combina el rico sabor del cacao con una dosis concentrada de extracto de Ganoderma Lucidum, creando una bebida funcional que apoya tu bienestar mientras disfrutas de un sabor clásico.',
+            usage: 'Mezcle una porción con agua o leche caliente. Ideal como una bebida nutritiva y reconfortante.',
+            ingredients: ['Cacao en polvo', 'Extracto de Ganoderma Lucidum']
+        },
+        'luvoco': {
+            name: 'LUVOCO',
+            description: 'Para los verdaderos conocedores del café. Luvoco es un café molido de tueste premium, diseñado para ser preparado en su método preferido (greca, cafetera de filtro, etc.). Cada grano está impregnado con los beneficios del Ganoderma Lucidum para una taza excepcional en aroma, sabor y bienestar.',
+            usage: 'Utilice la cantidad deseada de café molido en su cafetera o método de preparación habitual.',
+            ingredients: ['Café molido de tueste premium', 'Betaglucanos de Ganoderma Lucidum']
+        },
+        'reskine-collagen': {
+            name: 'BEBIDA DE COLÁGENO RESKINE',
+            description: 'Belleza que se bebe. Esta bebida funcional combina colágeno hidrolizado, esencial para la salud de la piel, cabello y uñas, con el poder antioxidante del Ganoderma Lucidum. Una fórmula diseñada para nutrir tu belleza desde el interior.',
+            usage: 'Disuelva el contenido de un sobre en un vaso con agua o su bebida preferida. Consumir preferiblemente en ayunas.',
+            ingredients: ['Colágeno hidrolizado', 'Extracto de Ganoderma Lucidum']
+        },
+        'capsulas-ganoderma': {
+            name: 'Cápsulas de Ganoderma',
+            description: 'La forma más pura y concentrada de obtener los beneficios del Ganoderma Lucidum. Cada cápsula contiene el extracto del hongo maduro, conocido por su capacidad para modular el sistema inmune y actuar como un potente antioxidante, promoviendo el equilibrio general del cuerpo.',
+            usage: 'Tomar 1 o 2 cápsulas al día, preferiblemente con las comidas.',
+            ingredients: ['Extracto de Ganoderma Lucidum (275 mg)']
+        },
+        'capsulas-excellium': {
+            name: 'CÁPSULAS EXCELLIUM',
+            description: 'Nutrición superior para tu cerebro. Estas cápsulas contienen el extracto del micelio del Ganoderma (hongo joven), rico en germanio orgánico y otros nutrientes que apoyan la oxigenación cerebral, la concentración y la salud del sistema nervioso.',
+            usage: 'Tomar 1 o 2 cápsulas al día. Ideal para estudiantes, profesionales y adultos mayores.',
+            ingredients: ['Micelio de Ganoderma Lucidum (275 mg)']
+        },
+        'capsulas-cordygold': {
+            name: 'CÁPSULAS CORDYGOLD',
+            description: 'El impulso de energía y vitalidad que necesitas. Formuladas con Cordyceps Sinensis, estas cápsulas son ideales para deportistas y personas con un estilo de vida activo. Apoyan la salud respiratoria, aumentan la resistencia y mejoran el rendimiento físico y mental.',
+            usage: 'Tomar 1 o 2 cápsulas al día, especialmente antes de la actividad física.',
+            ingredients: ['Cordyceps Sinensis (500 mg)']
+        },
+        'gano-fresh': {
+            name: 'PASTA DE DIENTES GANO FRESH',
+            description: 'Una sonrisa saludable de forma natural. Gano Fresh es una pasta dental sin flúor, enriquecida con extracto de Ganoderma Lucidum. Limpia suavemente, refresca el aliento y promueve la salud de dientes y encías sin químicos agresivos.',
+            usage: 'Cepille sus dientes después de cada comida o al menos dos veces al día.',
+            ingredients: ['Extracto de Ganoderma Lucidum', 'Menta', 'Sorbitol']
+        },
+        'gano-soap': {
+            name: 'JABÓN GANO',
+            description: 'Un jabón de uso diario que nutre mientras limpia. La combinación de extracto de Ganoderma Lucidum y leche de cabra ayuda a hidratar, suavizar y equilibrar el pH de la piel, dejándola limpia y radiante. Ideal para toda la familia.',
+            usage: 'Use diariamente durante el baño o la ducha para limpiar cara y cuerpo.',
+            ingredients: ['Extracto de Ganoderma Lucidum', 'Leche de cabra']
+        },
+        'gano-transparent-soap': {
+            name: 'JABÓN TRANSPARENTE GANO',
+            description: 'Limpieza y renovación para tu piel. Este jabón transparente combina las propiedades del Ganoderma Lucidum con la suavidad del aloe vera y el poder renovador del extracto de papaya. Ayuda a limpiar impurezas y a mejorar la textura de la piel.',
+            usage: 'Ideal para la limpieza facial diaria. Masajee suavemente sobre la piel húmeda y enjuague.',
+            ingredients: ['Extracto de Ganoderma Lucidum', 'Extracto de Papaya', 'Aloe Vera']
+        },
+        'shampoo-piel-brillo': {
+            name: 'Champú Piel&Brillo',
+            description: 'Revitaliza tu cabello con el poder del Ganoderma Lucidum. Este shampoo limpia suavemente, nutre el folículo piloso y fortalece el cabello desde la raíz, devolviéndole su brillo y vitalidad natural.',
+            usage: 'Aplique sobre el cabello húmedo, masajee el cuero cabelludo y enjuague con abundante agua.',
+            ingredients: ['Extracto de Ganoderma Lucidum', 'Aloe Vera']
+        },
+        'acondicionador-piel-brillo': {
+            name: 'ACONDICIONADOR Piel&Brillo',
+            description: 'El toque final para un cabello suave, brillante y manejable. Este acondicionador sella la hidratación, reduce el frizz y facilita el peinado, dejando tu cabello sedoso y protegido gracias a los beneficios del Ganoderma Lucidum.',
+            usage: 'Después del shampoo, aplique de medios a puntas, deje actuar por unos minutos y enjuague.',
+            ingredients: ['Extracto de Ganoderma Lucidum']
+        },
+        'exfoliante-piel-brillo': {
+            name: 'EXFOLIANTE CORPORAL Piel&Brillo',
+            description: 'Renueva tu piel y déjala luminosa. Este exfoliante corporal elimina suavemente las células muertas e impurezas, mientras el Ganoderma Lucidum nutre y protege. El resultado es una piel más suave, lisa y radiante.',
+            usage: 'Durante la ducha, masajee sobre la piel húmeda con movimientos circulares y luego enjuague. Usar 1-2 veces por semana.',
+            ingredients: ['Extracto de Ganoderma Lucidum', 'Polvo de semilla de albaricoque']
+        }
+    };
+
+    // --- SCRIPT DE FUNCIONALIDADES (main.js) ---
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- LÓGICA DEL MODAL ---
+        const modal = document.getElementById('product-modal');
+        const modalBody = document.getElementById('modal-body');
+        const closeModal = document.querySelector('.modal-close');
+
+        document.querySelectorAll('.btn-details').forEach(button => {
+            button.addEventListener('click', () => {
+                const productId = button.dataset.productId;
+                const data = productData[productId];
+                
+                if (data) {
+                    modalBody.innerHTML = `
+                        <h3>${data.name}</h3>
+                        <p>${data.description}</p>
+                        <h4 class="modal-subtitle">Modo de Uso</h4>
+                        <p>${data.usage}</p>
+                        <h4 class="modal-subtitle">Ingredientes Clave</h4>
+                        <ul>
+                            ${data.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                        </ul>
+                    `;
+                    modal.style.display = 'block';
+                } else {
+                    console.error('No se encontraron datos para el producto:', productId);
+                }
+            });
+        });
+
+        closeModal.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // --- LÓGICA DE COMPARTIR ---
+        document.querySelectorAll('.btn-share').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const productId = button.dataset.productId;
+                const productCard = document.getElementById(productId);
+                const productName = productCard.querySelector('h3').innerText;
+                const shareUrl = `${window.location.origin}${window.location.pathname}#${productId}`;
+
+                const shareData = {
+                    title: `Producto Gano Excel: ${productName}`,
+                    text: `¡Hola! Te comparto este producto que te puede interesar: ${productName}.`,
+                    url: shareUrl
+                };
+
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        console.error("Error al compartir:", err);
+                    }
+                } else {
+                    // Fallback para escritorio
+                    try {
+                        await navigator.clipboard.writeText(shareUrl);
+                        const originalText = button.innerText;
+                        button.innerText = '¡Enlace Copiado!';
+                        setTimeout(() => {
+                            button.innerText = originalText;
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Error al copiar el enlace:', err);
+                        alert('No se pudo copiar el enlace. Por favor, cópialo manualmente.');
+                    }
+                }
+            });
+        });
+
+        // --- LÓGICA DEL BOTÓN DE WHATSAPP (CON FALLBACK) ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const defaultSocioId = '573203415438'; // Tu número como fallback
+        let socioIdFromUrl = urlParams.get('socio');
+
+        // Validar que el socio de la URL sea un número
+        if (socioIdFromUrl && !/^\d+$/.test(socioIdFromUrl)) {
+            socioIdFromUrl = null; // Si no es un número, lo descartamos
+        }
+
+        // Usa el 'socio' de la URL si existe y es válido, si no, usa el por defecto.
+        const finalSocioId = socioIdFromUrl || defaultSocioId;
+
+        if (finalSocioId) {
+            const whatsappButton = document.getElementById('whatsapp-button');
+            const whatsappLink = `https://wa.me/${finalSocioId}?text=${encodeURIComponent('Hola, estoy interesado(a) en los productos Gano Excel. ¿Me podrías dar más información?')}`;
+            
+            whatsappButton.href = whatsappLink;
+            whatsappButton.style.display = 'flex'; // Muestra el botón
+        }
+    });
+    </script>
+
+</body>
+</html>
