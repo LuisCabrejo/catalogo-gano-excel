@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.btn-details').forEach(button => {
         button.addEventListener('click', () => {
             const productId = button.dataset.productId;
-            const data = productData[productId]; // Usa la data de products.js
+            const data = productData[productId];
             
             if (data) {
                 modalBody.innerHTML = `
@@ -73,17 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- LÓGICA DEL BOTÓN DE WHATSAPP (CON FALLBACK) ---
+    // --- LÓGICA DEL BOTÓN DE WHATSAPP ---
     const urlParams = new URLSearchParams(window.location.search);
-    const defaultSocioId = '573203415438'; // Tu número como fallback
-    let socioIdFromUrl = urlParams.get('socio');
+    const defaultSocioId = '573203415438'; // Número por defecto
+    const socioIdFromUrl = urlParams.get('socio');
 
-    // Validar que el socio de la URL sea un número
-    if (socioIdFromUrl && !/^\d+$/.test(socioIdFromUrl)) {
-        socioIdFromUrl = null; // Si no es un número, lo descartamos
-    }
-
-    // Usa el 'socio' de la URL si existe y es válido, si no, usa el por defecto.
+    // Usa el 'socio' de la URL si existe, si no, usa el por defecto.
     const finalSocioId = socioIdFromUrl || defaultSocioId;
 
     if (finalSocioId) {
