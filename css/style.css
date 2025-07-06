@@ -79,7 +79,7 @@ nav.main-nav {
 nav.main-nav a {
     color: var(--primary);
     text-decoration: none;
-    margin: 0 15px;
+    margin: 0 12px; /* Espacio reducido */
     font-weight: 700;
     transition: color 0.3s;
 }
@@ -87,6 +87,15 @@ nav.main-nav a {
 nav.main-nav a:hover {
     color: var(--secondary);
 }
+
+/* Ajuste para pantallas muy pequeñas */
+@media (max-width: 380px) {
+    nav.main-nav a {
+        margin: 0 8px;
+        font-size: 0.9rem;
+    }
+}
+
 
 .welcome-section {
     background-color: white;
@@ -304,7 +313,6 @@ nav.main-nav a:hover {
     background-color: rgba(0,0,0,0.6);
     animation: fadeIn 0.3s;
 }
-
 .modal-content {
     background-color: #fff;
     margin: 10% auto;
@@ -316,7 +324,6 @@ nav.main-nav a:hover {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     animation: slideIn 0.4s;
 }
-
 .modal-close {
     color: #aaa;
     position: absolute;
@@ -326,23 +333,19 @@ nav.main-nav a:hover {
     font-weight: bold;
     cursor: pointer;
 }
-
 .modal-close:hover {
     color: #000;
 }
-
 .modal-body h3 {
     font-weight: 700;
     font-size: 1.8rem;
     color: var(--primary);
     margin-top: 0;
 }
-
 .modal-body p, .modal-body ul {
     color: var(--text-secondary);
     line-height: 1.7;
 }
-
 .modal-body .modal-subtitle {
     font-weight: 600;
     color: var(--dark-text);
@@ -353,7 +356,6 @@ nav.main-nav a:hover {
     from { opacity: 0; } 
     to { opacity: 1; } 
 }
-
 @keyframes slideIn { 
     from { transform: translateY(-50px); opacity: 0; } 
     to { transform: translateY(0); opacity: 1; } 
@@ -404,5 +406,3 @@ footer .disclaimer {
 .info-card h3 {
     margin-top: 10px; /* Ajuste para dar espacio después del ícono */
 }
-
-
