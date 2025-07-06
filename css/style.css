@@ -17,7 +17,7 @@
     /* Bordes */
     --border-light: #dee2e6;
     --border-medium: #e5e7eb;
-    
+
     /* Especiales */
     --info-bg: #f0f9ff;
     --whatsapp-green: #25D366;
@@ -96,6 +96,7 @@ nav.main-nav a:hover {
     }
 }
 
+
 .welcome-section {
     background-color: white;
     padding: 40px 30px;
@@ -149,31 +150,10 @@ nav.main-nav a:hover {
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    position: relative;
-    padding-top: 60px; /* Espacio para el ícono */
-}
-
-.info-card-icon {
-    position: absolute;
-    top: 20px;
-    left: 25px;
-    width: 40px;
-    height: 40px;
-    background-color: var(--accent);
-    color: var(--primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.info-card-icon svg {
-    width: 24px;
-    height: 24px;
 }
 
 .info-card h3 {
-    margin-top: 10px; /* Ajuste para dar espacio después del ícono */
+    margin-top: 0;
     color: var(--primary);
     font-weight: 700;
     font-size: 1.5rem;
@@ -333,7 +313,6 @@ nav.main-nav a:hover {
     background-color: rgba(0,0,0,0.6);
     animation: fadeIn 0.3s;
 }
-
 .modal-content {
     background-color: #fff;
     margin: 10% auto;
@@ -345,7 +324,6 @@ nav.main-nav a:hover {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     animation: slideIn 0.4s;
 }
-
 .modal-close {
     color: #aaa;
     position: absolute;
@@ -355,37 +333,32 @@ nav.main-nav a:hover {
     font-weight: bold;
     cursor: pointer;
 }
-
 .modal-close:hover {
     color: #000;
 }
-
 .modal-body h3 {
     font-weight: 700;
     font-size: 1.8rem;
     color: var(--primary);
     margin-top: 0;
 }
-
 .modal-body p, .modal-body ul {
     color: var(--text-secondary);
     line-height: 1.7;
 }
-
 .modal-body .modal-subtitle {
     font-weight: 600;
     color: var(--dark-text);
     margin-top: 20px;
 }
 
-@keyframes fadeIn { 
-    from { opacity: 0; } 
-    to { opacity: 1; } 
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
-
-@keyframes slideIn { 
-    from { transform: translateY(-50px); opacity: 0; } 
-    to { transform: translateY(0); opacity: 1; } 
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 footer {
@@ -403,4 +376,33 @@ footer .disclaimer {
     max-width: 700px;
     margin: 0 auto 15px;
     opacity: 0.8;
+}
+
+/* NUEVOS ESTILOS PARA LOS ÍCONOS DE LA SECCIÓN DE INFORMACIÓN */
+.info-card {
+    position: relative;
+    padding-top: 60px; /* Espacio para el ícono */
+}
+
+.info-card-icon {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-card-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.info-card h3 {
+    margin-top: 10px; /* Ajuste para dar espacio después del ícono */
 }
