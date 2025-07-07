@@ -1,4 +1,48 @@
-// --- SCRIPT DE FUNCIONALIDADES ---
+// Animación de conteo para las estadísticas
+function animateCountUp() {
+    const stats = document.querySelectorAll('.innovation-stat');
+    
+    stats.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-count'));
+        const duration = 2000; // 2 segundos
+        const stepTime = Math.abs(Math.floor(duration / target));
+        let current = 0;
+        
+        const counter = setInterval(() => {
+            current += Math.ceil(target / 50);
+            if (current >= target) {
+                current = target;
+                clearInterval(counter);
+            }
+            
+            if (target === 200) {
+                stat.textContent = current + '+';
+            } else if (target === 100) {
+                stat.textContent = current + '%';
+            } else {
+                stat.textContent = current;
+            }
+        }, stepTime);
+    });
+}
+
+// Observador para activar la animación cuando la sección sea visible
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCountUp();
+            observer.disconnect(); // Solo anima una vez
+        }
+    });
+}, { threshold: 0.5 });
+
+// Observar la sección de pruebas
+const proofSection = document.querySelector('.innovation-proof');
+if (proofSection) {
+    observer.observe(proofSection);
+}
+
+// Configuración del catálogo completo
 document.addEventListener('DOMContentLoaded', function() {
     
     // --- LÓGICA DEL MODAL ---
@@ -6,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalBody = document.getElementById('modal-body');
     const closeModal = document.querySelector('.modal-close');
 
+    // Botones de "Más detalles"
     document.querySelectorAll('.btn-details').forEach(button => {
         button.addEventListener('click', () => {
             const productId = button.dataset.productId;
@@ -29,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Cerrar modal
     closeModal.addEventListener('click', () => modal.style.display = 'none');
     window.addEventListener('click', (event) => {
         if (event.target == modal) {
@@ -73,12 +119,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- LÓGICA DEL BOTÓN DE WHATSAPP ---
+    // --- CONFIGURACIÓN DEL BOTÓN DE WHATSAPP ---
     const urlParams = new URLSearchParams(window.location.search);
-    const defaultSocioId = '573203415438'; // Número por defecto
+    const defaultSocioId = '573203415438';
     const socioIdFromUrl = urlParams.get('socio');
-
-    // Usa el 'socio' de la URL si existe, si no, usa el por defecto.
     const finalSocioId = socioIdFromUrl || defaultSocioId;
 
     if (finalSocioId) {
@@ -86,6 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const whatsappLink = `https://wa.me/${finalSocioId}?text=${encodeURIComponent('Hola, estoy interesado(a) en los productos Gano Excel. ¿Me podrías dar más información?')}`;
         
         whatsappButton.href = whatsappLink;
-        whatsappButton.style.display = 'flex'; // Muestra el botón
+        whatsappButton.style.display = 'flex';
     }
 });
