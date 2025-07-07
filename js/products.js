@@ -1,117 +1,222 @@
-// --- BASE DE DATOS DE PRODUCTOS ---
+// Base de datos de productos
 const productData = {
     'ganocafe-3-en-1': {
         name: 'GANOCAFÉ 3 EN 1',
-        description: 'Es la bebida ideal para quienes buscan conveniencia sin sacrificar el sabor y los beneficios. Combina un café gourmet de alta calidad con crema no láctea y un toque dulce, todo enriquecido con el poderoso extracto de Ganoderma Lucidum. Es tu compañero perfecto para empezar el día con energía y bienestar.',
-        usage: 'Vierta el contenido de un sobre en una taza, agregue agua caliente (no hirviendo) y mezcle bien. Disfrute en cualquier momento del día.',
-        ingredients: ['Café instantáneo de calidad', 'Crema no láctea', 'Azúcar', 'Extracto de Ganoderma Lucidum']
+        description: 'Una deliciosa mezcla de café premium con Ganoderma Lucidum, cremoso y azúcar. Cada sorbo te brinda una experiencia única que combina el sabor tradicional del café con los beneficios del hongo de la inmortalidad.',
+        usage: 'Mezcla 1 sobre (21g) en 150ml de agua caliente. Revuelve bien y disfruta. Se puede tomar de 1 a 3 veces al día.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Café soluble premium',
+            'Cremora vegetal',
+            'Azúcar refinada',
+            'Saborizante natural'
+        ]
     },
     'ganocafe-clasico': {
         name: 'GANOCAFÉ CLÁSICO',
-        description: 'Para los puristas del café que no negocian el sabor intenso y el aroma profundo. Este café negro, tipo tinto, está potenciado con el extracto de Ganoderma Lucidum, ofreciendo una experiencia robusta que despierta tus sentidos y apoya tu bienestar con cada sorbo.',
-        usage: 'Disuelva un sobre en una taza con agua caliente. Disfrútelo solo o con su endulzante preferido.',
-        ingredients: ['Café negro instantáneo', 'Extracto de Ganoderma Lucidum']
+        description: 'Para los amantes del café puro, esta fórmula combina café negro de alta calidad con extracto de Ganoderma. Perfecto para quienes prefieren el sabor intenso del café sin aditivos.',
+        usage: 'Mezcla 1 sobre (4.5g) en 150ml de agua caliente. Ideal para tomar en las mañanas o cuando necesites energía.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Café soluble 100% puro',
+            'Sabor natural a café'
+        ]
     },
     'ganorico-latte': {
         name: 'GANORICO LATTE RICO',
-        description: 'Una experiencia de cafetería premium en la comodidad de tu hogar. Este latte combina la suavidad de la leche con un café selecto, creando una bebida espumosa y deliciosa. Enriquecido con betaglucanos de Ganoderma, es un capricho que cuida de ti.',
-        usage: 'Mezcle un sobre con agua caliente para obtener un latte cremoso y espumoso al instante.',
-        ingredients: ['Café selecto', 'Crema no láctea', 'Betaglucanos de Ganoderma Lucidum']
+        description: 'Una experiencia de latte premium con textura cremosa y espumosa. Esta mezcla perfecta de café, leche y Ganoderma crea una bebida indulgente pero saludable.',
+        usage: 'Disuelve 1 sobre (25g) en 180ml de agua caliente. Bate suavemente para crear espuma y disfruta.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Café premium',
+            'Leche en polvo',
+            'Cremora natural',
+            'Edulcorante natural'
+        ]
     },
     'ganorico-mocha': {
         name: 'GANORICO MOCHA RICO',
-        description: 'La fusión perfecta entre café rico y cacao indulgente, creando una bebida mocha que es tanto un placer para el paladar como un apoyo para tu bienestar. Enriquecido con los beneficios del Ganoderma Lucidum, es la opción ideal para un capricho saludable.',
-        usage: 'Vierta el contenido de un sobre en una taza, agregue agua o leche caliente y mezcle hasta obtener una bebida homogénea y deliciosa.',
-        ingredients: ['Café premium', 'Cacao en polvo', 'Crema no láctea', 'Betaglucanos de Ganoderma Lucidum']
+        description: 'La combinación perfecta de café y chocolate enriquecida con Ganoderma. Un sabor indulgente que satisface tus antojos mientras cuida tu bienestar.',
+        usage: 'Mezcla 1 sobre (25g) en 180ml de agua caliente. Perfecto para la tarde o como postre saludable.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Café premium',
+            'Cacao natural',
+            'Leche en polvo',
+            'Azúcar de caña'
+        ]
     },
     'ganorico-shoko': {
         name: 'GANORICO SHOKO RICO',
-        description: 'Un chocolate caliente que va más allá del sabor. Formulado para toda la familia, este chocolate suizo enriquecido con Ganoderma Lucidum es una bebida nutritiva y reconfortante, perfecta para cualquier momento del día.',
-        usage: 'Ideal para niños y adultos. Mezcle un sobre con leche o agua caliente para un chocolate cremoso y lleno de beneficios.',
-        ingredients: ['Cacao suizo', 'Crema no láctea', 'Azúcar', 'Extracto de Ganoderma Lucidum']
+        description: 'Chocolate caliente nutritivo enriquecido con Ganoderma. Ideal para toda la familia, ofrece el placer del chocolate con beneficios para la salud.',
+        usage: 'Disuelve 1 sobre (25g) en 180ml de agua caliente o leche. Ideal para niños y adultos en cualquier momento del día.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Cacao premium',
+            'Leche en polvo',
+            'Azúcar natural',
+            'Saborizante de chocolate'
+        ]
     },
     'gano-cereal': {
         name: 'ESPIRULINA GANO C\'REAL',
-        description: 'El desayuno de los campeones. Este cereal combina la fibra de la avena con el poder nutricional de la Spirulina y el extracto de Ganoderma Lucidum. Es un alimento completo que te proporciona energía sostenida y una nutrición balanceada para empezar tu jornada.',
-        usage: 'Vierta el contenido en un tazón y agregue leche o su bebida vegetal preferida. También puede consumirse solo como un snack nutritivo.',
-        ingredients: ['Avena en hojuelas', 'Spirulina', 'Extracto de Ganoderma Lucidum', 'Crema no láctea']
+        description: 'Un cereal nutritivo que combina Spirulina y Ganoderma para crear un desayuno completo rico en proteínas, vitaminas y minerales esenciales.',
+        usage: 'Mezcla 2 cucharadas (30g) con leche, yogur o agua. Ideal para el desayuno o como snack nutritivo.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Spirulina orgánica',
+            'Cereales integrales',
+            'Fibra natural',
+            'Vitaminas y minerales'
+        ]
     },
     'oleaf-rooibos': {
         name: 'BEBIDA DE OLEAF GANO ROOIBOS',
-        description: 'Una infusión para calmar el cuerpo y la mente. Este té Rooibos, naturalmente libre de cafeína, está enriquecido con Ganoderma Lucidum. Sus propiedades antioxidantes y relajantes lo convierten en la bebida perfecta para finalizar el día o para un momento de pausa.',
-        usage: 'Sumerja una bolsita de té en una taza con agua caliente durante 3-5 minutos. Disfrute solo o con un toque de miel.',
-        ingredients: ['Hojas de Té Rooibos', 'Extracto de Ganoderma Lucidum']
+        description: 'Té rooibos sudafricano naturalmente libre de cafeína, enriquecido con Ganoderma. Perfecto para relajarse y promover un sueño reparador.',
+        usage: 'Disuelve 1 sobre en agua caliente y deja reposar 3-5 minutos. Ideal para la noche o momentos de relajación.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Té Rooibos orgánico',
+            'Antioxidantes naturales',
+            'Sabor natural'
+        ]
     },
     'chocolate-gano': {
         name: 'CHOCOLATE GANO',
-        description: 'Más que un simple chocolate. Esta fórmula en polvo combina el rico sabor del cacao con una dosis concentrada de extracto de Ganoderma Lucidum, creando una bebida funcional que apoya tu bienestar mientras disfrutas de un sabor clásico.',
-        usage: 'Mezcle una porción con agua o leche caliente. Ideal como una bebida nutritiva y reconfortante.',
-        ingredients: ['Cacao en polvo', 'Extracto de Ganoderma Lucidum']
+        description: 'Bebida de chocolate concentrada con extracto puro de Ganoderma. Fórmula potente para quienes buscan máximos beneficios con sabor delicioso.',
+        usage: 'Disuelve 1 sobre en agua caliente. Se puede tomar 1-2 veces al día, preferiblemente con el estómago vacío.',
+        ingredients: [
+            'Extracto concentrado de Ganoderma Lucidum',
+            'Cacao puro',
+            'Edulcorante natural'
+        ]
     },
     'luvoco': {
         name: 'LUVOCO',
-        description: 'Para los verdaderos conocedores del café. Luvoco es un café molido de tueste premium, diseñado para ser preparado en su método preferido (greca, cafetera de filtro, etc.). Cada grano está impregnado con los beneficios del Ganoderma Lucidum para una taza excepcional en aroma, sabor y bienestar.',
-        usage: 'Utilice la cantidad deseada de café molido en su cafetera o método de preparación habitual.',
-        ingredients: ['Café molido de tueste premium', 'Betaglucanos de Ganoderma Lucidum']
+        description: 'Café molido gourmet enriquecido con Ganoderma para preparar en casa. Calidad premium para los conocedores del buen café.',
+        usage: 'Prepara como café tradicional en cafetera o prensa francesa. 1-2 cucharadas por taza según tu preferencia de intensidad.',
+        ingredients: [
+            'Café gourmet molido',
+            'Extracto de Ganoderma Lucidum',
+            'Tostado artesanal'
+        ]
     },
     'reskine-collagen': {
         name: 'BEBIDA DE COLÁGENO RESKINE',
-        description: 'Belleza que se bebe. Esta bebida funcional combina colágeno hidrolizado, esencial para la salud de la piel, cabello y uñas, con el poder antioxidante del Ganoderma Lucidum. Una fórmula diseñada para nutrir tu belleza desde el interior.',
-        usage: 'Disuelva el contenido de un sobre en un vaso con agua o su bebida preferida. Consumir preferiblemente en ayunas.',
-        ingredients: ['Colágeno hidrolizado', 'Extracto de Ganoderma Lucidum']
+        description: 'Bebida revolucionaria que combina colágeno hidrolizado con Ganoderma para apoyar la belleza desde adentro, promoviendo piel firme y radiante.',
+        usage: 'Disuelve 1 sobre en agua fría o al tiempo. Tomar preferiblemente en ayunas o antes de dormir.',
+        ingredients: [
+            'Colágeno hidrolizado',
+            'Extracto de Ganoderma Lucidum',
+            'Ácido hialurónico',
+            'Vitamina C',
+            'Sabor natural a frutas'
+        ]
     },
     'capsulas-ganoderma': {
         name: 'Cápsulas de Ganoderma',
-        description: 'La forma más pura y concentrada de obtener los beneficios del Ganoderma Lucidum. Cada cápsula contiene el extracto del hongo maduro, conocido por su capacidad para modular el sistema inmune y actuar como un potente antioxidante, promoviendo el equilibrio general del cuerpo.',
-        usage: 'Tomar 1 o 2 cápsulas al día, preferiblemente con las comidas.',
-        ingredients: ['Extracto de Ganoderma Lucidum (275 mg)']
+        description: 'Extracto concentrado de Ganoderma Lucidum en cápsulas. La forma más pura y potente de obtener todos los beneficios del hongo milenario.',
+        usage: 'Tomar 2 cápsulas al día con agua, preferiblemente antes de las comidas. No exceder la dosis recomendada.',
+        ingredients: [
+            'Extracto concentrado de Ganoderma Lucidum',
+            'Cápsula vegetal',
+            'Betaglucanos',
+            'Triterpenos',
+            'Polisacáridos'
+        ]
     },
     'capsulas-excellium': {
         name: 'CÁPSULAS EXCELLIUM',
-        description: 'Nutrición superior para tu cerebro. Estas cápsulas contienen el extracto del micelio del Ganoderma (hongo joven), rico en germanio orgánico y otros nutrientes que apoyan la oxigenación cerebral, la concentración y la salud del sistema nervioso.',
-        usage: 'Tomar 1 o 2 cápsulas al día. Ideal para estudiantes, profesionales y adultos mayores.',
-        ingredients: ['Micelio de Ganoderma Lucidum (275 mg)']
+        description: 'Conocido como el "tónico cerebral", contiene extracto del micelio joven del Ganoderma, rico en germanio orgánico para apoyar la función cerebral.',
+        usage: 'Tomar 1-2 cápsulas al día con agua. Ideal tomarlas en la mañana para aprovechar sus efectos durante el día.',
+        ingredients: [
+            'Extracto de micelio de Ganoderma',
+            'Germanio orgánico',
+            'Cápsula vegetal',
+            'Aminoácidos esenciales'
+        ]
     },
     'capsulas-cordygold': {
         name: 'CÁPSULAS CORDYGOLD',
-        description: 'El impulso de energía y vitalidad que necesitas. Formuladas con Cordyceps Sinensis, estas cápsulas son ideales para deportistas y personas con un estilo de vida activo. Apoyan la salud respiratoria, aumentan la resistencia y mejoran el rendimiento físico y mental.',
-        usage: 'Tomar 1 o 2 cápsulas al día, especialmente antes de la actividad física.',
-        ingredients: ['Cordyceps Sinensis (500 mg)']
+        description: 'Cordyceps sinensis de alta calidad para aumentar la energía, resistencia y vitalidad. Ideal para deportistas y personas activas.',
+        usage: 'Tomar 2 cápsulas al día, preferiblemente 30 minutos antes del ejercicio o actividad física intensa.',
+        ingredients: [
+            'Extracto de Cordyceps sinensis',
+            'Cápsula vegetal',
+            'Adenosina',
+            'Polisacáridos bioactivos'
+        ]
     },
     'gano-fresh': {
         name: 'PASTA DE DIENTES GANO FRESH',
-        description: 'Una sonrisa saludable de forma natural. Gano Fresh es una pasta dental sin flúor, enriquecida con extracto de Ganoderma Lucidum. Limpia suavemente, refresca el aliento y promueve la salud de dientes y encías sin químicos agresivos.',
-        usage: 'Cepille sus dientes después de cada comida o al menos dos veces al día.',
-        ingredients: ['Extracto de Ganoderma Lucidum', 'Menta', 'Sorbitol']
+        description: 'Pasta dental enriquecida con Ganoderma, libre de flúor. Limpia suavemente mientras protege dientes y encías de forma natural.',
+        usage: 'Usar como pasta dental regular. Aplicar sobre el cepillo y cepillar durante 2-3 minutos. Apta para toda la familia.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Bicarbonato de sodio',
+            'Aceites esenciales naturales',
+            'Agentes limpiadores suaves',
+            'Sin flúor'
+        ]
     },
     'gano-soap': {
         name: 'JABÓN GANO',
-        description: 'Un jabón de uso diario que nutre mientras limpia. La combinación de extracto de Ganoderma Lucidum y leche de cabra ayuda a hidratar, suavizar y equilibrar el pH de la piel, dejándola limpia y radiante. Ideal para toda la familia.',
-        usage: 'Use diariamente durante el baño o la ducha para limpiar cara y cuerpo.',
-        ingredients: ['Extracto de Ganoderma Lucidum', 'Leche de cabra']
+        description: 'Jabón artesanal enriquecido con Ganoderma y leche de cabra. Limpia, nutre e hidrata la piel dejándola suave y protegida.',
+        usage: 'Humedecer la piel, aplicar el jabón generando espuma suave y enjuagar. Uso diario en rostro y cuerpo.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Leche de cabra',
+            'Aceites vegetales naturales',
+            'Glicerina natural',
+            'Base jabonosa vegetal'
+        ]
     },
     'gano-transparent-soap': {
         name: 'JABÓN TRANSPARENTE GANO',
-        description: 'Limpieza y renovación para tu piel. Este jabón transparente combina las propiedades del Ganoderma Lucidum con la suavidad del aloe vera y el poder renovador del extracto de papaya. Ayuda a limpiar impurezas y a mejorar la textura de la piel.',
-        usage: 'Ideal para la limpieza facial diaria. Masajee suavemente sobre la piel húmeda y enjuague.',
-        ingredients: ['Extracto de Ganoderma Lucidum', 'Extracto de Papaya', 'Aloe Vera']
+        description: 'Jabón transparente con papaya y aloe vera, enriquecido con Ganoderma. Proporciona una limpieza profunda con efecto exfoliante suave.',
+        usage: 'Aplicar sobre piel húmeda, masajear suavemente para exfoliar y enjuagar bien. Ideal para uso corporal.',
+        ingredients: [
+            'Extracto de Ganoderma Lucidum',
+            'Extracto de papaya',
+            'Aloe vera',
+            'Base jabonosa transparente',
+            'Agentes exfoliantes naturales'
+        ]
     },
     'shampoo-piel-brillo': {
         name: 'Champú Piel&Brillo',
-        description: 'Revitaliza tu cabello con el poder del Ganoderma Lucidum. Este shampoo limpia suavemente, nutre el folículo piloso y fortalece el cabello desde la raíz, devolviéndole su brillo y vitalidad natural.',
-        usage: 'Aplique sobre el cabello húmedo, masajee el cuero cabelludo y enjuague con abundante agua.',
-        ingredients: ['Extracto de Ganoderma Lucidum', 'Aloe Vera']
+        description: 'Champú revitalizante que fortalece el cabello desde la raíz. Limpia suavemente mientras aporta brillo y vitalidad.',
+        usage: 'Aplicar sobre cabello húmedo, masajear suavemente el cuero cabelludo y enjuagar abundantemente.',
+        ingredients: [
+            'Extractos herbales',
+            'Vitaminas para el cabello',
+            'Agentes limpiadores suaves',
+            'Aceites nutritivos',
+            'pH balanceado'
+        ]
     },
     'acondicionador-piel-brillo': {
         name: 'ACONDICIONADOR Piel&Brillo',
-        description: 'El toque final para un cabello suave, brillante y manejable. Este acondicionador sella la hidratación, reduce el frizz y facilita el peinado, dejando tu cabello sedoso y protegido gracias a los beneficios del Ganoderma Lucidum.',
-        usage: 'Después del shampoo, aplique de medios a puntas, deje actuar por unos minutos y enjuague.',
-        ingredients: ['Extracto de Ganoderma Lucidum']
+        description: 'Acondicionador que complementa el champú, dejando el cabello suave, manejable y con brillo natural. Facilita el peinado y reduce el frizz.',
+        usage: 'Después del champú, aplicar de medios a puntas, dejar actuar 2-3 minutos y enjuagar completamente.',
+        ingredients: [
+            'Agentes acondicionadores',
+            'Aceites nutritivos',
+            'Vitaminas capilares',
+            'Extractos naturales',
+            'Siliconas suaves'
+        ]
     },
     'exfoliante-piel-brillo': {
         name: 'EXFOLIANTE CORPORAL Piel&Brillo',
-        description: 'Renueva tu piel y déjala luminosa. Este exfoliante corporal elimina suavemente las células muertas e impurezas, mientras el Ganoderma Lucidum nutre y protege. El resultado es una piel más suave, lisa y radiante.',
-        usage: 'Durante la ducha, masajee sobre la piel húmeda con movimientos circulares y luego enjuague. Usar 1-2 veces por semana.',
-        ingredients: ['Extracto de Ganoderma Lucidum', 'Polvo de semilla de albaricoque']
+        description: 'Exfoliante corporal que elimina células muertas y estimula la renovación celular, dejando la piel suave y luminosa.',
+        usage: 'Aplicar sobre piel húmeda con movimientos circulares suaves. Concentrarse en áreas más rugosas. Enjuagar bien.',
+        ingredients: [
+            'Partículas exfoliantes naturales',
+            'Aceites hidratantes',
+            'Vitaminas E y C',
+            'Extractos vegetales',
+            'Agentes humectantes'
+        ]
     }
 };
