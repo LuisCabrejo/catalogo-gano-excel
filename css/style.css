@@ -21,6 +21,15 @@
     /* Especiales */
     --info-bg: #f0f9ff;
     --whatsapp-green: #25D366;
+    
+    /* Nuevos colores para innovación */
+    --innovation-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    --innovation-card-border: rgba(224, 177, 203, 0.2);
+    --innovation-icon-bg: linear-gradient(135deg, var(--accent), var(--accent-hover));
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 *, *::before, *::after {
@@ -65,9 +74,10 @@ header p {
     font-weight: 400;
 }
 
+/* MENÚ OPTIMIZADO PARA UNA SOLA FILA */
 nav.main-nav {
     background-color: white;
-    padding: 15px;
+    padding: 8px 15px; /* Reducido padding vertical */
     border-bottom: 1px solid var(--border-light);
     text-align: center;
     position: sticky;
@@ -79,9 +89,12 @@ nav.main-nav {
 nav.main-nav a {
     color: var(--primary);
     text-decoration: none;
-    margin: 0 12px; /* Espacio reducido */
+    margin: 0 8px; /* Reducido margen */
     font-weight: 700;
+    font-size: 0.95rem; /* Ligeramente más pequeño */
     transition: color 0.3s;
+    padding: 4px 8px; /* Padding interno reducido */
+    display: inline-block;
 }
 
 nav.main-nav a:hover {
@@ -91,11 +104,11 @@ nav.main-nav a:hover {
 /* Ajuste para pantallas muy pequeñas */
 @media (max-width: 380px) {
     nav.main-nav a {
-        margin: 0 8px;
-        font-size: 0.9rem;
+        margin: 0 4px;
+        font-size: 0.85rem;
+        padding: 2px 4px;
     }
 }
-
 
 .welcome-section {
     background-color: white;
@@ -121,51 +134,196 @@ nav.main-nav a:hover {
     color: var(--text-secondary);
 }
 
+/* NUEVOS ESTILOS PARA LA SECCIÓN DE INNOVACIÓN */
+.innovation-section {
+    background: var(--innovation-bg);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+    margin: 60px 0;
+}
+
+.innovation-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(224, 177, 203, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(65, 90, 119, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.innovation-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
 .section-title-wrapper {
     text-align: center;
     margin: 40px 0 30px;
 }
 
+.exclusivity-badge {
+    background: var(--accent);
+    color: var(--primary);
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.875rem;
+    display: inline-block;
+    margin-bottom: 24px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(224, 177, 203, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
 .section-title-wrapper h2 {
     font-weight: 800;
-    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-size: clamp(2rem, 4vw, 2.8rem);
     line-height: 1.2;
     color: var(--primary);
-    display: inline-block;
-    border-bottom: 3px solid var(--accent);
-    padding-bottom: 10px;
+    margin: 0 0 20px 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.info-grid {
+.innovation-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 20px auto 0;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.innovation-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 60px 0;
 }
 
-.info-card {
-    background-color: white;
-    padding: 25px;
-    border-radius: 8px;
-    border-left: 5px solid var(--secondary);
+.innovation-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    border: 1px solid var(--innovation-card-border);
+    position: relative;
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+.innovation-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--innovation-icon-bg);
+}
+
+.innovation-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.15);
+}
+
+.innovation-card-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--innovation-icon-bg);
+    color: var(--primary);
+    border-radius: 20px;
     display: flex;
-    flex-direction: column;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: transform 0.3s ease;
 }
 
-.info-card h3 {
-    margin-top: 0;
+.innovation-card:hover .innovation-card-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.innovation-card-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.innovation-card h3 {
+    margin: 0 0 16px 0;
     color: var(--primary);
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    line-height: 1.3;
 }
 
-.info-card p {
+.innovation-card p {
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.7;
     color: var(--text-secondary);
-    flex-grow: 1;
+    margin: 0;
 }
 
+.innovation-proof {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+    padding: 40px 0;
+}
+
+.proof-stat {
+    text-align: center;
+    min-width: 120px;
+}
+
+.innovation-stat {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1rem;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive para estadísticas */
+@media (max-width: 768px) {
+    .innovation-proof {
+        gap: 40px;
+    }
+    
+    .innovation-stat {
+        font-size: 3rem;
+    }
+}
+
+/* ESTILOS EXISTENTES PARA EL RESTO DEL CATÁLOGO */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -290,7 +448,7 @@ nav.main-nav a:hover {
     font-size: 30px;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     z-index: 100;
-    display: none; /* Oculto por defecto, se mostrará con JS */
+    display: none;
     align-items: center;
     justify-content: center;
     transition: transform 0.3s;
@@ -313,6 +471,7 @@ nav.main-nav a:hover {
     background-color: rgba(0,0,0,0.6);
     animation: fadeIn 0.3s;
 }
+
 .modal-content {
     background-color: #fff;
     margin: 10% auto;
@@ -324,6 +483,7 @@ nav.main-nav a:hover {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     animation: slideIn 0.4s;
 }
+
 .modal-close {
     color: #aaa;
     position: absolute;
@@ -333,19 +493,23 @@ nav.main-nav a:hover {
     font-weight: bold;
     cursor: pointer;
 }
+
 .modal-close:hover {
     color: #000;
 }
+
 .modal-body h3 {
     font-weight: 700;
     font-size: 1.8rem;
     color: var(--primary);
     margin-top: 0;
 }
+
 .modal-body p, .modal-body ul {
     color: var(--text-secondary);
     line-height: 1.7;
 }
+
 .modal-body .modal-subtitle {
     font-weight: 600;
     color: var(--dark-text);
@@ -356,6 +520,7 @@ nav.main-nav a:hover {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
 @keyframes slideIn {
     from { transform: translateY(-50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
@@ -378,31 +543,17 @@ footer .disclaimer {
     opacity: 0.8;
 }
 
-/* NUEVOS ESTILOS PARA LOS ÍCONOS DE LA SECCIÓN DE INFORMACIÓN */
-.info-card {
-    position: relative;
-    padding-top: 60px; /* Espacio para el ícono */
+/* Estilos para secciones de productos */
+.category-section {
+    margin: 50px 0;
 }
 
-.info-card-icon {
-    position: absolute;
-    top: 20px;
-    left: 25px;
-    width: 40px;
-    height: 40px;
-    background-color: var(--accent);
+.category-section .section-title-wrapper h2 {
+    font-weight: 800;
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    line-height: 1.2;
     color: var(--primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.info-card-icon svg {
-    width: 24px;
-    height: 24px;
-}
-
-.info-card h3 {
-    margin-top: 10px; /* Ajuste para dar espacio después del ícono */
+    display: inline-block;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 10px;
 }
