@@ -4,9 +4,9 @@
  * Consulta directamente Supabase para obtener datos actualizados del portal
  */
 
-// 🔧 Configuración de Supabase (CORREGIDA - usar la clave correcta del contexto)
+// 🔧 Configuración de Supabase (CORREGIDA - usar las credenciales reales del sistema)
 const SUPABASE_URL = 'https://ovsvocjvjnqfaaugwnxg.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92c3ZvY2p2am5xZmFhdWd3bnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY4ODYzODksImV4cCI6MjA1MjQ2MjM4OX0.VGZreq-e-f7O1Rz5Eo8JSDMNFsIbGLT8lY3UKKbNv5w';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92c3ZvY2p2am5xZmFhdWd3bnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3ODEyMzcsImV4cCI6MjA2NzM1NzIzN30.ZErzsooaSXnS-NdmMYD0JcZFupFgrXfMLH-nOvU1NTE';
 
 // Inicializar cliente Supabase
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
