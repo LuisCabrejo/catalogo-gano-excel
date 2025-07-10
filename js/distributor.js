@@ -157,11 +157,11 @@ async function buscarDistribuidor(slug) {
                 console.log('📱 WhatsApp formateado:', whatsappFormateado);
             }
             
-            // Extraer primer nombre y primer apellido
-            const nombrePartes = distribuidorEncontrado.full_name.split(' ').filter(parte => parte.length > 0);
-            const primerNombre = nombrePartes[0] || '';
-            const primerApellido = nombrePartes[1] || '';
-            const nombreCompleto = nombrePartes.length >= 2 ? `${primerNombre} ${primerApellido}` : primerNombre;
+            // Extraer primer nombre + primer apellido para personalización
+            const nombreParts = distribuidorEncontrado.full_name.trim().split(' ').filter(part => part.length > 0);
+            const primerNombre = nombreParts[0] || '';
+            const primerApellido = nombreParts[1] || '';
+            const nombreApellido = primerApellido ? `${primerNombre} ${primerApellido}` : primerNombre;
             
             return {
                 nombre: distribuidorEncontrado.full_name,
@@ -169,8 +169,7 @@ async function buscarDistribuidor(slug) {
                 email: distribuidorEncontrado.email,
                 slug: slug,
                 primer_nombre: primerNombre,
-                primer_apellido: primerApellido,
-                nombre_completo: nombreCompleto
+                nombre_apellido: nombreApellido
             };
         }
         
@@ -203,28 +202,29 @@ function personalizarCatalogo(distribuidor) {
         console.log('🎨 INICIANDO PERSONALIZACIÓN DEL CATÁLOGO');
         console.log('🎨 Distribuidor:', distribuidor.nombre);
         console.log('🎨 Primer nombre:', distribuidor.primer_nombre);
+        console.log('🎨 Para badge:', distribuidor.nombre_apellido);
         console.log('🎨 ==========================================');
         
-        // 1. Personalizar título de la página (SOLO PRIMER NOMBRE)
+        // 1. Personalizar título de la página
         const tituloAnterior = document.title;
         document.title = `Catálogo de ${distribuidor.primer_nombre} - Gano Excel`;
         console.log('📝 Título actualizado:', `"${tituloAnterior}" → "${document.title}"`);
         
-        // 2. Personalizar header principal (CON NOMBRE + APELLIDO)
+        // 2. Personalizar header principal
         const headerTitle = document.querySelector('header h1');
         if (headerTitle) {
             const textoAnterior = headerTitle.textContent;
-            headerTitle.textContent = `Catálogo de Bienestar de ${distribuidor.nombre_completo}`;
+            headerTitle.textContent = `Catálogo de Bienestar de ${distribuidor.primer_nombre}`;
             console.log('📝 Header h1 actualizado:', `"${textoAnterior}" → "${headerTitle.textContent}"`);
         } else {
             console.warn('⚠️ No se encontró header h1');
         }
         
-        // 3. Personalizar subtítulo del header (CON NOMBRE + APELLIDO)
+        // 3. Personalizar subtítulo del header (frase que genere deseo)
         const headerSubtitle = document.querySelector('header p');
         if (headerSubtitle) {
             const textoAnterior = headerSubtitle.textContent;
-            headerSubtitle.textContent = `Descubre los productos Gano Excel recomendados por ${distribuidor.nombre_completo}`;
+            headerSubtitle.textContent = `Transforma tu bienestar con productos que nutren cuerpo, mente y espíritu`;
             console.log('📝 Header p actualizado:', `"${textoAnterior}" → "${headerSubtitle.textContent}"`);
         } else {
             console.warn('⚠️ No se encontró header p');
@@ -300,7 +300,7 @@ function configurarWhatsAppPersonalizado(distribuidor) {
         
         whatsappButton.href = whatsappUrl;
         whatsappButton.style.display = 'flex';
-        whatsappButton.title = `Contactar a ${distribuidor.primer_nombre} por WhatsApp`;
+                    whatsappButton.title = `Contactar a ${distribuidor.primer_nombre} por WhatsApp`;
         
         console.log('📱 WhatsApp configurado exitosamente:');
         console.log('📱   Nombre:', distribuidor.primer_nombre);
@@ -345,7 +345,7 @@ function agregarBadgeDistribuidor(distribuidor) {
                     text-align: center;
                     animation: fadeInScale 0.6s ease-out;
                 ">
-                    📱 Catálogo personalizado de ${distribuidor.nombre_completo}
+                    📱 Catálogo personalizado de ${distribuidor.nombre_apellido}
                 </div>
             `;
             
