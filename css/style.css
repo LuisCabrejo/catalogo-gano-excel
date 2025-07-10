@@ -74,47 +74,112 @@ header p {
     font-weight: 400;
 }
 
-/* MENÚ OPTIMIZADO PARA UNA SOLA FILA */
+/* =================================
+   MENÚ PRINCIPAL MEJORADO (V2.3)
+   ================================= */
 nav.main-nav {
     background-color: white;
-    padding: 8px 15px; /* Reducido padding vertical */
+    padding: 12px 20px; /* Aumentado padding vertical */
     border-bottom: 1px solid var(--border-light);
     text-align: center;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sombra más prominente */
 }
 
 nav.main-nav a {
     color: var(--primary);
     text-decoration: none;
-    margin: 0 6px; /* Reducido aún más para acomodar el nuevo elemento */
+    margin: 0 8px; /* Aumentado margen */
     font-weight: 700;
-    font-size: 0.9rem; /* Ligeramente más pequeño */
-    transition: color 0.3s;
-    padding: 4px 6px; /* Padding interno reducido */
+    font-size: 1rem; /* Aumentado de 0.9rem a 1rem */
+    transition: all 0.3s ease;
+    padding: 8px 12px; /* Aumentado padding interno */
     display: inline-block;
+    border-radius: 20px; /* Bordes redondeados */
+    letter-spacing: 0.3px; /* Mejor legibilidad */
 }
 
 nav.main-nav a:hover {
     color: var(--secondary);
+    background: rgba(65, 90, 119, 0.05); /* Fondo sutil en hover */
+    transform: translateY(-1px); /* Efecto de elevación */
 }
 
-/* Ajuste para pantallas muy pequeñas */
-@media (max-width: 600px) {
+/* Estilo especial para el enlace "Oportunidad" */
+nav.main-nav .oportunidad-link {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white !important;
+    font-weight: 800;
+    box-shadow: 0 3px 12px rgba(231, 76, 60, 0.3);
+    margin-left: 12px; /* Separar del resto */
+    transition: all 0.3s ease;
+}
+
+nav.main-nav .oportunidad-link:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    color: white !important;
+}
+
+/* Responsive - Pantallas medianas */
+@media (max-width: 768px) {
+    nav.main-nav {
+        padding: 10px 15px;
+    }
+    
     nav.main-nav a {
-        margin: 0 3px;
-        font-size: 0.85rem;
-        padding: 3px 4px;
+        margin: 0 5px;
+        font-size: 0.95rem;
+        padding: 6px 10px;
+    }
+    
+    nav.main-nav .oportunidad-link {
+        margin-left: 8px;
+        margin-top: 5px;
     }
 }
 
-@media (max-width: 380px) {
+/* Responsive - Pantallas pequeñas */
+@media (max-width: 600px) {
+    nav.main-nav {
+        padding: 8px 10px;
+        line-height: 1.4;
+    }
+    
     nav.main-nav a {
-        margin: 0 2px;
-        font-size: 0.8rem;
-        padding: 2px 3px;
+        margin: 2px 3px;
+        font-size: 0.9rem;
+        padding: 5px 8px;
+        display: inline-block;
+    }
+    
+    nav.main-nav .oportunidad-link {
+        margin-left: 5px;
+        margin-top: 5px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Responsive - Pantallas muy pequeñas */
+@media (max-width: 380px) {
+    nav.main-nav {
+        padding: 6px 8px;
+    }
+    
+    nav.main-nav a {
+        margin: 1px 2px;
+        font-size: 0.85rem;
+        padding: 4px 6px;
+    }
+    
+    nav.main-nav .oportunidad-link {
+        margin-left: 3px;
+        margin-top: 4px;
+        font-size: 0.85rem;
+        padding: 5px 8px;
     }
 }
 
