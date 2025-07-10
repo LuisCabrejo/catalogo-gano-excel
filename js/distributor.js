@@ -12,31 +12,63 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /**
- * 🔍 Buscar distribuidor por slug en Supabase
- * @param {string} slug - Slug del distribuidor (ej: "luis-cabrejo")
+ * 🔍 Buscar distribuidor por slug en Supabase (MEJORADO)
+ * @param {string} slug - Slug del distribuidor (ej: "ganocafe-online")
  * @returns {Object|null} Datos del distribuidor o null
  */
 async function buscarDistribuidor(slug) {
     try {
         console.log('🔍 Buscando distribuidor:', slug);
         
-        // Convertir slug a formato de búsqueda
-        const nombreBusqueda = slug.replace(/-/g, ' ');
+        // Convertir slug a formato de búsqueda más flexible
+        const nombreBusqueda = slug
+            .replace(/-/g, ' ')           // guiones a espacios
+            .replace(/[áàäâ]/g, 'a')      // normalizar acentos
+            .replace(/[éèëê]/g, 'e')
+            .replace(/[íìïî]/g, 'i')
+            .replace(/[óòöô]/g, 'o')
+            .replace(/[úùüû]/g, 'u')
+            .replace(/ñ/g, 'n');
         
-        // Consultar Supabase
-        const { data, error } = await supabaseClient
+        console.log('🔍 Búsqueda normalizada:', `"${slug}" → "${nombreBusqueda}"`);
+        
+        // Buscar con múltiples estrategias
+        let data = null, error = null;
+        
+        // Estrategia 1: Búsqueda exacta (sin acentos)
+        const { data: data1, error: error1 } = await supabaseClient
             .from('profiles')
             .select('full_name, whatsapp, email')
             .ilike('full_name', `%${nombreBusqueda}%`)
-            .single();
+            .limit(1);
             
-        if (error) {
-            console.error('❌ Error consultando Supabase:', error);
+        if (data1 && data1.length > 0) {
+            data = data1[0];
+            console.log('✅ Encontrado con búsqueda normalizada:', data);
+        } else {
+            // Estrategia 2: Búsqueda por palabras individuales
+            const palabras = nombreBusqueda.split(' ');
+            if (palabras.length > 1) {
+                const { data: data2, error: error2 } = await supabaseClient
+                    .from('profiles')
+                    .select('full_name, whatsapp, email')
+                    .ilike('full_name', `%${palabras[0]}%`)
+                    .ilike('full_name', `%${palabras[1]}%`)
+                    .limit(1);
+                    
+                if (data2 && data2.length > 0) {
+                    data = data2[0];
+                    console.log('✅ Encontrado con búsqueda por palabras:', data);
+                }
+            }
+        }
+        
+        if (error1 && error2) {
+            console.error('❌ Error consultando Supabase:', error1, error2);
             return null;
         }
         
         if (data) {
-            console.log('✅ Distribuidor encontrado:', data);
             return {
                 nombre: data.full_name,
                 whatsapp: data.whatsapp,
@@ -45,6 +77,7 @@ async function buscarDistribuidor(slug) {
             };
         }
         
+        console.warn('⚠️ No se encontró distribuidor para:', slug);
         return null;
     } catch (error) {
         console.error('❌ Error en búsqueda de distribuidor:', error);
