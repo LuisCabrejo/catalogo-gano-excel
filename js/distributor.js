@@ -1,4 +1,33 @@
 /**
+ * 🔗 Personalizar enlace de oportunidad empresarial con datos del distribuidor
+ * @param {Object} distribuidor - Datos del distribuidor
+ */
+function personalizarEnlaceOportunidad(distribuidor) {
+    try {
+        console.log('🔗 Personalizando enlace de oportunidad...');
+        
+        const oportunidadLink = document.querySelector('.oportunidad-link');
+        
+        if (oportunidadLink) {
+            // URL base de oportunidad + parámetro del distribuidor
+            const urlOportunidad = `https://oportunidad.4millones.com/?distribuidor=${distribuidor.slug}`;
+            
+            oportunidadLink.href = urlOportunidad;
+            oportunidadLink.title = `Ver oportunidad empresarial - Referido por ${distribuidor.primer_nombre}`;
+            
+            console.log('🔗 Enlace de oportunidad personalizado:');
+            console.log('🔗   URL:', urlOportunidad);
+            console.log('🔗   Distribuidor:', distribuidor.primer_nombre);
+        } else {
+            console.warn('⚠️ No se encontró enlace de oportunidad (.oportunidad-link)');
+        }
+        
+    } catch (error) {
+        console.error('❌ Error personalizando enlace de oportunidad:', error);
+    }
+}
+
+/**
  * 🎯 SISTEMA DE DISTRIBUIDORES PARA CATÁLOGO - VERSIÓN CORREGIDA
  * Este archivo personaliza el catálogo según el distribuidor que lo comparte
  * Consulta directamente Supabase para obtener datos actualizados del portal
@@ -261,6 +290,9 @@ function personalizarCatalogo(distribuidor) {
         
         // 6. Agregar badge de distribuidor
         agregarBadgeDistribuidor(distribuidor);
+        
+        // 6. Personalizar enlace de oportunidad empresarial
+        personalizarEnlaceOportunidad(distribuidor);
         
         console.log('🎨 ==========================================');
         console.log('✅ PERSONALIZACIÓN COMPLETADA EXITOSAMENTE');
@@ -541,5 +573,6 @@ if (window.location.hostname === 'localhost' || window.location.search.includes(
 
 // Mensaje de confirmación de carga
 console.log('🎯 ==========================================');
-console.log('✅ SISTEMA DE DISTRIBUIDORES CARGADO (V2.0)');
+console.log('✅ SISTEMA DE DISTRIBUIDORES CARGADO (V2.3)');
+console.log('🔗 + Enlace de Oportunidad Personalizado');
 console.log('🎯 ==========================================');
