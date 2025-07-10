@@ -205,12 +205,12 @@ function personalizarCatalogo(distribuidor) {
         console.log('🎨 Primer nombre:', distribuidor.primer_nombre);
         console.log('🎨 ==========================================');
         
-        // 1. Personalizar título de la página (CON NOMBRE + APELLIDO)
+        // 1. Personalizar título de la página (SOLO PRIMER NOMBRE)
         const tituloAnterior = document.title;
-        document.title = `Catálogo de ${distribuidor.nombre_completo} - Gano Excel`;
+        document.title = `Catálogo de ${distribuidor.primer_nombre} - Gano Excel`;
         console.log('📝 Título actualizado:', `"${tituloAnterior}" → "${document.title}"`);
         
-        // 2. Personalizar header principal (CON NOMBRE + APELLIDO)
+        // 2. Personalizar header principal (CON NOMBRE + APELLIDO) ⭐
         const headerTitle = document.querySelector('header h1');
         if (headerTitle) {
             const textoAnterior = headerTitle.textContent;
@@ -220,11 +220,11 @@ function personalizarCatalogo(distribuidor) {
             console.warn('⚠️ No se encontró header h1');
         }
         
-        // 3. Personalizar subtítulo del header (CON NOMBRE + APELLIDO)
+        // 3. Personalizar subtítulo del header (SOLO PRIMER NOMBRE)
         const headerSubtitle = document.querySelector('header p');
         if (headerSubtitle) {
             const textoAnterior = headerSubtitle.textContent;
-            headerSubtitle.textContent = `Descubre los productos Gano Excel recomendados por ${distribuidor.nombre_completo}`;
+            headerSubtitle.textContent = `Descubre los productos Gano Excel recomendados por ${distribuidor.primer_nombre}`;
             console.log('📝 Header p actualizado:', `"${textoAnterior}" → "${headerSubtitle.textContent}"`);
         } else {
             console.warn('⚠️ No se encontró header p');
@@ -245,7 +245,7 @@ function personalizarCatalogo(distribuidor) {
             if (welcomeText) {
                 const textoAnterior = welcomeText.innerHTML;
                 welcomeText.innerHTML = `
-                    <strong>${distribuidor.nombre_completo}</strong> te invita a explorar estos productos diseñados para nutrir tu cuerpo y mejorar tu día a día. 
+                    <strong>${distribuidor.primer_nombre}</strong> te invita a explorar estos productos diseñados para nutrir tu cuerpo y mejorar tu día a día. 
                     Cada uno combina lo mejor de la naturaleza con innovación científica. 
                     <br><br>
                     <strong>💬 Para más información, precios o realizar un pedido, contacta directamente a ${distribuidor.primer_nombre} usando el botón de WhatsApp.</strong>
@@ -345,7 +345,7 @@ function agregarBadgeDistribuidor(distribuidor) {
                     text-align: center;
                     animation: fadeInScale 0.6s ease-out;
                 ">
-                    📱 Catálogo personalizado de ${distribuidor.nombre_completo}
+                    📱 Catálogo personalizado de ${distribuidor.primer_nombre}
                 </div>
             `;
             
