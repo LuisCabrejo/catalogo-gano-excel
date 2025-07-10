@@ -107,20 +107,19 @@ nav.main-nav a:hover {
     transform: translateY(-1px); /* Efecto de elevación */
 }
 
-/* Estilo especial para el enlace "Oportunidad" */
+/* Estilo discreto para el enlace "Oportunidad" */
 nav.main-nav .oportunidad-link {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: var(--secondary); /* Color azul gris sutil */
     color: white !important;
-    font-weight: 800;
-    box-shadow: 0 3px 12px rgba(231, 76, 60, 0.3);
-    margin-left: 12px; /* Separar del resto */
+    font-weight: 700; /* Mismo peso que los otros */
+    border-radius: 20px;
+    margin-left: 8px; /* Pequeña separación */
     transition: all 0.3s ease;
 }
 
 nav.main-nav .oportunidad-link:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    background: var(--primary); /* Solo cambia a azul más oscuro */
+    transform: translateY(-1px); /* Mismo efecto sutil que los otros */
     color: white !important;
 }
 
