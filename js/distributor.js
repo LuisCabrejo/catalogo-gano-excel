@@ -157,12 +157,20 @@ async function buscarDistribuidor(slug) {
                 console.log('📱 WhatsApp formateado:', whatsappFormateado);
             }
             
+            // Extraer primer nombre y primer apellido
+            const nombrePartes = distribuidorEncontrado.full_name.split(' ').filter(parte => parte.length > 0);
+            const primerNombre = nombrePartes[0] || '';
+            const primerApellido = nombrePartes[1] || '';
+            const nombreCompleto = nombrePartes.length >= 2 ? `${primerNombre} ${primerApellido}` : primerNombre;
+            
             return {
                 nombre: distribuidorEncontrado.full_name,
                 whatsapp: whatsappFormateado,
                 email: distribuidorEncontrado.email,
                 slug: slug,
-                primer_nombre: distribuidorEncontrado.full_name.split(' ')[0]
+                primer_nombre: primerNombre,
+                primer_apellido: primerApellido,
+                nombre_completo: nombreCompleto
             };
         }
         
@@ -197,26 +205,26 @@ function personalizarCatalogo(distribuidor) {
         console.log('🎨 Primer nombre:', distribuidor.primer_nombre);
         console.log('🎨 ==========================================');
         
-        // 1. Personalizar título de la página
+        // 1. Personalizar título de la página (CON NOMBRE + APELLIDO)
         const tituloAnterior = document.title;
-        document.title = `Catálogo de ${distribuidor.primer_nombre} - Gano Excel`;
+        document.title = `Catálogo de ${distribuidor.nombre_completo} - Gano Excel`;
         console.log('📝 Título actualizado:', `"${tituloAnterior}" → "${document.title}"`);
         
-        // 2. Personalizar header principal
+        // 2. Personalizar header principal (CON NOMBRE + APELLIDO)
         const headerTitle = document.querySelector('header h1');
         if (headerTitle) {
             const textoAnterior = headerTitle.textContent;
-            headerTitle.textContent = `Catálogo de Bienestar de ${distribuidor.nombre}`;
+            headerTitle.textContent = `Catálogo de Bienestar de ${distribuidor.nombre_completo}`;
             console.log('📝 Header h1 actualizado:', `"${textoAnterior}" → "${headerTitle.textContent}"`);
         } else {
             console.warn('⚠️ No se encontró header h1');
         }
         
-        // 3. Personalizar subtítulo del header
+        // 3. Personalizar subtítulo del header (CON NOMBRE + APELLIDO)
         const headerSubtitle = document.querySelector('header p');
         if (headerSubtitle) {
             const textoAnterior = headerSubtitle.textContent;
-            headerSubtitle.textContent = `Descubre los productos Gano Excel recomendados por ${distribuidor.primer_nombre}`;
+            headerSubtitle.textContent = `Descubre los productos Gano Excel recomendados por ${distribuidor.nombre_completo}`;
             console.log('📝 Header p actualizado:', `"${textoAnterior}" → "${headerSubtitle.textContent}"`);
         } else {
             console.warn('⚠️ No se encontró header p');
@@ -237,7 +245,7 @@ function personalizarCatalogo(distribuidor) {
             if (welcomeText) {
                 const textoAnterior = welcomeText.innerHTML;
                 welcomeText.innerHTML = `
-                    <strong>${distribuidor.nombre}</strong> te invita a explorar estos productos diseñados para nutrir tu cuerpo y mejorar tu día a día. 
+                    <strong>${distribuidor.nombre_completo}</strong> te invita a explorar estos productos diseñados para nutrir tu cuerpo y mejorar tu día a día. 
                     Cada uno combina lo mejor de la naturaleza con innovación científica. 
                     <br><br>
                     <strong>💬 Para más información, precios o realizar un pedido, contacta directamente a ${distribuidor.primer_nombre} usando el botón de WhatsApp.</strong>
@@ -337,7 +345,7 @@ function agregarBadgeDistribuidor(distribuidor) {
                     text-align: center;
                     animation: fadeInScale 0.6s ease-out;
                 ">
-                    📱 Catálogo personalizado de ${distribuidor.nombre}
+                    📱 Catálogo personalizado de ${distribuidor.nombre_completo}
                 </div>
             `;
             
