@@ -226,6 +226,7 @@ section[id] {
     text-transform: uppercase;
 }
 
+
 /* --- Asesor de Bienestar --- */
 .wellness-advisor-section {
     background: white;
@@ -566,9 +567,13 @@ section[id] {
    6. AJUSTES ESPECÍFICOS PARA MÓVILES
    ================================= */
 @media screen and (max-width: 768px) {
-    /* Ocultar enlace de menú en móvil */
-    .nav-link-desktop-only {
+    /* Oculta el enlace y la sección de innovación en móvil */
+    .nav-link-desktop-only, #innovacion {
         display: none;
+    }
+
+    .wellness-advisor-section {
+        margin-top: 30px; /* Añade el espacio superior que tenía la sección de innovación */
     }
 
     /* --- Título del carrito más pequeño --- */
