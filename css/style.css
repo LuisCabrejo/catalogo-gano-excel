@@ -155,6 +155,43 @@ nav.main-nav a:hover:not(.dropdown-toggle) { background: rgba(65, 90, 119, 0.05)
 .btn-checkout { background-color: var(--whatsapp-green); color: white; border-color: var(--whatsapp-green); }
 
 /* =================================
+   6. AJUSTES ESPECÍFICOS PARA MÓVILES
+   ================================= */
+@media screen and (max-width: 768px) {
+
+    /* --- Ajuste #1: Título del carrito más pequeño --- */
+    .modal-header h3 {
+        font-size: 1.25rem; /* Reducimos el tamaño para que quepa en una línea */
+    }
+
+    /* --- Ajuste #2 y #6: Más espacio para la lista de productos y botones más abajo --- */
+    .modal-body-cart {
+        min-height: 190px; /* Asignamos una altura mínima al contenedor de productos para que se vean más y empuje el footer hacia abajo */
+    }
+
+    /* --- Ajuste #3: Botones de cantidad más grandes --- */
+    .cart-item-qty button {
+        width: 38px;  /* Hacemos los botones más anchos */
+        height: 38px; /* y más altos para facilitar el toque */
+        font-size: 1.6rem;
+    }
+
+    /* --- Ajuste #4: Menos espacio en el resumen de pago --- */
+    .cart-summary p {
+        margin: 4px 0; /* Reducimos el margen vertical */
+        font-size: 0.95rem;
+    }
+    .cart-summary p strong {
+        font-size: 1.1rem;
+    }
+
+    /* --- Ajuste #5: Ocultar precio unitario en la lista del carrito --- */
+    .cart-item-unit-price {
+        display: none; /* Ocultamos el precio de abajo del nombre del producto */
+    }
+}
+
+/* =================================
    6. OTROS (FAB, FOOTER)
    ================================= */
 .whatsapp-fab { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: var(--whatsapp-green); color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; z-index: 100; display: none; align-items: center; justify-content: center; }
