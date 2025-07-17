@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // --- ESTADO Y CONFIGURACIÓN ---
+    // =================================
+    // 1. ESTADO Y CONFIGURACIÓN INICIAL
+    // =================================
     let cart = [];
     const SHIPPING_COST = 15000;
     const formatCurrency = (value) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
 
-    // --- ELEMENTOS DEL DOM ---
+    // =================================
+    // 2. SELECCIÓN DE ELEMENTOS DEL DOM
+    // =================================
     const productModal = document.getElementById('product-modal');
     const cartModal = document.getElementById('cart-modal');
     const cartItemsContainer = document.getElementById('cart-items-container');
@@ -15,8 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const wellnessButtons = document.querySelectorAll('.wellness-goal-btn');
     const allProductCards = document.querySelectorAll('.product-card');
     const checkoutForm = document.getElementById('checkout-form');
+    const proofSection = document.querySelector('.innovation-proof');
 
-    // --- INICIALIZACIÓN ---
+    // =================================
+    // 3. INICIALIZACIÓN DE LA PÁGINA
+    // =================================
+    // Poblar precios en las tarjetas de producto
     allProductCards.forEach(card => {
         const product = productData[card.id];
         if (product) {
@@ -25,28 +33,46 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // --- ASESOR DE BIENESTAR ---
-    wellnessButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const goal = button.dataset.goal;
-            const isActive = button.classList.contains('active');
-            wellnessButtons.forEach(btn => btn.classList.remove('active'));
-            allProductCards.forEach(card => card.classList.remove('recommended'));
+    // --- Animación del contador de la sección de innovación ---
+    function animateCountUp() {
+        const stats = document.querySelectorAll('.innovation-stat');
+        stats.forEach(stat => {
+            const target = parseInt(stat.dataset.count);
+            let current = 0;
+            const increment = target / 100; // Animar en 100 pasos
 
-            if (!isActive) {
-                button.classList.add('active');
-                allProductCards.forEach(card => {
-                    const product = productData[card.id];
-                    if (product && product.wellnessTags.includes(goal)) {
-                        card.classList.add('recommended');
-                    }
-                });
-                document.querySelector('#productos').scrollIntoView({ behavior: 'smooth' });
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    clearInterval(timer);
+                    stat.textContent = target + (stat.dataset.count.includes('100') ? '%' : '+');
+                    if (target === 6) stat.textContent = target; // Caso especial para el 6
+                } else {
+                    stat.textContent = Math.ceil(current);
+                }
+            }, 20); // Velocidad de la animación
+        });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCountUp();
+                observer.unobserve(entry.target); // Animar solo una vez
             }
         });
-    });
+    }, { threshold: 0.5 }); // Se activa cuando el 50% de la sección es visible
 
-    // --- MODAL DE DETALLES DE PRODUCTO ---
+    if (proofSection) {
+        observer.observe(proofSection);
+    }
+
+
+    // =================================
+    // 4. LÓGICA DE FUNCIONALIDADES
+    // =================================
+
+    // --- Mostrar detalles de un producto en su modal ---
     function showProductDetails(productId) {
         const data = productData[productId];
         if (!data) return;
@@ -70,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         productModal.classList.add('show');
     }
 
-    // --- LÓGICA DEL CARRITO ---
+    // --- Renderizar y actualizar la UI del carrito ---
     function updateCartUI() {
         cartItemsContainer.innerHTML = cart.length === 0 ? '<p class="cart-empty-message">Tu carrito está vacío.</p>' :
             cart.map(item => `
@@ -96,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cartCountBadge.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
     }
 
+    // --- Añadir producto al carrito ---
     function addToCart(productId) {
         const existingItem = cart.find(item => item.id === productId);
         if (existingItem) {
@@ -119,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // --- Cambiar cantidad de un producto en el carrito ---
     function changeQuantity(productId, change) {
         const itemIndex = cart.findIndex(item => item.id === productId);
         if (itemIndex > -1) {
@@ -130,17 +158,21 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCartUI();
     }
 
-    // --- GESTIÓN DE EVENTOS ---
+    // =================================
+    // 5. GESTIÓN DE EVENTOS (CLICS Y FORMULARIOS)
+    // =================================
+
+    // --- Delegación de eventos para todos los clics ---
     document.addEventListener('click', (event) => {
         const target = event.target;
 
-        if (target.matches('.modal-close') || target.matches('.modal') || target.matches('.btn-continue-shopping')) {
+        if (target.matches('.modal-close') || target.matches('.modal') || target.closest('.btn-continue-shopping')) {
             productModal.classList.remove('show');
             cartModal.classList.remove('show');
         }
 
-        if (target.matches('.btn-details')) showProductDetails(target.dataset.productId);
-        if (target.matches('.btn-add-to-cart')) addToCart(target.dataset.productId);
+        if (target.closest('.btn-details')) showProductDetails(target.closest('.btn-details').dataset.productId);
+        if (target.closest('.btn-add-to-cart')) addToCart(target.closest('.btn-add-to-cart').dataset.productId);
         if (target.matches('#cart-button')) {
             event.preventDefault();
             updateCartUI();
@@ -152,7 +184,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // --- CHECKOUT ---
+    // --- Asesor de Bienestar ---
+     wellnessButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const goal = button.dataset.goal;
+            const isActive = button.classList.contains('active');
+            wellnessButtons.forEach(btn => btn.classList.remove('active'));
+            allProductCards.forEach(card => card.classList.remove('recommended'));
+
+            if (!isActive) {
+                button.classList.add('active');
+                allProductCards.forEach(card => {
+                    const product = productData[card.id];
+                    if (product && product.wellnessTags.includes(goal)) {
+                        card.classList.add('recommended');
+                    }
+                });
+                document.querySelector('#productos').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // --- Formulario de Checkout ---
     checkoutForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (cart.length === 0) return alert('Tu carrito está vacío.');
@@ -178,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
         message += `\n💰 *RESUMEN:*\n`;
         message += `Subtotal: ${formatCurrency(subtotal)}\n`;
         message += `Envío: ${formatCurrency(SHIPPING_COST)}\n`;
-        message += `*Total:* *${formatCurrency(total)}*\n\n`;
+        message += `*Total:* *${formatcurrency(total)}*\n\n`;
         message += `¡Hola! Este es mi pedido. Por favor confirma disponibilidad y coordina el envío. 😊`;
 
         window.open(`https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`, '_blank');

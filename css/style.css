@@ -17,183 +17,606 @@
     --innovation-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-html { scroll-behavior: smooth; }
-*, *::before, *::after { box-sizing: border-box; }
+html {
+    scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    margin: 0; padding: 0; background-color: var(--bg-light);
-    color: var(--text-primary); line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    line-height: 1.6;
 }
-.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px 0; }
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
 
 /* =================================
    2. ENCABEZADO Y NAVEGACIÓN
    ================================= */
-header { background-color: var(--primary); color: white; padding: 40px 20px; text-align: center; }
-header h1 { font-weight: 900; font-size: clamp(2.5rem, 5vw, 3.5rem); margin: 0; }
+header {
+    background-color: var(--primary);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin: 0;
+}
 
 nav.main-nav {
-    background-color: white; padding: 12px 20px; border-bottom: 1px solid var(--border-light);
-    position: sticky; top: 0; z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex;
-    justify-content: center; align-items: center; flex-wrap: wrap; gap: 5px;
+    background-color: white;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
 }
+
 nav.main-nav a {
-    color: var(--primary); text-decoration: none; margin: 0 4px; font-weight: 700;
-    font-size: 1rem; transition: all 0.3s ease; padding: 8px 12px;
-    display: inline-block; border-radius: 20px;
+    color: var(--primary);
+    text-decoration: none;
+    margin: 0 4px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 20px;
 }
-nav.main-nav a:hover:not(.dropdown-toggle) { background: rgba(65, 90, 119, 0.05); }
-.oportunidad-link { background: var(--secondary) !important; color: white !important; }
-.cart-nav-link { background-color: var(--accent); color: var(--primary) !important; position: relative; }
+
+nav.main-nav a:hover:not(.dropdown-toggle) {
+    background: rgba(65, 90, 119, 0.05);
+}
+
+.oportunidad-link {
+    background: var(--secondary) !important;
+    color: white !important;
+}
+
+.cart-nav-link {
+    background-color: var(--accent);
+    color: var(--primary) !important;
+    position: relative;
+}
+
 #cart-count-badge {
-    position: absolute; top: -5px; right: -8px; background-color: var(--primary);
-    color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; border: 2px solid white;
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    border: 2px solid white;
 }
 
 /* --- Menú Desplegable 'Productos' --- */
-.nav-dropdown { position: relative; display: inline-block; }
-.dropdown-toggle { cursor: pointer; }
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
 .dropdown-menu {
-    display: none; position: absolute; background-color: white; min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1); z-index: 1; border-radius: 8px;
-    padding: 10px 0; margin-top: 5px; border: 1px solid var(--border-light);
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 8px;
+    padding: 10px 0;
+    margin-top: 5px;
+    border: 1px solid var(--border-light);
 }
+
 .dropdown-menu a {
-    padding: 12px 16px; display: block; text-align: left; margin: 0; border-radius: 0;
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+    margin: 0;
+    border-radius: 0;
 }
-.dropdown-menu a:hover { background-color: var(--bg-light); }
-.nav-dropdown:hover .dropdown-menu { display: block; }
+
+.dropdown-menu a:hover {
+    background-color: var(--bg-light);
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    display: block;
+}
 
 /* =================================
    3. SECCIONES DE CONTENIDO
    ================================= */
-.welcome-section, .innovation-section, .wellness-advisor-section { padding: 60px 20px; text-align: center; }
-.innovation-section { background: var(--innovation-bg); }
-.wellness-advisor-section { background: white; border-bottom: 1px solid var(--border-light); }
-.section-title-wrapper h2 { font-weight: 800; font-size: clamp(2rem, 4vw, 2.8rem); margin: 0 0 15px 0; }
-.section-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto; }
-.exclusivity-badge { background: var(--accent); color: var(--primary); padding: 12px 32px; border-radius: 50px; font-weight: 800; display: inline-block; margin-bottom: 24px; }
+.section-title-wrapper {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title-wrapper h2 {
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin: 0 0 15px 0;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* --- Sección Innovación y Contador --- */
+.innovation-section {
+    background: var(--innovation-bg);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.exclusivity-badge {
+    background: var(--accent);
+    color: var(--primary);
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: 800;
+    display: inline-block;
+    margin-bottom: 24px;
+}
+
+.innovation-proof {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.proof-stat {
+    text-align: center;
+    min-width: 120px;
+}
+
+.innovation-stat {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+}
+
+.stat-label {
+    font-weight: 600;
+    font-size: 1rem;
+    display: block;
+    text-transform: uppercase;
+}
+
 
 /* --- Asesor de Bienestar --- */
-.wellness-goals-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; }
-.wellness-goal-btn {
-    padding: 12px 25px; font-size: 1rem; font-weight: 600; color: var(--secondary);
-    background-color: #fff; border: 2px solid var(--border-light); border-radius: 50px;
-    cursor: pointer; transition: all 0.3s ease;
+.wellness-advisor-section {
+    background: white;
+    padding: 60px 20px;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
 }
-.wellness-goal-btn:hover { background-color: var(--accent); border-color: var(--accent); color: var(--primary); transform: translateY(-2px); }
-.wellness-goal-btn.active { background-color: var(--primary); border-color: var(--primary); color: white; }
+
+.wellness-goals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.wellness-goal-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    background-color: #fff;
+    border: 2px solid var(--border-light);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.wellness-goal-btn:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.wellness-goal-btn.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
 
 /* =================================
    4. TARJETA DE PRODUCTO
    ================================= */
-.category-section { margin: 50px 0; }
-.category-section .section-title-wrapper h2 { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
-.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-.product-card {
-    background-color: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    display: flex; flex-direction: column;
-    transition: all 0.3s ease; border: 3px solid transparent;
+.category-section {
+    margin-top: 50px;
 }
-.product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-.product-card.recommended { border-color: var(--accent); transform: translateY(-5px) scale(1.02); }
-.product-card img { width: 100%; height: 250px; object-fit: cover; }
-.product-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-.product-info h3 { margin: 0 0 8px 0; font-size: 1.25rem; font-weight: 700; min-height: 2.5em; }
-.product-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
-.invima-registro { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 15px; }
-.benefits { font-size: 0.95rem; margin: 0 0 15px; padding-left: 20px; flex-grow: 1; color: var(--text-secondary); }
-.benefits li { margin-bottom: 8px; }
-.product-actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.category-section .section-title-wrapper h2 {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.product-card.recommended {
+    border-color: var(--accent);
+    transform: translateY(-5px) scale(1.02);
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    min-height: 2.5em;
+}
+
+.product-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.invima-registro {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.benefits {
+    font-size: 0.95rem;
+    margin: 0 0 15px;
+    padding-left: 20px;
+    flex-grow: 1;
+    color: var(--text-secondary);
+}
+
+.benefits li {
+    margin-bottom: 8px;
+}
+
+.product-actions {
+    margin-top: auto; /* Alinea los botones en la parte inferior de la tarjeta */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
 
 /* --- Botones de Tarjeta --- */
-.btn { padding: 12px; border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.95rem; text-align: center; text-decoration: none; transition: all 0.3s; }
-.btn-details { background-color: #fff; color: var(--secondary); border-color: var(--border-light); }
-.btn-add-to-cart { background-color: var(--primary); color: white; border-color: var(--primary); }
-.btn-add-to-cart.added { background-color: #28a745; border-color: #28a745; }
+.btn {
+    padding: 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.btn-details {
+    background-color: #fff;
+    color: var(--secondary);
+}
+
+.btn-add-to-cart {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-add-to-cart.added {
+    background-color: #28a745;
+    border-color: #28a745;
+}
 
 /* =================================
    5. MODALES (GENERAL Y CARRITO)
    ================================= */
-.modal { position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; display: none; }
-.modal.show { display: flex; }
+.modal {
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.modal.show {
+    display: flex;
+}
 
 /* --- Estructura Flex para Modal (Corrección Móvil) --- */
 .modal-content {
-    background-color: #fff; padding: 0; border-radius: 12px;
-    width: 90%; max-width: 600px; position: relative;
-    display: flex; flex-direction: column;
-    max-height: 90vh; overflow: hidden;
+    background-color: #fff;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Límite para que no se salga de la pantalla */
+    overflow: hidden;
 }
-.modal-close { position: absolute; top: 15px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; z-index: 10; }
-.modal-header { padding: 20px 30px; border-bottom: 1px solid var(--border-light); flex-shrink: 0; }
-.modal-header h3 { margin: 0; font-size: 1.5rem; color: var(--primary); }
-.modal-body-details, .modal-body-cart { padding: 20px 30px; overflow-y: auto; flex-grow: 1; }
-.modal-footer { padding: 20px 30px; background-color: var(--bg-light); border-top: 1px solid var(--border-light); flex-shrink: 0; }
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid var(--border-light);
+    flex-shrink: 0; /* Evita que el header se encoja */
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.modal-body-details,
+.modal-body-cart {
+    padding: 20px 30px;
+    overflow-y: auto; /* Permite scroll en el cuerpo del modal */
+    flex-grow: 1;
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    background-color: var(--bg-light);
+    border-top: 1px solid var(--border-light);
+    flex-shrink: 0; /* Evita que el footer se encoja */
+}
 
 /* --- Contenido Específico de Modales --- */
-.modal-body-details .modal-subtitle { font-weight: 600; margin-top: 20px; }
-.trust-badges-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-light); }
-.trust-badge { background-color: var(--bg-light); color: var(--secondary); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; }
+.modal-body-details .modal-subtitle {
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.trust-badges-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.trust-badge {
+    background-color: var(--bg-light);
+    color: var(--secondary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
 
 /* --- Contenido del Carrito --- */
-#cart-items-container { padding-top: 0; }
-.cart-item { display: flex; align-items: center; justify-content: space-between; padding-bottom: 15px; border-bottom: 1px solid var(--border-light); margin-bottom: 15px; }
-.cart-item:last-child { border-bottom: none; margin-bottom: 0; }
-.cart-item-qty { display: flex; align-items: center; margin: 0 15px; }
-.cart-item-qty button { background: #fff; border: 1px solid var(--border-light); width: 28px; height: 28px; cursor: pointer; border-radius: 5px; }
-.cart-summary { text-align: right; margin-bottom: 25px; }
-.checkout-form h4 { text-align: center; margin-bottom: 15px; }
-.checkout-form input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid var(--border-light); }
-.payment-info { font-size: 0.85rem; text-align: center; color: var(--text-secondary); margin-bottom: 20px; }
+#cart-items-container {
+    padding-top: 0;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.cart-item-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre botones y número */
+}
+
+.cart-item-qty button {
+    background: #fff;
+    border: 1px solid var(--border-light);
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.cart-summary {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.checkout-form h4 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.checkout-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.payment-info {
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
 
 /* --- Botones de Acción del Carrito --- */
-.cart-modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-.btn-secondary-action { background-color: #fff; color: var(--secondary); border: 1px solid var(--border-light); }
-.btn-secondary-action:hover { background-color: var(--border-light); }
-.btn-checkout { background-color: var(--whatsapp-green); color: white; border-color: var(--whatsapp-green); }
+.cart-modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-secondary-action {
+    background-color: #fff;
+    color: var(--secondary);
+    border: 1px solid var(--border-light);
+}
+
+.btn-checkout {
+    background-color: var(--whatsapp-green);
+    color: white;
+    border-color: var(--whatsapp-green);
+}
 
 /* =================================
    6. AJUSTES ESPECÍFICOS PARA MÓVILES
    ================================= */
 @media screen and (max-width: 768px) {
 
-    /* --- Ajuste #1: Título del carrito más pequeño --- */
+    /* --- Título del carrito más pequeño --- */
     .modal-header h3 {
-        font-size: 1.25rem; /* Reducimos el tamaño para que quepa en una línea */
+        font-size: 1.25rem;
+        white-space: nowrap; /* Evita el salto de línea */
     }
 
-    /* --- Ajuste #2 y #6: Más espacio para la lista de productos y botones más abajo --- */
+    /* --- Más espacio para la lista de productos --- */
     .modal-body-cart {
-        min-height: 190px; /* Asignamos una altura mínima al contenedor de productos para que se vean más y empuje el footer hacia abajo */
+        min-height: 240px; /* Más altura para ver aprox. 3 productos */
     }
 
-    /* --- Ajuste #3: Botones de cantidad más grandes --- */
+    /* --- Botones de cantidad más grandes y con más espacio --- */
     .cart-item-qty button {
-        width: 38px;  /* Hacemos los botones más anchos */
-        height: 38px; /* y más altos para facilitar el toque */
-        font-size: 1.6rem;
+        width: 40px;
+        height: 40px;
     }
 
-    /* --- Ajuste #4: Menos espacio en el resumen de pago --- */
+    /* --- Menos espacio en el resumen de pago --- */
     .cart-summary p {
-        margin: 4px 0; /* Reducimos el margen vertical */
-        font-size: 0.95rem;
-    }
-    .cart-summary p strong {
-        font-size: 1.1rem;
+        margin: 4px 0;
     }
 
-    /* --- Ajuste #5: Ocultar precio unitario en la lista del carrito --- */
+    /* --- Ocultar precio unitario en la lista del carrito --- */
     .cart-item-unit-price {
-        display: none; /* Ocultamos el precio de abajo del nombre del producto */
+        display: none;
     }
 }
 
 /* =================================
-   6. OTROS (FAB, FOOTER)
+   7. OTROS (FAB, FOOTER)
    ================================= */
-.whatsapp-fab { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: var(--whatsapp-green); color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; z-index: 100; display: none; align-items: center; justify-content: center; }
-footer { background-color: var(--primary); color: white; text-align: center; padding: 30px 20px; margin-top: 40px; }
-footer .disclaimer { font-size: 0.9em; max-width: 700px; margin: 0 auto; opacity: 0.8; }
+.whatsapp-fab {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--whatsapp-green);
+    color: #FFF;
+    border-radius: 50px;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+}
+
+footer .disclaimer {
+    font-size: 0.9em;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.8;
+}
