@@ -171,8 +171,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // --- CHECKOUT ---
-    document.getElementById('checkout-form').addEventListener('submit', (e) => {
+     // --- CHECKOUT (LÓGICA DE MENSAJE ACTUALIZADA) ---
+    const checkoutForm = document.getElementById('checkout-form');
+    checkoutForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (cart.length === 0) return alert('Tu carrito está vacío.');
 
@@ -186,15 +187,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const total = subtotal + SHIPPING_COST;
 
-        let message = `¡Hola ${distributorName}! 👋\n\nQuisiera hacer el siguiente pedido de tu catálogo:\n\n`;
+        // --- INICIO DE LA NUEVA LÓGICA DEL MENSAJE ---
+        let message = `🛒 *NUEVO PEDIDO* 🛒\n\n`;
+        message += `👤 *Cliente:* ${customerName}\n`;
+        message += `📍 *Dirección de envío:* ${customerAddress}\n\n`;
+        message += `📦 *PRODUCTOS:*\n`;
+
         cart.forEach(item => {
-            message += `*${item.quantity}x* - ${item.name} - _${formatCurrency(item.price * item.quantity)}_\n`;
+            message += `• *${item.quantity}x* - ${item.name}\n  Precio: ${formatCurrency(item.price * item.quantity)}\n`;
         });
-        message += `\n*Subtotal:* ${formatCurrency(subtotal)}`;
-        message += `\n*Envío:* ${formatCurrency(SHIPPING_COST)}`;
-        message += `\n*TOTAL A PAGAR:* *${formatCurrency(total)}*\n`;
-        message += `\n-- Mis Datos de Envío --\n*Nombre:* ${customerName}\n*Dirección:* ${customerAddress}\n\n`;
-        message += `Quedo atento(a) para coordinar el pago. ¡Gracias!`;
+
+        message += `\n💰 *RESUMEN:*\n`;
+        message += `Subtotal: ${formatCurrency(subtotal)}\n`;
+        message += `Envío: ${formatCurrency(SHIPPING_COST)}\n`;
+        message += `*Total:* *${formatCurrency(total)}*\n\n`;
+        message += `¡Hola! Este es mi pedido. Por favor confirma disponibilidad y coordina el envío. 😊`;
+        // --- FIN DE LA NUEVA LÓGICA DEL MENSAJE ---
 
         window.open(`https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`, '_blank');
     });
