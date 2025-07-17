@@ -86,8 +86,10 @@ nav.main-nav a {
     border-radius: 20px;
 }
 
+/* Efecto de "elevación" para indicar que es clickeable */
 nav.main-nav a:hover:not(.dropdown-toggle) {
-    background: rgba(65, 90, 119, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
 
 .oportunidad-link {
@@ -155,6 +157,11 @@ nav.main-nav a:hover:not(.dropdown-toggle) {
 /* =================================
    3. SECCIONES DE CONTENIDO
    ================================= */
+section[id] {
+    /* Ajuste para que las anclas no queden ocultas por el menú pegajoso */
+    scroll-margin-top: 80px;
+}
+
 .section-title-wrapper {
     text-align: center;
     margin-bottom: 40px;
@@ -178,6 +185,7 @@ nav.main-nav a:hover:not(.dropdown-toggle) {
     background: var(--innovation-bg);
     padding: 60px 20px;
     text-align: center;
+    margin-top: 30px; /* Espacio entre menú y primera sección */
 }
 
 .exclusivity-badge {
@@ -217,7 +225,6 @@ nav.main-nav a:hover:not(.dropdown-toggle) {
     display: block;
     text-transform: uppercase;
 }
-
 
 /* --- Asesor de Bienestar --- */
 .wellness-advisor-section {
@@ -559,6 +566,10 @@ nav.main-nav a:hover:not(.dropdown-toggle) {
    6. AJUSTES ESPECÍFICOS PARA MÓVILES
    ================================= */
 @media screen and (max-width: 768px) {
+    /* Ocultar enlace de menú en móvil */
+    .nav-link-desktop-only {
+        display: none;
+    }
 
     /* --- Título del carrito más pequeño --- */
     .modal-header h3 {
@@ -568,10 +579,10 @@ nav.main-nav a:hover:not(.dropdown-toggle) {
 
     /* --- Más espacio para la lista de productos --- */
     .modal-body-cart {
-        min-height: 240px; /* Más altura para ver aprox. 3 productos */
+        min-height: 250px; /* Aumentamos altura para ver ~3 productos */
     }
 
-    /* --- Botones de cantidad más grandes y con más espacio --- */
+    /* --- Botones de cantidad más grandes --- */
     .cart-item-qty button {
         width: 40px;
         height: 40px;
