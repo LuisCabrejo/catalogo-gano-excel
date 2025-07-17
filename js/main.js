@@ -1,135 +1,204 @@
-// Animación de conteo para las estadísticas
-function animateCountUp() {
-    const stats = document.querySelectorAll('.innovation-stat');
-    
-    stats.forEach(stat => {
-        const target = parseInt(stat.getAttribute('data-count'));
-        const duration = 2000; // 2 segundos
-        const stepTime = Math.abs(Math.floor(duration / target));
-        let current = 0;
-        
-        const counter = setInterval(() => {
-            current += Math.ceil(target / 50);
-            if (current >= target) {
-                current = target;
-                clearInterval(counter);
-            }
-            
-            if (target === 200) {
-                stat.textContent = current + '+';
-            } else if (target === 100) {
-                stat.textContent = current + '%';
-            } else {
-                stat.textContent = current;
-            }
-        }, stepTime);
-    });
-}
-
-// Observador para activar la animación cuando la sección sea visible
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateCountUp();
-            observer.disconnect(); // Solo anima una vez
-        }
-    });
-}, { threshold: 0.5 });
-
-// Observar la sección de pruebas
-const proofSection = document.querySelector('.innovation-proof');
-if (proofSection) {
-    observer.observe(proofSection);
-}
-
-// Configuración del catálogo completo
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // --- LÓGICA DEL MODAL ---
-    const modal = document.getElementById('product-modal');
-    const modalBody = document.getElementById('modal-body');
-    const closeModal = document.querySelector('.modal-close');
+    // --- ESTADO Y CONFIGURACIÓN ---
+    let cart = [];
+    const SHIPPING_COST = 15000;
+    const formatCurrency = (value) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
 
-    // Botones de "Más detalles"
-    document.querySelectorAll('.btn-details').forEach(button => {
-        button.addEventListener('click', () => {
-            const productId = button.dataset.productId;
-            const data = productData[productId];
-            
-            if (data) {
-                modalBody.innerHTML = `
-                    <h3>${data.name}</h3>
-                    <p>${data.description}</p>
-                    <h4 class="modal-subtitle">Modo de Uso</h4>
-                    <p>${data.usage}</p>
-                    <h4 class="modal-subtitle">Ingredientes Clave</h4>
-                    <ul>
-                        ${data.ingredients.map(ing => `<li>${ing}</li>`).join('')}
-                    </ul>
+    // --- ELEMENTOS DEL DOM ---
+    const productModal = document.getElementById('product-modal');
+    const cartModal = document.getElementById('cart-modal');
+    const wellnessButtons = document.querySelectorAll('.wellness-goal-btn');
+
+    // --- RENDERIZADO INICIAL DE PRODUCTOS ---
+    function renderProducts() {
+        const categoryContainers = {
+            bebidas: document.querySelector('#bebidas .product-grid'),
+            capsulas: document.querySelector('#capsulas .product-grid'),
+            'cuidado-personal': document.querySelector('#cuidado-personal .product-grid')
+        };
+
+        for (const productId in productData) {
+            const product = productData[productId];
+            const container = categoryContainers[product.category];
+
+            if (container) {
+                const card = document.createElement('article');
+                card.className = 'product-card';
+                card.id = product.id;
+
+                const benefitsList = product.benefits.map(b => `<li>${b}</li>`).join('');
+
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <div class="product-price">${formatCurrency(product.price)}</div>
+                        <div class="invima-registro">Registro INVIMA: ${product.invima}</div>
+                        <ul class="product-benefits">
+                            ${benefitsList}
+                        </ul>
+                        <div class="product-actions">
+                            <button class="btn btn-details" data-product-id="${product.id}">Detalles</button>
+                            <button class="btn btn-add-to-cart" data-product-id="${product.id}">Agregar 🛒</button>
+                        </div>
+                    </div>
                 `;
-                modal.style.display = 'block';
-            } else {
-                console.error('No se encontraron datos para el producto:', productId);
+                container.appendChild(card);
+            }
+        }
+    }
+
+    // --- ASESOR DE BIENESTAR ---
+    wellnessButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const goal = button.dataset.goal;
+            const isActive = button.classList.contains('active');
+            const allProductCards = document.querySelectorAll('.product-card');
+
+            wellnessButtons.forEach(btn => btn.classList.remove('active'));
+            allProductCards.forEach(card => card.classList.remove('recommended'));
+
+            if (!isActive) {
+                button.classList.add('active');
+                allProductCards.forEach(card => {
+                    const product = productData[card.id];
+                    if (product && product.wellnessTags.includes(goal)) {
+                        card.classList.add('recommended');
+                    }
+                });
+                document.querySelector('#productos').scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
 
-    // Cerrar modal
-    closeModal.addEventListener('click', () => modal.style.display = 'none');
-    window.addEventListener('click', (event) => {
-        if (event.target == modal) {
-            modal.style.display = 'none';
+    // --- MODAL DE DETALLES DE PRODUCTO ---
+    function showProductDetails(productId) {
+        const data = productData[productId];
+        if (!data) return;
+
+        const modalBody = productModal.querySelector('.modal-body');
+        modalBody.innerHTML = `
+            <h3>${data.name}</h3>
+            <p>${data.description}</p>
+            <h4 class="modal-subtitle">Modo de Uso</h4>
+            <p>${data.usage}</p>
+            <h4 class="modal-subtitle">Ingredientes Clave</h4>
+            <ul>${data.ingredients.map(ing => `<li>${ing}</li>`).join('')}</ul>
+            <div class="trust-badges-container">
+                ${data.isGanodermaBased ? `
+                    <span class="trust-badge">🍄 6 Variedades Fusionadas</span>
+                    <span class="trust-badge">💧 100% Hidrosoluble</span>
+                    <span class="trust-badge">🌿 +200 Fitonutrientes</span>
+                ` : ''}
+            </div>
+        `;
+        productModal.classList.add('show');
+    }
+
+    // --- LÓGICA DEL CARRITO ---
+    function updateCartUI() {
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartSubtotalEl = document.getElementById('cart-subtotal');
+        const cartShippingEl = document.getElementById('cart-shipping');
+        const cartTotalEl = document.getElementById('cart-total');
+        const cartCountBadge = document.getElementById('cart-count-badge');
+
+        cartItemsContainer.innerHTML = cart.length === 0 ? '<p class="cart-empty-message">Tu carrito está vacío.</p>' :
+            cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info"><h5>${item.name}</h5><p>${formatCurrency(item.price)}</p></div>
+                    <div class="cart-item-qty">
+                        <button data-id="${item.id}" class="qty-btn decrease">-</button>
+                        <span>${item.quantity}</span>
+                        <button data-id="${item.id}" class="qty-btn increase">+</button>
+                    </div>
+                    <div class="cart-item-price">${formatCurrency(item.price * item.quantity)}</div>
+                </div>
+            `).join('');
+
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const total = subtotal > 0 ? subtotal + SHIPPING_COST : 0;
+        cartSubtotalEl.textContent = formatCurrency(subtotal);
+        cartShippingEl.textContent = formatCurrency(subtotal > 0 ? SHIPPING_COST : 0);
+        cartTotalEl.textContent = formatCurrency(total);
+        cartCountBadge.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function addToCart(productId) {
+        const existingItem = cart.find(item => item.id === productId);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            const product = productData[productId];
+            cart.push({ id: productId, name: product.name, price: product.price, quantity: 1 });
+        }
+        updateCartUI();
+
+        const button = document.querySelector(`.btn-add-to-cart[data-product-id="${productId}"]`);
+        if(button) {
+            button.textContent = 'Agregado ✓';
+            button.classList.add('added');
+            setTimeout(() => {
+                button.textContent = 'Agregar 🛒';
+                button.classList.remove('added');
+            }, 1500);
+        }
+    }
+
+    function changeQuantity(productId, change) {
+        const itemIndex = cart.findIndex(item => item.id === productId);
+        if (itemIndex > -1) {
+            cart[itemIndex].quantity += change;
+            if (cart[itemIndex].quantity <= 0) {
+                cart.splice(itemIndex, 1);
+            }
+        }
+        updateCartUI();
+    }
+
+    // --- GESTIÓN DE EVENTOS ---
+    document.addEventListener('click', (event) => {
+        if (event.target.matches('.modal-close') || event.target.matches('.modal')) {
+            productModal.classList.remove('show');
+            cartModal.classList.remove('show');
+        }
+        if (event.target.matches('.btn-details')) showProductDetails(event.target.dataset.productId);
+        if (event.target.matches('.btn-add-to-cart')) addToCart(event.target.dataset.productId);
+        if (event.target.matches('#cart-button')) { event.preventDefault(); updateCartUI(); cartModal.classList.add('show'); }
+        if (event.target.matches('.qty-btn')) {
+            const change = event.target.classList.contains('increase') ? 1 : -1;
+            changeQuantity(event.target.dataset.id, change);
         }
     });
 
-    // --- LÓGICA DE COMPARTIR ---
-    document.querySelectorAll('.btn-share').forEach(button => {
-        button.addEventListener('click', async (event) => {
-            const productId = button.dataset.productId;
-            const productCard = document.getElementById(productId);
-            const productName = productCard.querySelector('h3').innerText;
-            const shareUrl = `${window.location.origin}${window.location.pathname}#${productId}`;
+    // --- CHECKOUT ---
+    document.getElementById('checkout-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (cart.length === 0) return alert('Tu carrito está vacío.');
 
-            const shareData = {
-                title: `Producto Gano Excel: ${productName}`,
-                text: `¡Hola! Te comparto este producto que te puede interesar: ${productName}.`,
-                url: shareUrl
-            };
+        const customerName = document.getElementById('customer-name').value;
+        const customerAddress = document.getElementById('customer-address').value;
+        const distributorWhatsapp = document.body.dataset.distributorWhatsapp;
+        const distributorName = document.querySelector('.welcome-section h2')?.textContent.replace('¡Hola! Soy ', '').trim() || 'Distribuidor';
 
-            if (navigator.share) {
-                try {
-                    await navigator.share(shareData);
-                } catch (err) {
-                    console.error("Error al compartir:", err);
-                }
-            } else {
-                // Fallback para escritorio
-                try {
-                    await navigator.clipboard.writeText(shareUrl);
-                    const originalText = button.innerText;
-                    button.innerText = '¡Enlace Copiado!';
-                    setTimeout(() => {
-                        button.innerText = originalText;
-                    }, 2000);
-                } catch (err) {
-                    console.error('Error al copiar el enlace:', err);
-                    alert('No se pudo copiar el enlace. Por favor, cópialo manualmente.');
-                }
-            }
+        if (!distributorWhatsapp) return alert('Error: No se encontró el número del distribuidor.');
+
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const total = subtotal + SHIPPING_COST;
+
+        let message = `¡Hola ${distributorName}! 👋\n\nQuisiera hacer el siguiente pedido de tu catálogo:\n\n`;
+        cart.forEach(item => {
+            message += `*${item.quantity}x* - ${item.name} - _${formatCurrency(item.price * item.quantity)}_\n`;
         });
+        message += `\n*Subtotal:* ${formatCurrency(subtotal)}`;
+        message += `\n*Envío:* ${formatCurrency(SHIPPING_COST)}`;
+        message += `\n*TOTAL A PAGAR:* *${formatCurrency(total)}*\n`;
+        message += `\n-- Mis Datos de Envío --\n*Nombre:* ${customerName}\n*Dirección:* ${customerAddress}\n\n`;
+        message += `Quedo atento(a) para coordinar el pago. ¡Gracias!`;
+
+        window.open(`https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`, '_blank');
     });
 
-    // --- CONFIGURACIÓN DEL BOTÓN DE WHATSAPP ---
-    const urlParams = new URLSearchParams(window.location.search);
-    const defaultSocioId = '573203415438';
-    const socioIdFromUrl = urlParams.get('socio');
-    const finalSocioId = socioIdFromUrl || defaultSocioId;
-
-    if (finalSocioId) {
-        const whatsappButton = document.getElementById('whatsapp-button');
-        const whatsappLink = `https://wa.me/${finalSocioId}?text=${encodeURIComponent('Hola, estoy interesado(a) en los productos Gano Excel. ¿Me podrías dar más información?')}`;
-        
-        whatsappButton.href = whatsappLink;
-        whatsappButton.style.display = 'flex';
-    }
+    // --- INICIALIZAR LA APP ---
+    renderProducts();
 });
