@@ -75,52 +75,50 @@ header p {
 }
 
 /* =================================
-   MENÚ PRINCIPAL MEJORADO (V2.3)
+   MENÚ PRINCIPAL (V3 - FLEXBOX NATIVO)
    ================================= */
 nav.main-nav {
     background-color: white;
-    padding: 12px 20px;
+    padding: 10px 15px;
     border-bottom: 1px solid var(--border-light);
-    text-align: center;
     position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-nav.main-nav a {
+nav.main-nav a,
+nav.main-nav .dropdown-toggle {
     color: var(--primary);
     text-decoration: none;
-    margin: 0 8px;
     font-weight: 700;
     font-size: 1rem;
     transition: all 0.3s ease;
     padding: 8px 12px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     border-radius: 20px;
+    margin: 0;
     letter-spacing: 0.3px;
 }
 
-nav.main-nav a:hover {
+nav.main-nav a:hover,
+.dropdown-toggle:hover {
     color: var(--secondary);
     background: rgba(65, 90, 119, 0.05);
-    transform: translateY(-1px);
 }
 
-/* Estilo discreto para el enlace "Oportunidad" */
 nav.main-nav .oportunidad-link {
     background: var(--secondary);
     color: white !important;
-    font-weight: 700;
-    border-radius: 20px;
-    margin-left: 8px;
-    transition: all 0.3s ease;
 }
-
 nav.main-nav .oportunidad-link:hover {
     background: var(--primary);
-    transform: translateY(-1px);
-    color: white !important;
 }
 
 /* =================================
@@ -134,29 +132,13 @@ nav.main-nav .oportunidad-link:hover {
 .dropdown-toggle {
     background: none;
     border: none;
-    color: var(--primary);
     font-family: inherit;
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 8px 12px;
-    margin: 0 8px;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
     gap: 6px;
-    transition: all 0.3s ease;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
 }
 
 .dropdown-arrow {
     transition: transform 0.3s ease;
-}
-
-.dropdown-toggle:hover {
-    color: var(--secondary);
-    background: rgba(65, 90, 119, 0.05);
-    transform: translateY(-1px);
 }
 
 .dropdown-toggle[aria-expanded="true"] .dropdown-arrow {
@@ -201,133 +183,12 @@ nav.main-nav .oportunidad-link:hover {
     color: white;
 }
 
-/* Overlay para móviles cuando el menú está abierto */
-@media (max-width: 600px) {
-    .dropdown-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: 999;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .dropdown-overlay.show {
-        opacity: 1;
-        visibility: visible;
-    }
-}
-
-/* Responsive - Pantallas medianas */
-@media (max-width: 768px) {
-    nav.main-nav {
-        padding: 10px 15px;
-    }
-
-    nav.main-nav a {
-        margin: 0 5px;
-        font-size: 0.95rem;
+/* AJUSTE RESPONSIVE PARA EL MENÚ */
+@media (max-width: 480px) {
+    nav.main-nav a,
+    nav.main-nav .dropdown-toggle {
+        font-size: 0.9rem;
         padding: 6px 10px;
-    }
-
-    nav.main-nav .oportunidad-link {
-        margin-left: 8px;
-        margin-top: 5px;
-    }
-
-    .dropdown-toggle {
-        font-size: 0.95rem;
-        padding: 6px 10px;
-        margin: 0 5px;
-    }
-
-    .dropdown-menu {
-        min-width: 200px;
-    }
-
-    .dropdown-item {
-        font-size: 0.9rem;
-        padding: 10px 16px;
-    }
-}
-
-/* Responsive - Pantallas pequeñas */
-@media (max-width: 600px) {
-    nav.main-nav {
-        padding: 8px 10px;
-        line-height: 1.4;
-    }
-
-    nav.main-nav a {
-        margin: 2px 3px;
-        font-size: 0.9rem;
-        padding: 5px 8px;
-        display: inline-block;
-    }
-
-    nav.main-nav .oportunidad-link {
-        margin-left: 5px;
-        margin-top: 5px;
-        font-size: 0.9rem;
-    }
-
-    .dropdown {
-        display: block;
-        width: 100%;
-        margin: 5px 0;
-    }
-
-    .dropdown-toggle {
-        font-size: 0.9rem;
-        padding: 5px 8px;
-        width: auto;
-        margin: 2px 3px;
-    }
-
-    .dropdown-menu {
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 300px;
-        margin-top: 5px;
-    }
-}
-
-/* Responsive - Pantallas muy pequeñas */
-@media (max-width: 380px) {
-    nav.main-nav {
-        padding: 6px 8px;
-    }
-
-    nav.main-nav a {
-        margin: 1px 2px;
-        font-size: 0.85rem;
-        padding: 4px 6px;
-    }
-
-    nav.main-nav .oportunidad-link {
-        margin-left: 3px;
-        margin-top: 4px;
-        font-size: 0.85rem;
-        padding: 5px 8px;
-    }
-
-    .dropdown-toggle {
-        font-size: 0.85rem;
-        padding: 4px 6px;
-    }
-
-    .dropdown-menu {
-        font-size: 0.85rem;
-    }
-
-    .dropdown-item {
-        padding: 8px 12px;
     }
 }
 
@@ -355,7 +216,7 @@ nav.main-nav .oportunidad-link:hover {
     color: var(--text-secondary);
 }
 
-/* NUEVOS ESTILOS PARA LA SECCIÓN DE INNOVACIÓN */
+/* ESTILOS PARA LA SECCIÓN DE INNOVACIÓN */
 .innovation-section {
     background: var(--innovation-bg);
     padding: 80px 0;
@@ -533,12 +394,10 @@ nav.main-nav .oportunidad-link:hover {
     letter-spacing: 0.5px;
 }
 
-/* Responsive para estadísticas */
 @media (max-width: 768px) {
     .innovation-proof {
         gap: 40px;
     }
-
     .innovation-stat {
         font-size: 3rem;
     }
@@ -624,7 +483,7 @@ nav.main-nav .oportunidad-link:hover {
     flex-grow: 1;
 }
 
-/* ESTILOS EXISTENTES PARA EL RESTO DEL CATÁLOGO */
+/* ESTILOS DE PRODUCTOS */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -759,7 +618,7 @@ nav.main-nav .oportunidad-link:hover {
     transform: scale(1.1);
 }
 
-/* Modal Styles */
+/* ESTILOS DE MODALES */
 .modal {
     display: none;
     position: fixed;
@@ -862,8 +721,6 @@ footer .disclaimer {
 /* =================================
    ESTILOS DEL CARRITO DE COMPRAS
    ================================= */
-
-/* Precio del Producto en la Tarjeta */
 .product-price {
     font-size: 1.5rem;
     font-weight: 800;
@@ -872,7 +729,6 @@ footer .disclaimer {
     text-align: center;
 }
 
-/* Botón de Añadir al Carrito */
 .btn-add-to-cart {
     background-color: var(--primary);
     color: white;
@@ -884,7 +740,6 @@ footer .disclaimer {
     transform: scale(1.05);
 }
 
-/* Icono del Carrito en la Navegación */
 .cart-icon-wrapper {
     position: relative;
     display: inline-flex !important;
@@ -908,10 +763,9 @@ footer .disclaimer {
     align-items: center;
     border: 2px solid white;
     transition: transform 0.2s ease, background-color 0.2s ease;
-    display: none; /* Se muestra con JS */
+    display: none;
 }
 
-/* Panel Lateral del Carrito */
 body.no-scroll {
     overflow: hidden;
 }
@@ -936,7 +790,7 @@ body.no-scroll {
 .cart-panel {
     position: fixed;
     top: 0;
-    right: -100%; /* Inicia fuera de la pantalla */
+    right: -100%;
     width: 100%;
     max-width: 400px;
     height: 100vh;
@@ -991,7 +845,6 @@ body.no-scroll {
     font-size: 1.1rem;
 }
 
-/* Estilos de cada item en el carrito */
 .cart-item {
     display: flex;
     align-items: center;
@@ -1060,10 +913,9 @@ body.no-scroll {
     transition: color 0.2s;
 }
 .remove-item-btn:hover {
-    color: #f44336; /* Rojo de peligro */
+    color: #f44336;
 }
 
-/* Footer del carrito */
 .cart-panel-footer {
     padding: 20px;
     border-top: 1px solid var(--border-light);
@@ -1106,7 +958,6 @@ body.no-scroll {
     cursor: not-allowed;
 }
 
-/* Estilos para el Modal de Finalizar Compra */
 #checkout-modal .form-group {
     margin-bottom: 20px;
 }
@@ -1244,41 +1095,4 @@ body.no-scroll {
 @keyframes fadeOut {
     from { opacity: 1; transform: scale(1); }
     to { opacity: 0; transform: scale(0.95); }
-}
-
-/* =================================
-   AJUSTES RESPONSIVE PARA EL MENÚ
-   ================================= */
-@media (max-width: 768px) {
-    nav.main-nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 5px 10px; /* Espacio vertical y horizontal */
-    }
-    nav.main-nav a,
-    nav.main-nav .dropdown-toggle {
-        margin: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    nav.main-nav {
-        gap: 5px;
-    }
-    nav.main-nav a,
-    nav.main-nav .dropdown-toggle {
-        font-size: 0.9rem;
-        padding: 6px 10px;
-    }
-    .cart-icon-wrapper svg {
-        width: 20px;
-        height: 20px;
-    }
-    .cart-counter {
-        width: 20px;
-        height: 20px;
-        font-size: 0.7rem;
-    }
 }
