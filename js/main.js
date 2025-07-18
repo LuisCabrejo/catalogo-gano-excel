@@ -29,6 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const proofSection = document.querySelector('.innovation-proof');
     const toastContainer = document.getElementById('toast-container');
 
+    // Elementos del menú
+    const navDropdown = document.querySelector('.nav-dropdown');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+
     // =================================
     // 3. INICIALIZACIÓN DE LA PÁGINA
     // =================================
@@ -46,8 +51,63 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartUI();
     updateCartCount();
 
+    // Configurar menú responsivo
+    setupResponsiveMenu();
+
     // =================================
-    // 4. SISTEMA DE NOTIFICACIONES TOAST
+    // 4. CONFIGURACIÓN DEL MENÚ RESPONSIVO
+    // =================================
+    function setupResponsiveMenu() {
+        // Solo en mobile (<=768px) manejar clicks en dropdown
+        function handleDropdownClick(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                navDropdown.classList.toggle('active');
+            }
+        }
+
+        // Cerrar dropdown al hacer click en items (mobile y desktop)
+        function closeDropdownOnItemClick(e) {
+            // Agregar clase de feedback visual
+            e.currentTarget.classList.add('clicked');
+
+            // Cerrar dropdown
+            if (navDropdown) {
+                navDropdown.classList.remove('active');
+            }
+
+            // Remover clase después de un momento
+            setTimeout(() => {
+                e.currentTarget.classList.remove('clicked');
+            }, 200);
+        }
+
+        // Event listeners
+        if (dropdownToggle) {
+            dropdownToggle.addEventListener('click', handleDropdownClick);
+        }
+
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', closeDropdownOnItemClick);
+        });
+
+        // Cerrar dropdown al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!navDropdown.contains(e.target)) {
+                navDropdown.classList.remove('active');
+            }
+        });
+
+        // Manejar cambios de tamaño de ventana
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navDropdown.classList.remove('active');
+            }
+        });
+    }
+
+    // =================================
+    // 5. SISTEMA DE NOTIFICACIONES TOAST
     // =================================
     function showToast(title, message, type = 'success') {
         const toast = document.createElement('div');
@@ -75,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =================================
-    // 5. ANIMACIÓN DEL CONTADOR
+    // 6. ANIMACIÓN DEL CONTADOR
     // =================================
     function animateCountUp() {
         const stats = document.querySelectorAll('.innovation-stat');
@@ -116,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =================================
-    // 6. FUNCIONES DEL CARRITO
+    // 7. FUNCIONES DEL CARRITO
     // =================================
 
     function updateCartCount() {
@@ -242,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =================================
-    // 7. MODAL DE DETALLES
+    // 8. MODAL DE DETALLES
     // =================================
     function showProductDetails(productId) {
         const data = productData[productId];
@@ -268,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =================================
-    // 8. ASESOR DE BIENESTAR
+    // 9. ASESOR DE BIENESTAR
     // =================================
     wellnessButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -290,11 +350,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                // Scroll a productos
-                document.querySelector('#productos').scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                // Scroll a productos con offset correcto
+                const productosSection = document.querySelector('#productos');
+                if (productosSection) {
+                    const navHeight = document.querySelector('nav.main-nav').offsetHeight;
+                    const targetPosition = productosSection.offsetTop - navHeight - 20;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
 
                 showToast('Productos recomendados', 'Productos destacados según tu objetivo');
             }
@@ -302,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =================================
-    // 9. CHECKOUT POR WHATSAPP
+    // 10. CHECKOUT POR WHATSAPP
     // =================================
     function processCheckout() {
         if (cart.length === 0) {
@@ -345,19 +411,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =================================
-    // 10. GESTIÓN DE EVENTOS
+    // 11. NAVEGACIÓN SUAVE CON OFFSET
+    // =================================
+    function smoothScrollWithOffset(targetId) {
+        const target = document.querySelector(targetId);
+        if (target) {
+            const navHeight = document.querySelector('nav.main-nav').offsetHeight;
+            const targetPosition = target.offsetTop - navHeight - 20;
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // =================================
+    // 12. GESTIÓN DE EVENTOS
     // =================================
 
     // Eventos del carrito
-    cartButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        openCart();
-    });
+    if (cartButton) {
+        cartButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            openCart();
+        });
+    }
 
-    closeCartBtn.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', closeCart);
+    }
 
-    checkoutBtn.addEventListener('click', processCheckout);
+    if (cartOverlay) {
+        cartOverlay.addEventListener('click', closeCart);
+    }
+
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', processCheckout);
+    }
 
     // Delegación de eventos para el documento
     document.addEventListener('click', (event) => {
@@ -390,6 +481,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const productId = target.dataset.id;
             removeFromCart(productId);
         }
+
+        // Enlaces de navegación que requieren scroll offset
+        if (target.matches('a[href^="#"]')) {
+            const href = target.getAttribute('href');
+            if (href && href !== '#') {
+                event.preventDefault();
+                smoothScrollWithOffset(href);
+            }
+        }
     });
 
     // Prevenir cierre del modal al hacer click dentro del contenido
@@ -397,23 +497,30 @@ document.addEventListener('DOMContentLoaded', function() {
         content.addEventListener('click', (e) => e.stopPropagation());
     });
 
-    // Cerrar carrito con ESC
+    // Cerrar carrito y modal con ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeCart();
-            productModal.classList.remove('show');
+            if (productModal) {
+                productModal.classList.remove('show');
+            }
+            // Cerrar dropdown en mobile
+            if (navDropdown) {
+                navDropdown.classList.remove('active');
+            }
         }
     });
 
     // =================================
-    // 11. INICIALIZACIÓN FINAL
+    // 13. INICIALIZACIÓN FINAL
     // =================================
     console.log('🛒 Sistema de carrito inicializado correctamente');
+    console.log('📱 Menú responsivo configurado');
     console.log('✨ Catálogo Gano Excel cargado completamente');
 });
 
 // =================================
-// 12. FUNCIONES GLOBALES PARA DEBUGGING
+// 14. FUNCIONES GLOBALES PARA DEBUGGING
 // =================================
 window.cartDebug = {
     getCart: () => cart,
@@ -428,3 +535,21 @@ window.cartDebug = {
         console.log('🧪 Producto de prueba agregado');
     }
 };
+
+// =================================
+// 15. ESTILOS DINÁMICOS PARA ANIMACIONES
+// =================================
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);

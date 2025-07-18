@@ -28,12 +28,52 @@ function personalizarEnlaceOportunidad(distribuidor) {
 }
 
 /**
- * 🎯 SISTEMA DE DISTRIBUIDORES PARA CATÁLOGO - VERSIÓN CORREGIDA
+ * 🔗 Configurar enlace de afiliación del Back Office
+ * @param {Object} distribuidor - Datos del distribuidor
+ */
+function configurarEnlaceAfiliacion(distribuidor) {
+    try {
+        console.log('🔗 Configurando enlace de afiliación...');
+
+        const afiliacionLink = document.getElementById('afiliacion-link');
+
+        if (afiliacionLink) {
+            if (distribuidor.affiliateLink && distribuidor.affiliateLink.trim() !== '') {
+                // El distribuidor tiene enlace personalizado
+                afiliacionLink.href = distribuidor.affiliateLink;
+                afiliacionLink.title = `Únete al equipo de ${distribuidor.primer_nombre}`;
+
+                console.log('🔗 Enlace de afiliación configurado:');
+                console.log('🔗   URL:', distribuidor.affiliateLink);
+                console.log('🔗   Distribuidor:', distribuidor.primer_nombre);
+            } else {
+                // Enlace por defecto si no tiene configurado
+                afiliacionLink.href = 'https://ganoexcel.com/gano-excel-colombia/';
+                afiliacionLink.title = 'Conoce la oportunidad de negocio Gano Excel';
+
+                console.log('🔗 Usando enlace de afiliación por defecto');
+            }
+
+            // Abrir en nueva pestaña
+            afiliacionLink.target = '_blank';
+            afiliacionLink.rel = 'noopener noreferrer';
+
+        } else {
+            console.warn('⚠️ No se encontró enlace de afiliación (#afiliacion-link)');
+        }
+
+    } catch (error) {
+        console.error('❌ Error configurando enlace de afiliación:', error);
+    }
+}
+
+/**
+ * 🎯 SISTEMA DE DISTRIBUIDORES PARA CATÁLOGO - VERSIÓN FINAL
  * Este archivo personaliza el catálogo según el distribuidor que lo comparte
  * Consulta directamente Supabase para obtener datos actualizados del portal
  */
 
-// 🔧 Configuración de Supabase (CORREGIDA - usar las credenciales reales del sistema)
+// 🔧 Configuración de Supabase
 const SUPABASE_URL = 'https://ovsvocjvjnqfaaugwnxg.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92c3ZvY2p2am5xZmFhdWd3bnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3ODEyMzcsImV4cCI6MjA2NzM1NzIzN30.ZErzsooaSXnS-NdmMYD0JcZFupFgrXfMLH-nOvU1NTE';
 
@@ -41,7 +81,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /**
- * 🎯 Generar slug desde nombre completo (CORREGIDO - identico al portal)
+ * 🎯 Generar slug desde nombre completo
  * @param {string} fullName - Nombre completo del usuario
  * @returns {string} Slug amigable
  */
@@ -63,7 +103,7 @@ function generarSlugDesdNombre(fullName) {
 
         console.log('📝 Nombre para slug:', nombreParaSlug);
 
-        // Convertir a slug amigable (proceso mejorado y más robusto)
+        // Convertir a slug amigable
         const slug = nombreParaSlug
             .toLowerCase()
             .trim()
@@ -93,7 +133,7 @@ function generarSlugDesdNombre(fullName) {
 }
 
 /**
- * 🔍 Buscar distribuidor por slug en Supabase (CORREGIDO Y OPTIMIZADO)
+ * 🔍 Buscar distribuidor por slug en Supabase
  * @param {string} slug - Slug del distribuidor (ej: "maria-gonzalez")
  * @returns {Object|null} Datos del distribuidor o null
  */
@@ -115,7 +155,7 @@ async function buscarDistribuidor(slug) {
 
         const { data: perfiles, error } = await supabaseClient
             .from('profiles')
-            .select('full_name, whatsapp, email')
+            .select('full_name, whatsapp, email, backoffice_affiliate_link')
             .not('full_name', 'is', null);
 
         if (error) {
@@ -160,6 +200,7 @@ async function buscarDistribuidor(slug) {
                 console.log('🎉 Nombre:', perfil.full_name);
                 console.log('🎉 WhatsApp:', perfil.whatsapp);
                 console.log('🎉 Email:', perfil.email);
+                console.log('🎉 Enlace Afiliación:', perfil.backoffice_affiliate_link);
                 console.log('🎉 Slug:', slug);
                 console.log('🎉 ==========================================');
                 break;
@@ -196,6 +237,7 @@ async function buscarDistribuidor(slug) {
                 nombre: distribuidorEncontrado.full_name,
                 whatsapp: whatsappFormateado,
                 email: distribuidorEncontrado.email,
+                affiliateLink: distribuidorEncontrado.backoffice_affiliate_link,
                 slug: slug,
                 primer_nombre: primerNombre,
                 nombre_apellido: nombreApellido
@@ -222,7 +264,7 @@ async function buscarDistribuidor(slug) {
 }
 
 /**
- * 🎨 Personalizar catálogo con datos del distribuidor (MEJORADO CON VERIFICACIONES)
+ * 🎨 Personalizar catálogo con datos del distribuidor
  * @param {Object} distribuidor - Datos del distribuidor
  */
 function personalizarCatalogo(distribuidor) {
@@ -291,8 +333,11 @@ function personalizarCatalogo(distribuidor) {
         // 6. Agregar badge de distribuidor
         agregarBadgeDistribuidor(distribuidor);
 
-        // 6. Personalizar enlace de oportunidad empresarial
+        // 7. Personalizar enlace de oportunidad empresarial
         personalizarEnlaceOportunidad(distribuidor);
+
+        // 8. Configurar enlace de afiliación
+        configurarEnlaceAfiliacion(distribuidor);
 
         console.log('🎨 ==========================================');
         console.log('✅ PERSONALIZACIÓN COMPLETADA EXITOSAMENTE');
@@ -305,17 +350,17 @@ function personalizarCatalogo(distribuidor) {
 }
 
 /**
- * 📱 Configurar botón de WhatsApp personalizado del distribuidor (MEJORADO)
+ * 📱 Configurar botón de WhatsApp personalizado del distribuidor
  * @param {Object} distribuidor - Datos del distribuidor
  */
 function configurarWhatsAppPersonalizado(distribuidor) {
     try {
         console.log('📱 Configurando WhatsApp personalizado...');
 
-        const whatsappButton = document.getElementById('whatsapp-button');
+        const whatsappButton = document.getElementById('whatsapp-fab');
 
         if (!whatsappButton) {
-            console.error('❌ No se encontró el botón de WhatsApp con id "whatsapp-button"');
+            console.error('❌ No se encontró el botón de WhatsApp con id "whatsapp-fab"');
             return;
         }
 
@@ -323,6 +368,9 @@ function configurarWhatsAppPersonalizado(distribuidor) {
             console.warn('⚠️ Distribuidor no tiene número de WhatsApp');
             return;
         }
+
+        // Configurar el atributo data para el carrito
+        document.body.setAttribute('data-distributor-whatsapp', distribuidor.whatsapp);
 
         // Mensaje personalizado con el nombre del distribuidor
         const mensaje = `Hola ${distribuidor.primer_nombre}, vi tu catálogo de productos Gano Excel y me interesan. ¿Me podrías dar más información sobre precios y disponibilidad?`;
@@ -332,7 +380,7 @@ function configurarWhatsAppPersonalizado(distribuidor) {
 
         whatsappButton.href = whatsappUrl;
         whatsappButton.style.display = 'flex';
-                    whatsappButton.title = `Contactar a ${distribuidor.primer_nombre} por WhatsApp`;
+        whatsappButton.title = `Contactar a ${distribuidor.primer_nombre} por WhatsApp`;
 
         console.log('📱 WhatsApp configurado exitosamente:');
         console.log('📱   Nombre:', distribuidor.primer_nombre);
@@ -345,7 +393,7 @@ function configurarWhatsAppPersonalizado(distribuidor) {
 }
 
 /**
- * 🏷️ Agregar badge de distribuidor para mayor confianza (MEJORADO)
+ * 🏷️ Agregar badge de distribuidor para mayor confianza
  * @param {Object} distribuidor - Datos del distribuidor
  */
 function agregarBadgeDistribuidor(distribuidor) {
@@ -405,7 +453,7 @@ function agregarBadgeDistribuidor(distribuidor) {
 }
 
 /**
- * 🔄 Configurar fallback si no hay distribuidor específico (MEJORADO)
+ * 🔄 Configurar fallback si no hay distribuidor específico
  */
 function configurarFallback() {
     try {
@@ -413,7 +461,7 @@ function configurarFallback() {
         console.log('🔄 CONFIGURANDO FALLBACK (DISTRIBUIDOR POR DEFECTO)');
         console.log('🔄 ==========================================');
 
-        const whatsappButton = document.getElementById('whatsapp-button');
+        const whatsappButton = document.getElementById('whatsapp-fab');
 
         if (whatsappButton) {
             // Número por defecto de Ganocafé Online
@@ -425,9 +473,20 @@ function configurarFallback() {
             whatsappButton.style.display = 'flex';
             whatsappButton.title = 'Contactar por WhatsApp';
 
+            // Configurar para el carrito también
+            document.body.setAttribute('data-distributor-whatsapp', numeroDefecto);
+
             console.log('📱 WhatsApp configurado con número por defecto:', numeroDefecto);
         } else {
             console.warn('⚠️ No se encontró botón de WhatsApp para fallback');
+        }
+
+        // Enlace de afiliación por defecto
+        const afiliacionLink = document.getElementById('afiliacion-link');
+        if (afiliacionLink) {
+            afiliacionLink.href = 'https://ganoexcel.com/gano-excel-colombia/';
+            afiliacionLink.title = 'Conoce la oportunidad de negocio Gano Excel';
+            afiliacionLink.target = '_blank';
         }
 
         // Mantener título original
@@ -442,12 +501,12 @@ function configurarFallback() {
 }
 
 /**
- * 🚀 Función principal: Inicializar sistema de distribuidores (MEJORADA)
+ * 🚀 Función principal: Inicializar sistema de distribuidores
  */
 async function inicializarDistribuidor() {
     try {
         console.log('🚀 ==========================================');
-        console.log('🚀 SISTEMA DE DISTRIBUIDORES - VERSIÓN CORREGIDA');
+        console.log('🚀 SISTEMA DE DISTRIBUIDORES - VERSIÓN FINAL');
         console.log('🚀 ==========================================');
         console.log('🚀 URL actual:', window.location.href);
         console.log('🚀 Timestamp:', new Date().toISOString());
@@ -573,6 +632,7 @@ if (window.location.hostname === 'localhost' || window.location.search.includes(
 
 // Mensaje de confirmación de carga
 console.log('🎯 ==========================================');
-console.log('✅ SISTEMA DE DISTRIBUIDORES CARGADO (V2.3)');
-console.log('🔗 + Enlace de Oportunidad Personalizado');
+console.log('✅ SISTEMA DE DISTRIBUIDORES CARGADO (V3.1)');
+console.log('🔗 + Enlace de Afiliación Configurado');
+console.log('🛒 + Compatible con Carrito Lateral');
 console.log('🎯 ==========================================');
