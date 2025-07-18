@@ -145,11 +145,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LÓGICA DE FINALIZAR COMPRA ---
     const generateWhatsAppMessage = () => {
+        // Obtenemos los datos del cliente desde el formulario
         const customerName = customerNameInput.value.trim() || '[Nombre del Cliente]';
         const customerAddress = customerAddressInput.value.trim() || '[Dirección de Envío]';
+
+        // Obtenemos el nombre del distribuidor (gracias al ajuste del Paso 1)
+        const distributorName = window.distributorProfile ? window.distributorProfile.primer_nombre : 'distribuidor(a)';
+
+        // Calculamos los totales
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const orderSummary = cart.map(item => `${item.quantity}x ${item.name}`).join('\n');
-        const message = `Hola, quiero realizar el siguiente pedido:\n\n*Cliente:* ${customerName}\n*Dirección de Envío:* ${customerAddress}\n\n*Resumen del Pedido:*\n${orderSummary}\n\n*Subtotal:* ${formatPrice(subtotal)}\n*Costo de Envío:* ${formatPrice(SHIPPING_COST)}\n*Total a Pagar:* ${formatPrice(subtotal + SHIPPING_COST)}\n\nEl pago se puede realizar por Transferencia Bancaria o Nequi. ¡Gracias!`;
+
+        // Creamos el resumen del pedido con emojis
+        const orderSummary = cart.map(item => `   - ${item.quantity}x ${item.name}`).join('\n');
+
+        // Creamos el nuevo mensaje amigable y personalizado
+        const message = `¡Hola, ${distributorName}! 👋 Te contacto desde tu catálogo para hacer el siguiente pedido:\n\n` +
+                        `👤 *Cliente:* ${customerName}\n` +
+                        `🚚 *Dirección de Envío:* ${customerAddress}\n\n` +
+                        `📦 *Resumen del Pedido:*\n${orderSummary}\n\n` +
+                        `*Subtotal:* ${formatPrice(subtotal)}\n` +
+                        `*Costo de Envío:* ${formatPrice(SHIPPING_COST)}\n` +
+                        `💰 *Total a Pagar:* ${formatPrice(subtotal + SHIPPING_COST)}\n\n` +
+                        `Quedo atento(a) a los datos para realizar el pago (Nequi o Transferencia) y coordinar el envío. ¡Muchas gracias! 😊`;
+
         whatsappMessageTextarea.value = message;
         return message;
     };

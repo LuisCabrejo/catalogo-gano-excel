@@ -226,6 +226,7 @@ async function buscarDistribuidor(slug) {
  * @param {Object} distribuidor - Datos del distribuidor
  */
 function personalizarCatalogo(distribuidor) {
+        window.distributorProfile = distribuidor; // <--- AGREGA ESTA LÍNEA
     try {
         console.log('🎨 ==========================================');
         console.log('🎨 INICIANDO PERSONALIZACIÓN DEL CATÁLOGO');
