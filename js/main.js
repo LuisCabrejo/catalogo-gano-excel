@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const productsDropdown = document.querySelector('.products-dropdown');
     if (productsDropdown) {
         const dropdownLink = productsDropdown.querySelector('a');
+        const dropdownMenu = productsDropdown.querySelector('.dropdown-menu');
+        const dropdownOptions = dropdownMenu.querySelectorAll('a');
 
         // Funcionalidad para móviles (click)
         dropdownLink.addEventListener('click', function(e) {
@@ -56,6 +58,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 productsDropdown.classList.toggle('active');
             }
+        });
+
+        // Cerrar dropdown al hacer click en una opción (solo móvil)
+        dropdownOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    // Cerrar el dropdown
+                    productsDropdown.classList.remove('active');
+
+                    // Esperar un poco para que se cierre el dropdown antes del scroll
+                    setTimeout(() => {
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+
+                        if (targetElement) {
+                            // Calcular offset considerando el menú sticky
+                            const menuHeight = document.querySelector('.main-nav').offsetHeight;
+                            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                            const offsetPosition = elementPosition - menuHeight - 20; // 20px extra de padding
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 300); // Tiempo de la animación de cierre
+                }
+            });
         });
 
         // Cerrar dropdown al hacer click fuera (solo móvil)
@@ -70,6 +100,27 @@ document.addEventListener('DOMContentLoaded', function() {
             if (window.innerWidth > 768) {
                 productsDropdown.classList.remove('active');
             }
+        });
+
+        // Manejar scroll suave para todos los enlaces de anclaje
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement && !this.closest('.dropdown-menu')) {
+                    // Solo aplicar offset si no es un enlace del dropdown (ya manejado arriba)
+                    const menuHeight = document.querySelector('.main-nav').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - menuHeight - 20;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     }
 
