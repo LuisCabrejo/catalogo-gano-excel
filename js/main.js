@@ -4,11 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // =================================
     let cart = [];
     const SHIPPING_COST = 15000;
-    const formatCurrency = (value) => new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        minimumFractionDigits: 0
-    }).format(value);
+    const formatCurrency = (value) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
 
     // =================================
     // 2. SELECCIÓN DE ELEMENTOS DEL DOM
@@ -43,24 +39,21 @@ document.addEventListener('DOMContentLoaded', function() {
         stats.forEach(stat => {
             const target = parseInt(stat.dataset.count);
             let current = 0;
-            const increment = target / 100;
+            const increment = target / 100; // Animar en 100 pasos
 
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
                     clearInterval(timer);
-                    // Asegura que el número final sea exacto y añade el símbolo correcto
-                    if (target === 200) stat.textContent = target + '+';
-                    else if (target === 100) stat.textContent = target + '%';
-                    else stat.textContent = target;
+                    stat.textContent = target + (stat.dataset.count.includes('100') ? '%' : '+');
+                    if (target === 6) stat.textContent = target; // Caso especial para el 6
                 } else {
                     stat.textContent = Math.ceil(current);
                 }
-            }, 20);
+            }, 20); // Velocidad de la animación
         });
     }
 
-    // Observador para activar la animación solo cuando la sección es visible
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -68,13 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 observer.unobserve(entry.target); // Animar solo una vez
             }
         });
-    }, {
-        threshold: 0.5
-    }); // Se activa cuando el 50% de la sección es visible
+    }, { threshold: 0.5 }); // Se activa cuando el 50% de la sección es visible
 
     if (proofSection) {
         observer.observe(proofSection);
     }
+
 
     // =================================
     // 4. LÓGICA DE FUNCIONALIDADES
@@ -138,12 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             const product = productData[productId];
             if (product) {
-                cart.push({
-                    id: productId,
-                    name: product.name,
-                    price: product.price,
-                    quantity: 1
-                });
+                cart.push({ id: productId, name: product.name, price: product.price, quantity: 1 });
             }
         }
         updateCartUI();
@@ -179,24 +166,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', (event) => {
         const target = event.target;
 
-        // Cierra modales
         if (target.matches('.modal-close') || target.matches('.modal') || target.closest('.btn-continue-shopping')) {
             productModal.classList.remove('show');
             cartModal.classList.remove('show');
         }
 
-        // Acciones de producto
         if (target.closest('.btn-details')) showProductDetails(target.closest('.btn-details').dataset.productId);
         if (target.closest('.btn-add-to-cart')) addToCart(target.closest('.btn-add-to-cart').dataset.productId);
-
-        // Abrir carrito
-        if (target.closest('#cart-button')) {
+        if (target.matches('#cart-button')) {
             event.preventDefault();
             updateCartUI();
             cartModal.classList.add('show');
         }
-
-        // Cambiar cantidad
         if (target.matches('.qty-btn')) {
             const change = target.classList.contains('increase') ? 1 : -1;
             changeQuantity(target.dataset.id, change);
@@ -204,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- Asesor de Bienestar ---
-    wellnessButtons.forEach(button => {
+     wellnessButtons.forEach(button => {
         button.addEventListener('click', () => {
             const goal = button.dataset.goal;
             const isActive = button.classList.contains('active');
@@ -219,9 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         card.classList.add('recommended');
                     }
                 });
-                document.querySelector('#productos').scrollIntoView({
-                    behavior: 'smooth'
-                });
+                document.querySelector('#productos').scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
@@ -252,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
         message += `\n💰 *RESUMEN:*\n`;
         message += `Subtotal: ${formatCurrency(subtotal)}\n`;
         message += `Envío: ${formatCurrency(SHIPPING_COST)}\n`;
-        message += `*Total:* *${formatCurrency(total)}*\n\n`;
+        message += `*Total:* *${formatcurrency(total)}*\n\n`;
         message += `¡Hola! Este es mi pedido. Por favor confirma disponibilidad y coordina el envío. 😊`;
 
         window.open(`https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`, '_blank');

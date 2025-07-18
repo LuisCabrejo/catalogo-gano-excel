@@ -1,15 +1,19 @@
 /* =================================
-   1. VARIABLES Y RESET
+   1. VARIABLES GLOBALES Y RESET
    ================================= */
 :root {
+    /* Colores */
     --primary: #0d1b2a;
     --secondary: #415a77;
     --accent: #e0b1cb;
+    --accent-hover: #c497b2;
     --bg-light: #f8f9fa;
     --text-primary: #212529;
     --text-secondary: #6b7280;
     --border-light: #dee2e6;
     --whatsapp-green: #25D366;
+    --recommend-highlight: rgba(224, 177, 203, 0.25);
+    /* Fondos */
     --innovation-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
@@ -26,8 +30,10 @@ html {
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     margin: 0;
+    padding: 0;
     background-color: var(--bg-light);
     color: var(--text-primary);
+    line-height: 1.6;
 }
 
 .container {
@@ -65,21 +71,27 @@ nav.main-nav {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 5px;
 }
 
 nav.main-nav a {
     color: var(--primary);
     text-decoration: none;
+    margin: 0 4px;
     font-weight: 700;
     font-size: 1rem;
     transition: all 0.3s ease;
     padding: 8px 12px;
+    display: inline-block;
     border-radius: 20px;
 }
 
+nav.main-nav a:hover:not(.dropdown-toggle) {
+    background: rgba(65, 90, 119, 0.05);
+}
+
 .oportunidad-link {
-    background: var(--secondary);
+    background: var(--secondary) !important;
     color: white !important;
 }
 
@@ -87,25 +99,28 @@ nav.main-nav a {
     background-color: var(--accent);
     color: var(--primary) !important;
     position: relative;
-    font-size: 1.5rem;
-    padding: 6px 12px;
-    line-height: 1;
 }
 
 #cart-count-badge {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -5px;
+    right: -8px;
     background-color: var(--primary);
     color: white;
     border-radius: 50%;
     padding: 2px 6px;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     border: 2px solid white;
 }
 
+/* --- Menú Desplegable 'Productos' --- */
 .nav-dropdown {
     position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
 }
 
 .dropdown-menu {
@@ -125,6 +140,12 @@ nav.main-nav a {
     padding: 12px 16px;
     display: block;
     text-align: left;
+    margin: 0;
+    border-radius: 0;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--bg-light);
 }
 
 .nav-dropdown:hover .dropdown-menu {
@@ -134,10 +155,6 @@ nav.main-nav a {
 /* =================================
    3. SECCIONES DE CONTENIDO
    ================================= */
-section[id] {
-    scroll-margin-top: 80px;
-}
-
 .section-title-wrapper {
     text-align: center;
     margin-bottom: 40px;
@@ -146,6 +163,7 @@ section[id] {
 .section-title-wrapper h2 {
     font-weight: 800;
     font-size: clamp(2rem, 4vw, 2.8rem);
+    margin: 0 0 15px 0;
 }
 
 .section-subtitle {
@@ -155,11 +173,11 @@ section[id] {
     margin: 0 auto;
 }
 
+/* --- Sección Innovación y Contador --- */
 .innovation-section {
     background: var(--innovation-bg);
     padding: 60px 20px;
     text-align: center;
-    margin-top: 30px;
 }
 
 .exclusivity-badge {
@@ -180,18 +198,28 @@ section[id] {
     flex-wrap: wrap;
 }
 
+.proof-stat {
+    text-align: center;
+    min-width: 120px;
+}
+
 .innovation-stat {
     font-size: 4rem;
     font-weight: 900;
     color: var(--accent);
+    display: block;
+    line-height: 1;
 }
 
 .stat-label {
     font-weight: 600;
     font-size: 1rem;
+    display: block;
     text-transform: uppercase;
 }
 
+
+/* --- Asesor de Bienestar --- */
 .wellness-advisor-section {
     background: white;
     padding: 60px 20px;
@@ -220,6 +248,13 @@ section[id] {
     transition: all 0.3s ease;
 }
 
+.wellness-goal-btn:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
 .wellness-goal-btn.active {
     background-color: var(--primary);
     border-color: var(--primary);
@@ -231,6 +266,12 @@ section[id] {
    ================================= */
 .category-section {
     margin-top: 50px;
+}
+
+.category-section .section-title-wrapper h2 {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 10px;
+    display: inline-block;
 }
 
 .product-grid {
@@ -245,11 +286,18 @@ section[id] {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
+    transition: all 0.3s ease;
     border: 3px solid transparent;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .product-card.recommended {
     border-color: var(--accent);
+    transform: translateY(-5px) scale(1.02);
 }
 
 .product-card img {
@@ -268,6 +316,7 @@ section[id] {
 .product-info h3 {
     margin: 0 0 8px 0;
     font-size: 1.25rem;
+    font-weight: 700;
     min-height: 2.5em;
 }
 
@@ -286,35 +335,53 @@ section[id] {
 
 .benefits {
     font-size: 0.95rem;
+    margin: 0 0 15px;
     padding-left: 20px;
     flex-grow: 1;
     color: var(--text-secondary);
 }
 
+.benefits li {
+    margin-bottom: 8px;
+}
+
 .product-actions {
-    margin-top: auto;
+    margin-top: auto; /* Alinea los botones en la parte inferior de la tarjeta */
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
+/* --- Botones de Tarjeta --- */
 .btn {
     padding: 12px;
     border: 1px solid var(--border-light);
     border-radius: 8px;
     cursor: pointer;
     font-weight: 700;
+    font-size: 0.95rem;
     text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.btn-details {
+    background-color: #fff;
+    color: var(--secondary);
+}
+
+.btn-add-to-cart {
+    background-color: var(--primary);
+    color: white;
 }
 
 .btn-add-to-cart.added {
     background-color: #28a745;
     border-color: #28a745;
-    color: white;
 }
 
 /* =================================
-   5. MODAL DEL CARRITO (REINGENIERÍA)
+   5. MODALES (GENERAL Y CARRITO)
    ================================= */
 .modal {
     position: fixed;
@@ -333,14 +400,17 @@ section[id] {
     display: flex;
 }
 
+/* --- Estructura Flex para Modal (Corrección Móvil) --- */
 .modal-content {
     background-color: #fff;
+    padding: 0;
     border-radius: 12px;
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
+    position: relative;
     display: flex;
     flex-direction: column;
-    max-height: 85vh;
+    max-height: 90vh; /* Límite para que no se salga de la pantalla */
     overflow: hidden;
 }
 
@@ -349,47 +419,83 @@ section[id] {
     top: 15px;
     right: 25px;
     font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
     z-index: 10;
 }
 
 .modal-header {
-    padding: 20px;
+    padding: 20px 30px;
     border-bottom: 1px solid var(--border-light);
-    flex-shrink: 0;
+    flex-shrink: 0; /* Evita que el header se encoja */
 }
 
 .modal-header h3 {
     margin: 0;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    color: var(--primary);
 }
 
+.modal-body-details,
 .modal-body-cart {
-    padding: 10px 20px;
-    overflow-y: auto;
+    padding: 20px 30px;
+    overflow-y: auto; /* Permite scroll en el cuerpo del modal */
     flex-grow: 1;
 }
 
 .modal-footer {
-    padding: 20px;
+    padding: 20px 30px;
     background-color: var(--bg-light);
     border-top: 1px solid var(--border-light);
-    flex-shrink: 0;
+    flex-shrink: 0; /* Evita que el footer se encoja */
+}
+
+/* --- Contenido Específico de Modales --- */
+.modal-body-details .modal-subtitle {
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.trust-badges-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.trust-badge {
+    background-color: var(--bg-light);
+    color: var(--secondary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+/* --- Contenido del Carrito --- */
+#cart-items-container {
+    padding-top: 0;
 }
 
 .cart-item {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
+    display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
     padding: 15px 0;
     border-bottom: 1px solid var(--border-light);
+}
+
+.cart-item-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
 .cart-item-qty {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 15px; /* Espacio entre botones y número */
 }
 
 .cart-item-qty button {
@@ -400,6 +506,7 @@ section[id] {
     cursor: pointer;
     border-radius: 8px;
     font-size: 1.4rem;
+    line-height: 1;
 }
 
 .cart-summary {
@@ -407,42 +514,82 @@ section[id] {
     margin-bottom: 15px;
 }
 
-.cart-summary p {
-    margin: 5px 0;
+.checkout-form h4 {
+    text-align: center;
+    margin-bottom: 15px;
 }
 
-.cart-summary p strong {
-    font-size: 1.2rem;
+.checkout-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
 }
 
+.payment-info {
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+
+/* --- Botones de Acción del Carrito --- */
 .cart-modal-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+    margin-top: 20px;
 }
 
 .btn-secondary-action {
-    background-color: white;
-    border: 1px solid var(--border-light);
+    background-color: #fff;
     color: var(--secondary);
+    border: 1px solid var(--border-light);
 }
 
 .btn-checkout {
     background-color: var(--whatsapp-green);
     color: white;
+    border-color: var(--whatsapp-green);
 }
 
 /* =================================
-   6. AJUSTES PARA MÓVILES
+   6. AJUSTES ESPECÍFICOS PARA MÓVILES
    ================================= */
 @media screen and (max-width: 768px) {
-    .innovation-section {
-        display: block;
+
+    /* --- Título del carrito más pequeño --- */
+    .modal-header h3 {
+        font-size: 1.25rem;
+        white-space: nowrap; /* Evita el salto de línea */
+    }
+
+    /* --- Más espacio para la lista de productos --- */
+    .modal-body-cart {
+        min-height: 240px; /* Más altura para ver aprox. 3 productos */
+    }
+
+    /* --- Botones de cantidad más grandes y con más espacio --- */
+    .cart-item-qty button {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* --- Menos espacio en el resumen de pago --- */
+    .cart-summary p {
+        margin: 4px 0;
+    }
+
+    /* --- Ocultar precio unitario en la lista del carrito --- */
+    .cart-item-unit-price {
+        display: none;
     }
 }
 
 /* =================================
-   7. FOOTER Y OTROS
+   7. OTROS (FAB, FOOTER)
    ================================= */
 .whatsapp-fab {
     position: fixed;
@@ -465,4 +612,11 @@ footer {
     text-align: center;
     padding: 30px 20px;
     margin-top: 40px;
+}
+
+footer .disclaimer {
+    font-size: 0.9em;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.8;
 }
