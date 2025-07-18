@@ -1,11 +1,7 @@
-/**
- * 🎯 SISTEMA DE DISTRIBUIDORES PARA CATÁLOGO - VERSIÓN 5.0
- * Personaliza el catálogo y configura el número de WhatsApp para los pedidos.
- */
 document.addEventListener('DOMContentLoaded', () => {
-    // 🔧 Configuración de Supabase
+    // --- CONFIGURACIÓN DE SUPABASE ---
     const SUPABASE_URL = 'https://ovsvocjvjnqfaaugwnxg.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92c3ZvY2p2am5xZmFhdWd3bnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3ODEyMzcsImV4cCI6MjA2NzM1NzIzN30.ZErzsooaSXnS-NdmMYD0JcZFupFgrXfMLH-nOvU1NTE';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIJzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92c3ZvY2p2am5xZmFhdWd3bnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3ODEyMzcsImV4cCI6MjA2NzM1NzIzN30.ZErzsooaSXnS-NdmMYD0JcZFupFgrXfMLH-nOvU1NTE';
 
     if (typeof window.supabase === 'undefined') {
         console.error('❌ Supabase no está disponible. Aplicando fallback.');
@@ -14,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // --- FUNCIONES AUXILIARES ---
     function generarSlug(fullName) {
         if (!fullName) return null;
         const parts = fullName.trim().toLowerCase().split(' ').filter(part => part.length > 0);
@@ -21,10 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return nombreParaSlug.replace(/[áäà]/g, 'a').replace(/[éëè]/g, 'e').replace(/[íïì]/g, 'i').replace(/[óöò]/g, 'o').replace(/[úüù]/g, 'u').replace(/ñ/g, 'n').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
     }
 
+    // --- LÓGICA PRINCIPAL ---
     async function buscarDistribuidor(slug) {
         try {
             if (!slug) return null;
-            const { data: perfiles, error } = await supabaseClient.from('profiles').select('full_name, whatsapp').not('full_name', 'is', null);
+            // AÑADIDO 'affiliate_link' A LA CONSULTA
+            const { data: perfiles, error } = await supabaseClient.from('profiles').select('full_name, whatsapp, affiliate_link').not('full_name', 'is', null);
             if (error) { console.error('❌ Error en Supabase:', error); return null; }
             if (!perfiles) return null;
 
@@ -34,15 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (whatsapp.length === 10) whatsapp = '57' + whatsapp;
 
                     const nombreParts = perfil.full_name.trim().split(' ');
-                    const primerNombre = nombreParts[0] || '';
-                    const primerApellido = nombreParts[1] || '';
-
                     return {
                         nombre: perfil.full_name,
                         whatsapp: whatsapp,
-                        primer_nombre: primerNombre,
-                        nombre_apellido: primerApellido ? `${primerNombre} ${primerApellido}` : primerNombre,
-                        slug: slug
+                        primer_nombre: nombreParts[0] || '',
+                        affiliate_link: perfil.affiliate_link // Se añade el nuevo campo
                     };
                 }
             }
@@ -54,21 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function personalizarCatalogo(distribuidor) {
-        console.log('🎨 Personalizando catálogo para:', distribuidor.nombre);
         document.body.dataset.distributorWhatsapp = distribuidor.whatsapp;
         document.title = `Catálogo de ${distribuidor.primer_nombre} - Gano Excel`;
-        document.querySelector('header h1').textContent = `Catálogo de Bienestar de ${distribuidor.primer_nombre}`;
 
-        const welcomeTitle = document.querySelector('.welcome-section h2');
-        if (welcomeTitle) welcomeTitle.textContent = `¡Hola! Soy ${distribuidor.nombre_apellido}`;
-
-        const welcomeText = document.querySelector('.welcome-section p');
-        if (welcomeText) welcomeText.innerHTML = `Te doy la bienvenida a mi catálogo. Explora los productos y si tienes alguna duda, contáctame en el botón de WhatsApp.`;
-
+        // Configurar enlace de contacto del FAB
         configurarWhatsAppFAB(distribuidor.whatsapp, distribuidor.primer_nombre);
 
-        const oportunidadLink = document.querySelector('.oportunidad-link');
-        if (oportunidadLink) oportunidadLink.href = `https://oportunidad.4millones.com/?distribuidor=${distribuidor.slug}`;
+        // Configurar el nuevo enlace de afiliación
+        const affiliateButton = document.getElementById('affiliate-link-button');
+        if (affiliateButton && distribuidor.affiliate_link) {
+            affiliateButton.href = distribuidor.affiliate_link;
+            affiliateButton.style.display = 'inline-block'; // Mostrar el botón
+        } else if (affiliateButton) {
+            affiliateButton.style.display = 'none'; // Ocultar si no hay enlace
+        }
     }
 
     function configurarWhatsAppFAB(numero, nombre) {
@@ -81,14 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function configurarFallback() {
-        console.log('🔄 Configurando fallback.');
         const numeroDefecto = '573118870682';
         document.body.dataset.distributorWhatsapp = numeroDefecto;
         configurarWhatsAppFAB(numeroDefecto, 'Gano Excel');
+        // Ocultar botón de afiliación en modo fallback
+        const affiliateButton = document.getElementById('affiliate-link-button');
+        if(affiliateButton) affiliateButton.style.display = 'none';
     }
 
     async function inicializar() {
-        console.log('🚀 Inicializando sistema de distribuidores...');
         const distribuidorSlug = new URLSearchParams(window.location.search).get('distribuidor');
         if (distribuidorSlug) {
             const distribuidor = await buscarDistribuidor(distribuidorSlug);
