@@ -1,30 +1,43 @@
 document.addEventListener('DOMContentLoaded', function() {
     // =================================
-    // 1. ESTADO Y CONFIGURACIÓN INICIAL
+    // 1. CONFIGURACIÓN Y ESTADO GLOBAL
     // =================================
     let cart = [];
     const SHIPPING_COST = 15000;
-    const formatCurrency = (value) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
+
+    // Formateo de moneda
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0
+        }).format(value);
+    };
 
     // =================================
-    // 2. SELECCIÓN DE ELEMENTOS DEL DOM
+    // 2. ELEMENTOS DEL DOM
     // =================================
     const productModal = document.getElementById('product-modal');
-    const cartModal = document.getElementById('cart-modal');
-    const cartItemsContainer = document.getElementById('cart-items-container');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartButton = document.getElementById('cart-button');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartItemsList = document.getElementById('cart-items-list');
     const cartSubtotalEl = document.getElementById('cart-subtotal');
     const cartShippingEl = document.getElementById('cart-shipping');
     const cartTotalEl = document.getElementById('cart-total');
     const cartCountBadge = document.getElementById('cart-count-badge');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const customerNameInput = document.getElementById('customer-name');
+    const customerAddressInput = document.getElementById('customer-address');
     const wellnessButtons = document.querySelectorAll('.wellness-goal-btn');
     const allProductCards = document.querySelectorAll('.product-card');
-    const checkoutForm = document.getElementById('checkout-form');
     const proofSection = document.querySelector('.innovation-proof');
 
     // =================================
-    // 3. INICIALIZACIÓN DE LA PÁGINA
+    // 3. INICIALIZACIÓN
     // =================================
-    // Poblar precios en las tarjetas de producto
+
+    // Poblar precios en las tarjetas
     allProductCards.forEach(card => {
         const product = productData[card.id];
         if (product) {
@@ -33,207 +46,376 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // --- Animación del contador de la sección de innovación ---
-    function animateCountUp() {
-        const stats = document.querySelectorAll('.innovation-stat');
-        stats.forEach(stat => {
-            const target = parseInt(stat.dataset.count);
-            let current = 0;
-            const increment = target / 100; // Animar en 100 pasos
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    clearInterval(timer);
-                    stat.textContent = target + (stat.dataset.count.includes('100') ? '%' : '+');
-                    if (target === 6) stat.textContent = target; // Caso especial para el 6
-                } else {
-                    stat.textContent = Math.ceil(current);
-                }
-            }, 20); // Velocidad de la animación
-        });
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCountUp();
-                observer.unobserve(entry.target); // Animar solo una vez
-            }
-        });
-    }, { threshold: 0.5 }); // Se activa cuando el 50% de la sección es visible
-
-    if (proofSection) {
-        observer.observe(proofSection);
-    }
-
+    // Crear overlay para el carrito en móvil
+    const cartOverlay = document.createElement('div');
+    cartOverlay.className = 'cart-overlay';
+    cartOverlay.id = 'cart-overlay';
+    document.body.appendChild(cartOverlay);
 
     // =================================
-    // 4. LÓGICA DE FUNCIONALIDADES
+    // 4. FUNCIONES DEL CARRITO REDISEÑADO
     // =================================
 
-    // --- Mostrar detalles de un producto en su modal ---
-    function showProductDetails(productId) {
-        const data = productData[productId];
-        if (!data) return;
-
-        const modalBody = productModal.querySelector('.modal-body-details');
-        modalBody.innerHTML = `
-            <h3>${data.name}</h3>
-            <p>${data.description}</p>
-            <h4 class="modal-subtitle">Modo de Uso</h4>
-            <p>${data.usage}</p>
-            <h4 class="modal-subtitle">Ingredientes Clave</h4>
-            <ul>${data.ingredients.map(ing => `<li>${ing}</li>`).join('')}</ul>
-            <div class="trust-badges-container">
-                ${data.isGanodermaBased ? `
-                    <span class="trust-badge">🍄 6 Variedades Fusionadas</span>
-                    <span class="trust-badge">💧 100% Hidrosoluble</span>
-                    <span class="trust-badge">🌿 +200 Fitonutrientes</span>
-                ` : ''}
-            </div>
-        `;
-        productModal.classList.add('show');
+    function openCart() {
+        cartDrawer.classList.add('open');
+        cartOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        updateCartDisplay();
     }
 
-    // --- Renderizar y actualizar la UI del carrito ---
-    function updateCartUI() {
-        cartItemsContainer.innerHTML = cart.length === 0 ? '<p class="cart-empty-message">Tu carrito está vacío.</p>' :
-            cart.map(item => `
-                <div class="cart-item">
-                    <div class="cart-item-info">
-                        <h5>${item.name}</h5>
-                        <p class="cart-item-unit-price">${formatCurrency(item.price)}</p>
-                    </div>
-                    <div class="cart-item-qty">
-                        <button data-id="${item.id}" class="qty-btn decrease">-</button>
-                        <span>${item.quantity}</span>
-                        <button data-id="${item.id}" class="qty-btn increase">+</button>
-                    </div>
-                    <div class="cart-item-price">${formatCurrency(item.price * item.quantity)}</div>
-                </div>
-            `).join('');
-
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const total = subtotal > 0 ? subtotal + SHIPPING_COST : 0;
-        cartSubtotalEl.textContent = formatCurrency(subtotal);
-        cartShippingEl.textContent = formatCurrency(subtotal > 0 ? SHIPPING_COST : 0);
-        cartTotalEl.textContent = formatCurrency(total);
-        cartCountBadge.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    function closeCart() {
+        cartDrawer.classList.remove('open');
+        cartOverlay.classList.remove('show');
+        document.body.style.overflow = '';
     }
 
-    // --- Añadir producto al carrito ---
     function addToCart(productId) {
         const existingItem = cart.find(item => item.id === productId);
+        const product = productData[productId];
+
+        if (!product) return;
+
         if (existingItem) {
             existingItem.quantity++;
         } else {
-            const product = productData[productId];
-            if (product) {
-                cart.push({ id: productId, name: product.name, price: product.price, quantity: 1 });
+            cart.push({
+                id: productId,
+                name: product.name,
+                price: product.price,
+                quantity: 1
+            });
+        }
+
+        updateCartDisplay();
+        updateCartBadge();
+        showAddedFeedback(productId);
+    }
+
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        updateCartDisplay();
+        updateCartBadge();
+        validateCheckout();
+    }
+
+    function updateQuantity(productId, newQuantity) {
+        const item = cart.find(item => item.id === productId);
+        if (item) {
+            if (newQuantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                item.quantity = newQuantity;
+                updateCartDisplay();
+                updateCartBadge();
+                validateCheckout();
             }
         }
-        updateCartUI();
+    }
 
-        const button = document.querySelector(`.btn-add-to-cart[data-product-id="${productId}"]`);
+    function updateCartDisplay() {
+        if (cart.length === 0) {
+            cartItemsList.innerHTML = `
+                <div class="cart-empty">
+                    <p>🛒 Tu carrito está vacío</p>
+                    <p>¡Agrega algunos productos!</p>
+                </div>
+            `;
+        } else {
+            cartItemsList.innerHTML = cart.map(item => `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="cart-item-header">
+                        <div class="cart-item-name">${item.name}</div>
+                        <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">×</button>
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                        </div>
+                        <div class="cart-item-total">${formatCurrency(item.price * item.quantity)}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        updateCartSummary();
+        validateCheckout();
+    }
+
+    function updateCartSummary() {
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const shipping = subtotal > 0 ? SHIPPING_COST : 0;
+        const total = subtotal + shipping;
+
+        cartSubtotalEl.textContent = formatCurrency(subtotal);
+        cartShippingEl.textContent = formatCurrency(shipping);
+        cartTotalEl.textContent = formatCurrency(total);
+    }
+
+    function updateCartBadge() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountBadge.textContent = totalItems;
+        cartCountBadge.style.display = totalItems > 0 ? 'block' : 'none';
+    }
+
+    function showAddedFeedback(productId) {
+        const button = document.querySelector(`[data-product-id="${productId}"].btn-add-to-cart`);
         if (button) {
-            button.textContent = 'Agregado ✓';
+            const originalText = button.textContent;
+            button.textContent = '✓ Agregado';
             button.classList.add('added');
+
             setTimeout(() => {
-                button.textContent = 'Agregar 🛒';
+                button.textContent = originalText;
                 button.classList.remove('added');
             }, 1500);
         }
     }
 
-    // --- Cambiar cantidad de un producto en el carrito ---
-    function changeQuantity(productId, change) {
-        const itemIndex = cart.findIndex(item => item.id === productId);
-        if (itemIndex > -1) {
-            cart[itemIndex].quantity += change;
-            if (cart[itemIndex].quantity <= 0) {
-                cart.splice(itemIndex, 1);
-            }
-        }
-        updateCartUI();
+    function validateCheckout() {
+        const hasItems = cart.length > 0;
+        const hasName = customerNameInput.value.trim().length > 0;
+        const hasAddress = customerAddressInput.value.trim().length > 0;
+
+        checkoutBtn.disabled = !(hasItems && hasName && hasAddress);
     }
 
     // =================================
-    // 5. GESTIÓN DE EVENTOS (CLICS Y FORMULARIOS)
+    // 5. FUNCIONES DE PRODUCTOS Y MODAL
     // =================================
 
-    // --- Delegación de eventos para todos los clics ---
-    document.addEventListener('click', (event) => {
-        const target = event.target;
+    function showProductDetails(productId) {
+        const product = productData[productId];
+        if (!product) return;
 
-        if (target.matches('.modal-close') || target.matches('.modal') || target.closest('.btn-continue-shopping')) {
-            productModal.classList.remove('show');
-            cartModal.classList.remove('show');
-        }
+        const modalBody = productModal.querySelector('.modal-body-details');
+        modalBody.innerHTML = `
+            <h3>${product.name}</h3>
+            <p class="product-price-modal">${formatCurrency(product.price)}</p>
+            <p>${product.description}</p>
+            <h4 class="modal-subtitle">Modo de Uso</h4>
+            <p>${product.usage}</p>
+            <h4 class="modal-subtitle">Ingredientes Clave</h4>
+            <ul>${product.ingredients.map(ing => `<li>${ing}</li>`).join('')}</ul>
+            ${product.isGanodermaBased ? `
+                <div class="trust-badges-container">
+                    <span class="trust-badge">🍄 6 Variedades Fusionadas</span>
+                    <span class="trust-badge">💧 100% Hidrosoluble</span>
+                    <span class="trust-badge">🌿 +200 Fitonutrientes</span>
+                </div>
+            ` : ''}
+        `;
+        productModal.classList.add('show');
+    }
 
-        if (target.closest('.btn-details')) showProductDetails(target.closest('.btn-details').dataset.productId);
-        if (target.closest('.btn-add-to-cart')) addToCart(target.closest('.btn-add-to-cart').dataset.productId);
-        if (target.matches('#cart-button')) {
-            event.preventDefault();
-            updateCartUI();
-            cartModal.classList.add('show');
-        }
-        if (target.matches('.qty-btn')) {
-            const change = target.classList.contains('increase') ? 1 : -1;
-            changeQuantity(target.dataset.id, change);
-        }
-    });
+    // =================================
+    // 6. ANIMACIÓN DEL CONTADOR
+    // =================================
 
-    // --- Asesor de Bienestar ---
-     wellnessButtons.forEach(button => {
+    function animateCountUp() {
+        const stats = document.querySelectorAll('.innovation-stat');
+        stats.forEach(stat => {
+            const target = parseInt(stat.dataset.count);
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    clearInterval(timer);
+                    if (target === 100) {
+                        stat.textContent = target + '%';
+                    } else if (target === 200) {
+                        stat.textContent = target + '+';
+                    } else {
+                        stat.textContent = target;
+                    }
+                } else {
+                    stat.textContent = Math.ceil(current);
+                }
+            }, 40);
+        });
+    }
+
+    // Observer para el contador
+    if (proofSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCountUp();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(proofSection);
+    }
+
+    // =================================
+    // 7. ASESOR DE BIENESTAR
+    // =================================
+
+    wellnessButtons.forEach(button => {
         button.addEventListener('click', () => {
             const goal = button.dataset.goal;
             const isActive = button.classList.contains('active');
+
+            // Limpiar selecciones anteriores
             wellnessButtons.forEach(btn => btn.classList.remove('active'));
             allProductCards.forEach(card => card.classList.remove('recommended'));
 
             if (!isActive) {
                 button.classList.add('active');
+
+                // Destacar productos recomendados
                 allProductCards.forEach(card => {
                     const product = productData[card.id];
-                    if (product && product.wellnessTags.includes(goal)) {
+                    if (product && product.wellnessTags && product.wellnessTags.includes(goal)) {
                         card.classList.add('recommended');
                     }
                 });
-                document.querySelector('#productos').scrollIntoView({ behavior: 'smooth' });
+
+                // Scroll suave a productos
+                document.querySelector('#productos').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
     });
 
-    // --- Formulario de Checkout ---
-    checkoutForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (cart.length === 0) return alert('Tu carrito está vacío.');
+    // =================================
+    // 8. GESTIÓN DE EVENTOS
+    // =================================
 
-        const customerName = document.getElementById('customer-name').value;
-        const customerAddress = document.getElementById('customer-address').value;
+    // Eventos del carrito
+    cartButton.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    // Validación del formulario
+    customerNameInput.addEventListener('input', validateCheckout);
+    customerAddressInput.addEventListener('input', validateCheckout);
+
+    // Checkout
+    checkoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (cart.length === 0) {
+            alert('Tu carrito está vacío.');
+            return;
+        }
+
+        const customerName = customerNameInput.value.trim();
+        const customerAddress = customerAddressInput.value.trim();
         const distributorWhatsapp = document.body.dataset.distributorWhatsapp;
 
-        if (!distributorWhatsapp) return alert('Error: No se encontró el número del distribuidor.');
+        if (!customerName || !customerAddress) {
+            alert('Por favor completa todos los datos.');
+            return;
+        }
 
+        if (!distributorWhatsapp) {
+            alert('Error: No se encontró el número del distribuidor.');
+            return;
+        }
+
+        // Generar mensaje de WhatsApp
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const total = subtotal + SHIPPING_COST;
 
-        let message = `🛒 *NUEVO PEDIDO* 🛒\n\n`;
+        let message = `🛒 *NUEVO PEDIDO DESDE EL CATÁLOGO* 🛒\n\n`;
         message += `👤 *Cliente:* ${customerName}\n`;
-        message += `📍 *Dirección de envío:* ${customerAddress}\n\n`;
-        message += `📦 *PRODUCTOS:*\n`;
+        message += `📍 *Dirección:* ${customerAddress}\n\n`;
+        message += `📦 *PRODUCTOS PEDIDOS:*\n`;
 
         cart.forEach(item => {
-            message += `• *${item.quantity}x* - ${item.name}\n  Precio: ${formatCurrency(item.price * item.quantity)}\n`;
+            message += `• ${item.quantity}x ${item.name}\n`;
+            message += `  💰 ${formatCurrency(item.price * item.quantity)}\n\n`;
         });
 
-        message += `\n💰 *RESUMEN:*\n`;
+        message += `💰 *RESUMEN DEL PEDIDO:*\n`;
         message += `Subtotal: ${formatCurrency(subtotal)}\n`;
         message += `Envío: ${formatCurrency(SHIPPING_COST)}\n`;
-        message += `*Total:* *${formatcurrency(total)}*\n\n`;
-        message += `¡Hola! Este es mi pedido. Por favor confirma disponibilidad y coordina el envío. 😊`;
+        message += `*TOTAL: ${formatCurrency(total)}*\n\n`;
+        message += `¡Hola! Este es mi pedido desde tu catálogo. ¿Podrías confirmar disponibilidad y coordinar el envío? ¡Gracias! 😊`;
 
-        window.open(`https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`, '_blank');
+        // Abrir WhatsApp
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+
+        // Limpiar carrito después del envío
+        setTimeout(() => {
+            cart = [];
+            updateCartDisplay();
+            updateCartBadge();
+            customerNameInput.value = '';
+            customerAddressInput.value = '';
+            closeCart();
+        }, 1000);
     });
+
+    // Delegación de eventos para clics generales
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+
+        // Cerrar modales
+        if (target.matches('.modal-close') || (target.matches('.modal') && !target.closest('.modal-content'))) {
+            productModal.classList.remove('show');
+        }
+
+        // Mostrar detalles de producto
+        if (target.closest('.btn-details')) {
+            const productId = target.closest('.btn-details').dataset.productId;
+            showProductDetails(productId);
+        }
+
+        // Agregar al carrito
+        if (target.closest('.btn-add-to-cart')) {
+            const productId = target.closest('.btn-add-to-cart').dataset.productId;
+            addToCart(productId);
+        }
+    });
+
+    // Tecla Escape para cerrar modales y carrito
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            productModal.classList.remove('show');
+            closeCart();
+        }
+    });
+
+    // =================================
+    // 9. FUNCIONES GLOBALES (para HTML onclick)
+    // =================================
+
+    // Exponer funciones necesarias al scope global
+    window.removeFromCart = removeFromCart;
+    window.updateQuantity = updateQuantity;
+
+    // =================================
+    // 10. INICIALIZACIÓN FINAL
+    // =================================
+
+    // Configurar estado inicial
+    updateCartBadge();
+    validateCheckout();
+
+    // Scroll suave para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    console.log('🎯 Catálogo inicializado correctamente');
+    console.log('📊 Productos cargados:', Object.keys(productData).length);
+    console.log('🛒 Sistema de carrito listo');
 });
