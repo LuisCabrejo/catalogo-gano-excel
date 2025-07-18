@@ -151,36 +151,36 @@ async function buscarDistribuidor(slug) {
 }
 
 /**
- * 🔗 Configurar enlace de afiliación personalizado
+ * 🔗 Configurar enlace de membresía personalizado
  * @param {Object} distribuidor - Datos del distribuidor
  */
-function configurarEnlaceAfiliacion(distribuidor) {
+function configurarEnlacemembresia(distribuidor) {
     try {
-        console.log('🔗 Configurando enlace de afiliación...');
+        console.log('🔗 Configurando enlace de membresía...');
 
-        const affiliationLink = document.getElementById('affiliation-link');
+        const membershipLink = document.getElementById('membership-link');
 
-        if (affiliationLink) {
+        if (membershipLink) {
             if (distribuidor.affiliation_link && distribuidor.affiliation_link.trim() !== '') {
-                // El distribuidor tiene enlace de afiliación personalizado
-                affiliationLink.href = distribuidor.affiliation_link;
-                affiliationLink.title = `Únete al equipo de ${distribuidor.primer_nombre}`;
-                affiliationLink.style.display = 'inline-block';
+                // El distribuidor tiene enlace de membresía personalizado
+                membershipLink.href = distribuidor.affiliation_link;
+                membershipLink.title = `Únete al equipo de ${distribuidor.primer_nombre}`;
+                membershipLink.style.display = 'inline-block';
 
-                console.log('🔗 Enlace de afiliación configurado:');
+                console.log('🔗 Enlace de membresía configurado:');
                 console.log('🔗   URL:', distribuidor.affiliation_link);
                 console.log('🔗   Distribuidor:', distribuidor.primer_nombre);
             } else {
                 // Sin enlace personalizado, ocultar la opción
-                affiliationLink.style.display = 'none';
-                console.log('🔗 Sin enlace de afiliación, opción oculta');
+                membershipLink.style.display = 'none';
+                console.log('🔗 Sin enlace de membresía, opción oculta');
             }
         } else {
-            console.warn('⚠️ No se encontró elemento #affiliation-link');
+            console.warn('⚠️ No se encontró elemento #membership-link');
         }
 
     } catch (error) {
-        console.error('❌ Error configurando enlace de afiliación:', error);
+        console.error('❌ Error configurando enlace de membresía:', error);
     }
 }
 
@@ -218,31 +218,31 @@ function personalizarCatalogo(distribuidor) {
         console.log('🎨 Distribuidor:', distribuidor.nombre);
         console.log('🎨 ==========================================');
 
-        // 1. Personalizar título de la página
-        document.title = `Catálogo de ${distribuidor.primer_nombre} - Gano Excel`;
+        // 1. Personalizar título de la página con mejor formato
+        document.title = `🌿 Catálogo de ${distribuidor.primer_nombre} | Productos Gano Excel`;
 
-        // 2. Personalizar header principal
+        // 2. Personalizar header principal con mensaje más personal
         const headerTitle = document.querySelector('header h1');
         if (headerTitle) {
-            headerTitle.textContent = `Catálogo de Bienestar de ${distribuidor.primer_nombre}`;
+            headerTitle.textContent = `¡Hola! Soy ${distribuidor.primer_nombre}`;
         }
 
-        // 3. Personalizar subtítulo del header
+        // 3. Personalizar subtítulo del header con mensaje más directo
         const headerSubtitle = document.querySelector('header p');
         if (headerSubtitle) {
-            headerSubtitle.textContent = `Transforma tu bienestar con productos que nutren cuerpo, mente y espíritu`;
+            headerSubtitle.textContent = `Te invito a descubrir estos productos que transformarán tu bienestar`;
         }
 
         // 4. Configurar WhatsApp personalizado
         configurarWhatsAppPersonalizado(distribuidor);
 
-        // 5. Configurar enlace de afiliación
-        configurarEnlaceAfiliacion(distribuidor);
+        // 5. Configurar enlace de membresía (cambio de afiliación)
+        configurarEnlacemembresia(distribuidor);
 
         // 6. Personalizar enlace de oportunidad
         personalizarEnlaceOportunidad(distribuidor);
 
-        // 7. Agregar badge de distribuidor
+        // 7. Agregar badge de distribuidor más prominente
         agregarBadgeDistribuidor(distribuidor);
 
         // 8. Configurar datos en el body para JavaScript
@@ -366,13 +366,13 @@ function configurarFallback() {
             document.body.dataset.distributorWhatsapp = numeroDefecto;
         }
 
-        // Ocultar enlace de afiliación
-        const affiliationLink = document.getElementById('affiliation-link');
-        if (affiliationLink) {
-            affiliationLink.style.display = 'none';
+        // Ocultar enlace de membresía
+        const membershipLink = document.getElementById('membership-link');
+        if (membershipLink) {
+            membershipLink.style.display = 'none';
         }
 
-        document.title = 'Catálogo de Bienestar - Gano Excel';
+        document.title = '🌿 Catálogo de Bienestar | Productos Gano Excel';
         console.log('🔄 Fallback configurado');
 
     } catch (error) {

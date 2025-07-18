@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const wellnessButtons = document.querySelectorAll('.wellness-goal-btn');
     const allProductCards = document.querySelectorAll('.product-card');
     const proofSection = document.querySelector('.innovation-proof');
+    const whatsappFab = document.getElementById('whatsapp-fab');
 
     // =================================
     // 3. INICIALIZACIÓN
@@ -156,7 +157,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCartBadge() {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCountBadge.textContent = totalItems;
-        cartCountBadge.style.display = totalItems > 0 ? 'block' : 'none';
+
+        // Mostrar/ocultar badge basado en cantidad
+        if (totalItems > 0) {
+            cartCountBadge.style.display = 'block';
+            cartButton.setAttribute('data-count', totalItems);
+        } else {
+            cartCountBadge.style.display = 'none';
+            cartButton.setAttribute('data-count', '0');
+        }
     }
 
     function showAddedFeedback(productId) {
