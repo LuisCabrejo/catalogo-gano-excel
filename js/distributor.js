@@ -259,7 +259,8 @@ function personalizarCatalogo(distribuidor) {
             console.warn('⚠️ No se encontró header p');
         }
 
-        // 4. Personalizar mensaje de bienvenida
+        /*
+       // 4. Personalizar mensaje de bienvenida
         const welcomeSection = document.querySelector('.welcome-section');
         if (welcomeSection) {
             const welcomeTitle = welcomeSection.querySelector('h2');
@@ -284,6 +285,7 @@ function personalizarCatalogo(distribuidor) {
         } else {
             console.warn('⚠️ No se encontró .welcome-section');
         }
+        */
 
         // 5. Configurar botón de WhatsApp personalizado
         configurarWhatsAppPersonalizado(distribuidor);
