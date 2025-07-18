@@ -1,44 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
     // =================================
-    // 1. CONFIGURACIÓN Y ESTADO GLOBAL
+    // 1. ESTADO Y CONFIGURACIÓN INICIAL
     // =================================
     let cart = [];
     const SHIPPING_COST = 15000;
-
-    // Formateo de moneda
-    const formatCurrency = (value) => {
-        return new Intl.NumberFormat('es-CO', {
-            style: 'currency',
-            currency: 'COP',
-            minimumFractionDigits: 0
-        }).format(value);
-    };
+    const formatCurrency = (value) => new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+    }).format(value);
 
     // =================================
-    // 2. ELEMENTOS DEL DOM
+    // 2. SELECCIÓN DE ELEMENTOS DEL DOM
     // =================================
     const productModal = document.getElementById('product-modal');
-    const cartDrawer = document.getElementById('cart-drawer');
-    const cartButton = document.getElementById('cart-button');
-    const closeCartBtn = document.getElementById('close-cart');
-    const cartItemsList = document.getElementById('cart-items-list');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const cartOverlay = document.getElementById('cart-overlay');
+    const cartItemsContainer = document.getElementById('cart-items-container');
     const cartSubtotalEl = document.getElementById('cart-subtotal');
     const cartShippingEl = document.getElementById('cart-shipping');
     const cartTotalEl = document.getElementById('cart-total');
     const cartCountBadge = document.getElementById('cart-count-badge');
     const checkoutBtn = document.getElementById('checkout-btn');
-    const customerNameInput = document.getElementById('customer-name');
-    const customerAddressInput = document.getElementById('customer-address');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartButton = document.getElementById('cart-button');
     const wellnessButtons = document.querySelectorAll('.wellness-goal-btn');
     const allProductCards = document.querySelectorAll('.product-card');
     const proofSection = document.querySelector('.innovation-proof');
-    const whatsappFab = document.getElementById('whatsapp-fab');
+    const toastContainer = document.getElementById('toast-container');
 
     // =================================
-    // 3. INICIALIZACIÓN
+    // 3. INICIALIZACIÓN DE LA PÁGINA
     // =================================
 
-    // Poblar precios en las tarjetas
+    // Poblar precios en las tarjetas de producto
     allProductCards.forEach(card => {
         const product = productData[card.id];
         if (product) {
@@ -47,195 +42,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Crear overlay para el carrito en móvil
-    const cartOverlay = document.createElement('div');
-    cartOverlay.className = 'cart-overlay';
-    cartOverlay.id = 'cart-overlay';
-    document.body.appendChild(cartOverlay);
+    // Inicializar carrito
+    updateCartUI();
+    updateCartCount();
 
     // =================================
-    // 4. FUNCIONES DEL CARRITO REDISEÑADO
+    // 4. SISTEMA DE NOTIFICACIONES TOAST
     // =================================
+    function showToast(title, message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
 
-    function openCart() {
-        cartDrawer.classList.add('open');
-        cartOverlay.classList.add('show');
-        document.body.style.overflow = 'hidden';
-        updateCartDisplay();
-    }
+        const icon = type === 'success' ? '✅' : '❌';
 
-    function closeCart() {
-        cartDrawer.classList.remove('open');
-        cartOverlay.classList.remove('show');
-        document.body.style.overflow = '';
-    }
-
-    function addToCart(productId) {
-        const existingItem = cart.find(item => item.id === productId);
-        const product = productData[productId];
-
-        if (!product) return;
-
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            cart.push({
-                id: productId,
-                name: product.name,
-                price: product.price,
-                quantity: 1
-            });
-        }
-
-        updateCartDisplay();
-        updateCartBadge();
-        showAddedFeedback(productId);
-    }
-
-    function removeFromCart(productId) {
-        cart = cart.filter(item => item.id !== productId);
-        updateCartDisplay();
-        updateCartBadge();
-        validateCheckout();
-    }
-
-    function updateQuantity(productId, newQuantity) {
-        const item = cart.find(item => item.id === productId);
-        if (item) {
-            if (newQuantity <= 0) {
-                removeFromCart(productId);
-            } else {
-                item.quantity = newQuantity;
-                updateCartDisplay();
-                updateCartBadge();
-                validateCheckout();
-            }
-        }
-    }
-
-    function updateCartDisplay() {
-        if (cart.length === 0) {
-            cartItemsList.innerHTML = `
-                <div class="cart-empty">
-                    <p>🛒 Tu carrito está vacío</p>
-                    <p>¡Agrega algunos productos!</p>
-                </div>
-            `;
-        } else {
-            cartItemsList.innerHTML = cart.map(item => `
-                <div class="cart-item" data-id="${item.id}">
-                    <div class="cart-item-header">
-                        <div class="cart-item-name">${item.name}</div>
-                        <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">×</button>
-                    </div>
-                    <div class="cart-item-controls">
-                        <div class="cart-item-qty">
-                            <button class="qty-btn" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
-                            <span>${item.quantity}</span>
-                            <button class="qty-btn" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
-                        </div>
-                        <div class="cart-item-total">${formatCurrency(item.price * item.quantity)}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        updateCartSummary();
-        validateCheckout();
-    }
-
-    function updateCartSummary() {
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const shipping = subtotal > 0 ? SHIPPING_COST : 0;
-        const total = subtotal + shipping;
-
-        cartSubtotalEl.textContent = formatCurrency(subtotal);
-        cartShippingEl.textContent = formatCurrency(shipping);
-        cartTotalEl.textContent = formatCurrency(total);
-    }
-
-    function updateCartBadge() {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountBadge.textContent = totalItems;
-
-        // Mostrar/ocultar badge basado en cantidad
-        if (totalItems > 0) {
-            cartCountBadge.style.display = 'block';
-            cartButton.setAttribute('data-count', totalItems);
-        } else {
-            cartCountBadge.style.display = 'none';
-            cartButton.setAttribute('data-count', '0');
-        }
-    }
-
-    function showAddedFeedback(productId) {
-        const button = document.querySelector(`[data-product-id="${productId}"].btn-add-to-cart`);
-        if (button) {
-            const originalText = button.textContent;
-            button.textContent = '✓ Agregado';
-            button.classList.add('added');
-
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.classList.remove('added');
-            }, 1500);
-        }
-    }
-
-    function validateCheckout() {
-        const hasItems = cart.length > 0;
-        const hasName = customerNameInput.value.trim().length > 0;
-        const hasAddress = customerAddressInput.value.trim().length > 0;
-
-        checkoutBtn.disabled = !(hasItems && hasName && hasAddress);
-    }
-
-    // =================================
-    // 5. FUNCIONES DE PRODUCTOS Y MODAL
-    // =================================
-
-    function showProductDetails(productId) {
-        const product = productData[productId];
-        if (!product) return;
-
-        const modalBody = productModal.querySelector('.modal-body-details');
-        modalBody.innerHTML = `
-            <h3>${product.name}</h3>
-            <p class="product-price-modal">${formatCurrency(product.price)}</p>
-            <p>${product.description}</p>
-            <h4 class="modal-subtitle">Modo de Uso</h4>
-            <p>${product.usage}</p>
-            <h4 class="modal-subtitle">Ingredientes Clave</h4>
-            <ul>${product.ingredients.map(ing => `<li>${ing}</li>`).join('')}</ul>
-            ${product.isGanodermaBased ? `
-                <div class="trust-badges-container">
-                    <span class="trust-badge">🍄 6 Variedades Fusionadas</span>
-                    <span class="trust-badge">💧 100% Hidrosoluble</span>
-                    <span class="trust-badge">🌿 +200 Fitonutrientes</span>
-                </div>
-            ` : ''}
+        toast.innerHTML = `
+            <div class="toast-icon">${icon}</div>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
         `;
-        productModal.classList.add('show');
+
+        toastContainer.appendChild(toast);
+
+        // Auto-remove después de 3 segundos
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }
+        }, 3000);
     }
 
     // =================================
-    // 6. ANIMACIÓN DEL CONTADOR
+    // 5. ANIMACIÓN DEL CONTADOR
     // =================================
-
     function animateCountUp() {
         const stats = document.querySelectorAll('.innovation-stat');
         stats.forEach(stat => {
             const target = parseInt(stat.dataset.count);
             let current = 0;
             const increment = target / 50;
+
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
                     clearInterval(timer);
-                    if (target === 100) {
-                        stat.textContent = target + '%';
-                    } else if (target === 200) {
+                    if (target === 200) {
                         stat.textContent = target + '+';
+                    } else if (target === 100) {
+                        stat.textContent = target + '%';
                     } else {
                         stat.textContent = target;
                     }
@@ -246,30 +102,180 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Observer para el contador
-    if (proofSection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCountUp();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCountUp();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
 
+    if (proofSection) {
         observer.observe(proofSection);
     }
 
     // =================================
-    // 7. ASESOR DE BIENESTAR
+    // 6. FUNCIONES DEL CARRITO
     // =================================
 
+    function updateCartCount() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountBadge.textContent = totalItems;
+        cartCountBadge.style.display = totalItems > 0 ? 'flex' : 'none';
+    }
+
+    function updateCartUI() {
+        const isEmpty = cart.length === 0;
+
+        if (isEmpty) {
+            cartItemsContainer.innerHTML = `
+                <div class="cart-empty">
+                    <div class="cart-empty-icon">🛒</div>
+                    <p>Tu carrito está vacío</p>
+                    <small>¡Comienza agregando productos!</small>
+                </div>
+            `;
+        } else {
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="cart-item-header">
+                        <div class="cart-item-info">
+                            <h5>${item.name}</h5>
+                        </div>
+                        <div class="cart-item-price">${formatCurrency(item.price * item.quantity)}</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="quantity-controls">
+                            <button class="qty-btn decrease" data-id="${item.id}" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
+                            <span class="quantity-display">${item.quantity}</span>
+                            <button class="qty-btn increase" data-id="${item.id}">+</button>
+                        </div>
+                        <button class="remove-item" data-id="${item.id}">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Calcular totales
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const shipping = subtotal > 0 ? SHIPPING_COST : 0;
+        const total = subtotal + shipping;
+
+        cartSubtotalEl.textContent = formatCurrency(subtotal);
+        cartShippingEl.textContent = formatCurrency(shipping);
+        cartTotalEl.textContent = formatCurrency(total);
+
+        // Habilitar/deshabilitar botón de checkout
+        checkoutBtn.disabled = isEmpty;
+
+        updateCartCount();
+    }
+
+    function addToCart(productId) {
+        const product = productData[productId];
+        if (!product) return;
+
+        const existingItem = cart.find(item => item.id === productId);
+
+        if (existingItem) {
+            existingItem.quantity++;
+            showToast('Cantidad actualizada', `${product.name} (${existingItem.quantity} unidades)`);
+        } else {
+            cart.push({
+                id: productId,
+                name: product.name,
+                price: product.price,
+                quantity: 1
+            });
+            showToast('Producto agregado', `${product.name} agregado al carrito`);
+        }
+
+        updateCartUI();
+
+        // Feedback visual en el botón
+        const button = document.querySelector(`.btn-quick-add[data-product-id="${productId}"]`);
+        if (button) {
+            const originalText = button.textContent;
+            button.textContent = 'Agregado ✓';
+            button.classList.add('added');
+
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('added');
+            }, 1500);
+        }
+    }
+
+    function removeFromCart(productId) {
+        const itemIndex = cart.findIndex(item => item.id === productId);
+        if (itemIndex > -1) {
+            const removedItem = cart[itemIndex];
+            cart.splice(itemIndex, 1);
+            showToast('Producto eliminado', `${removedItem.name} eliminado del carrito`);
+            updateCartUI();
+        }
+    }
+
+    function changeQuantity(productId, change) {
+        const item = cart.find(item => item.id === productId);
+        if (item) {
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                updateCartUI();
+            }
+        }
+    }
+
+    function openCart() {
+        cartSidebar.classList.add('open');
+        cartOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+        cartSidebar.classList.remove('open');
+        cartOverlay.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    // =================================
+    // 7. MODAL DE DETALLES
+    // =================================
+    function showProductDetails(productId) {
+        const data = productData[productId];
+        if (!data) return;
+
+        const modalBody = productModal.querySelector('.modal-body-details');
+        modalBody.innerHTML = `
+            <h3>${data.name}</h3>
+            <p>${data.description}</p>
+            <h4 class="modal-subtitle">Modo de Uso</h4>
+            <p>${data.usage}</p>
+            <h4 class="modal-subtitle">Ingredientes Clave</h4>
+            <ul>${data.ingredients.map(ing => `<li>${ing}</li>`).join('')}</ul>
+            <div class="trust-badges-container">
+                ${data.isGanodermaBased ? `
+                    <span class="trust-badge">🍄 6 Variedades Fusionadas</span>
+                    <span class="trust-badge">💧 100% Hidrosoluble</span>
+                    <span class="trust-badge">🌿 +200 Fitonutrientes</span>
+                ` : ''}
+            </div>
+        `;
+        productModal.classList.add('show');
+    }
+
+    // =================================
+    // 8. ASESOR DE BIENESTAR
+    // =================================
     wellnessButtons.forEach(button => {
         button.addEventListener('click', () => {
             const goal = button.dataset.goal;
             const isActive = button.classList.contains('active');
 
-            // Limpiar selecciones anteriores
+            // Remover estado activo de todos
             wellnessButtons.forEach(btn => btn.classList.remove('active'));
             allProductCards.forEach(card => card.classList.remove('recommended'));
 
@@ -284,147 +290,141 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                // Scroll suave a productos
+                // Scroll a productos
                 document.querySelector('#productos').scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
+
+                showToast('Productos recomendados', 'Productos destacados según tu objetivo');
             }
         });
     });
 
     // =================================
-    // 8. GESTIÓN DE EVENTOS
+    // 9. CHECKOUT POR WHATSAPP
     // =================================
-
-    // Eventos del carrito
-    cartButton.addEventListener('click', openCart);
-    closeCartBtn.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
-
-    // Validación del formulario
-    customerNameInput.addEventListener('input', validateCheckout);
-    customerAddressInput.addEventListener('input', validateCheckout);
-
-    // Checkout
-    checkoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-
+    function processCheckout() {
         if (cart.length === 0) {
-            alert('Tu carrito está vacío.');
+            showToast('Carrito vacío', 'Agrega productos antes de continuar', 'error');
             return;
         }
 
-        const customerName = customerNameInput.value.trim();
-        const customerAddress = customerAddressInput.value.trim();
         const distributorWhatsapp = document.body.dataset.distributorWhatsapp;
-
-        if (!customerName || !customerAddress) {
-            alert('Por favor completa todos los datos.');
-            return;
-        }
-
         if (!distributorWhatsapp) {
-            alert('Error: No se encontró el número del distribuidor.');
+            showToast('Error', 'No se encontró contacto del distribuidor', 'error');
             return;
         }
 
-        // Generar mensaje de WhatsApp
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const total = subtotal + SHIPPING_COST;
 
         let message = `🛒 *NUEVO PEDIDO DESDE EL CATÁLOGO* 🛒\n\n`;
-        message += `👤 *Cliente:* ${customerName}\n`;
-        message += `📍 *Dirección:* ${customerAddress}\n\n`;
-        message += `📦 *PRODUCTOS PEDIDOS:*\n`;
+        message += `📦 *PRODUCTOS SOLICITADOS:*\n`;
 
         cart.forEach(item => {
             message += `• ${item.quantity}x ${item.name}\n`;
-            message += `  💰 ${formatCurrency(item.price * item.quantity)}\n\n`;
+            message += `  ${formatCurrency(item.price)} c/u = ${formatCurrency(item.price * item.quantity)}\n\n`;
         });
 
         message += `💰 *RESUMEN DEL PEDIDO:*\n`;
         message += `Subtotal: ${formatCurrency(subtotal)}\n`;
         message += `Envío: ${formatCurrency(SHIPPING_COST)}\n`;
-        message += `*TOTAL: ${formatCurrency(total)}*\n\n`;
-        message += `¡Hola! Este es mi pedido desde tu catálogo. ¿Podrías confirmar disponibilidad y coordinar el envío? ¡Gracias! 😊`;
+        message += `*Total: ${formatCurrency(total)}*\n\n`;
+        message += `Hola! Me interesa realizar este pedido. ¿Podrías confirmarme disponibilidad y coordinar el envío? 😊`;
+
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`;
 
         // Abrir WhatsApp
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=${distributorWhatsapp}&text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
 
-        // Limpiar carrito después del envío
-        setTimeout(() => {
-            cart = [];
-            updateCartDisplay();
-            updateCartBadge();
-            customerNameInput.value = '';
-            customerAddressInput.value = '';
-            closeCart();
-        }, 1000);
+        // Cerrar carrito
+        closeCart();
+
+        showToast('Redirigiendo a WhatsApp', 'Completa tu pedido por WhatsApp');
+    }
+
+    // =================================
+    // 10. GESTIÓN DE EVENTOS
+    // =================================
+
+    // Eventos del carrito
+    cartButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        openCart();
     });
 
-    // Delegación de eventos para clics generales
+    closeCartBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    checkoutBtn.addEventListener('click', processCheckout);
+
+    // Delegación de eventos para el documento
     document.addEventListener('click', (event) => {
         const target = event.target;
 
         // Cerrar modales
-        if (target.matches('.modal-close') || (target.matches('.modal') && !target.closest('.modal-content'))) {
+        if (target.matches('.modal-close') || target.matches('.modal')) {
             productModal.classList.remove('show');
         }
 
-        // Mostrar detalles de producto
+        // Botones de producto
         if (target.closest('.btn-details')) {
             const productId = target.closest('.btn-details').dataset.productId;
             showProductDetails(productId);
         }
 
-        // Agregar al carrito
-        if (target.closest('.btn-add-to-cart')) {
-            const productId = target.closest('.btn-add-to-cart').dataset.productId;
+        if (target.closest('.btn-quick-add')) {
+            const productId = target.closest('.btn-quick-add').dataset.productId;
             addToCart(productId);
         }
+
+        // Controles del carrito
+        if (target.matches('.qty-btn')) {
+            const productId = target.dataset.id;
+            const change = target.classList.contains('increase') ? 1 : -1;
+            changeQuantity(productId, change);
+        }
+
+        if (target.matches('.remove-item')) {
+            const productId = target.dataset.id;
+            removeFromCart(productId);
+        }
     });
 
-    // Tecla Escape para cerrar modales y carrito
+    // Prevenir cierre del modal al hacer click dentro del contenido
+    document.querySelectorAll('.modal-content').forEach(content => {
+        content.addEventListener('click', (e) => e.stopPropagation());
+    });
+
+    // Cerrar carrito con ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            productModal.classList.remove('show');
             closeCart();
+            productModal.classList.remove('show');
         }
     });
 
     // =================================
-    // 9. FUNCIONES GLOBALES (para HTML onclick)
+    // 11. INICIALIZACIÓN FINAL
     // =================================
-
-    // Exponer funciones necesarias al scope global
-    window.removeFromCart = removeFromCart;
-    window.updateQuantity = updateQuantity;
-
-    // =================================
-    // 10. INICIALIZACIÓN FINAL
-    // =================================
-
-    // Configurar estado inicial
-    updateCartBadge();
-    validateCheckout();
-
-    // Scroll suave para enlaces internos
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    console.log('🎯 Catálogo inicializado correctamente');
-    console.log('📊 Productos cargados:', Object.keys(productData).length);
-    console.log('🛒 Sistema de carrito listo');
+    console.log('🛒 Sistema de carrito inicializado correctamente');
+    console.log('✨ Catálogo Gano Excel cargado completamente');
 });
+
+// =================================
+// 12. FUNCIONES GLOBALES PARA DEBUGGING
+// =================================
+window.cartDebug = {
+    getCart: () => cart,
+    clearCart: () => {
+        cart = [];
+        updateCartUI();
+        console.log('🗑️ Carrito limpiado');
+    },
+    addTestProduct: () => {
+        const testProduct = Object.keys(productData)[0];
+        addToCart(testProduct);
+        console.log('🧪 Producto de prueba agregado');
+    }
+};
