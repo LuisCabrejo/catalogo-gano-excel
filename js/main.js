@@ -51,9 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeModal = document.querySelector('.modal-close');
 
     // Botones de "Más detalles"
-    document.querySelectorAll('.btn-details').forEach(button => {
-        button.addEventListener('click', () => {
-            const productId = button.dataset.productId;
+    // NOTA: Esta lógica seguirá funcionando con los nuevos botones.
+    document.body.addEventListener('click', (e) => {
+        if (e.target.classList.contains('btn-details')) {
+            const productId = e.target.dataset.productId;
             const data = productData[productId];
 
             if (data) {
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error('No se encontraron datos para el producto:', productId);
             }
-        });
+        }
     });
 
     // Cerrar modal
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- LÓGICA DE COMPARTIR ---
+    // NOTA: Este código se mantiene por si se reutiliza, pero los botones .btn-share ya no están en las tarjetas.
     document.querySelectorAll('.btn-share').forEach(button => {
         button.addEventListener('click', async (event) => {
             const productId = button.dataset.productId;
@@ -119,13 +121,102 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // --- LÓGICA DEL MENÚ DESPLEGABLE ---
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+    if (dropdownToggle && dropdownMenu) {
+        // Función para cerrar el menú
+        function closeDropdown() {
+            dropdownMenu.classList.remove('show');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+            if (overlay) overlay.classList.remove('show');
+        }
+
+        // Función para abrir el menú
+        function openDropdown() {
+            dropdownMenu.classList.add('show');
+            dropdownToggle.setAttribute('aria-expanded', 'true');
+            if (overlay) overlay.classList.add('show');
+        }
+
+        // Toggle del menú al hacer clic en el botón
+        dropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (dropdownMenu.classList.contains('show')) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        });
+
+        // Cerrar el menú al hacer clic en un item
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', () => {
+                closeDropdown();
+
+                // Scroll suave a la sección (opcional)
+                const targetId = item.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Cerrar el menú al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                closeDropdown();
+            }
+        });
+
+        // Cerrar el menú al hacer scroll
+        window.addEventListener('scroll', () => {
+            if (dropdownMenu.classList.contains('show')) {
+                closeDropdown();
+            }
+        });
+
+        // Cerrar el menú con la tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && dropdownMenu.classList.contains('show')) {
+                closeDropdown();
+                dropdownToggle.focus();
+            }
+        });
+
+        // Crear overlay para móviles
+        const isMobile = window.innerWidth <= 600;
+        let overlay;
+
+        if (isMobile) {
+            overlay = document.createElement('div');
+            overlay.className = 'dropdown-overlay';
+            document.body.appendChild(overlay);
+
+            // Cerrar al hacer clic en el overlay
+            overlay.addEventListener('click', closeDropdown);
+        }
+    }
+
     // --- CONFIGURACIÓN DEL BOTÓN DE WHATSAPP ---
+    // NOTA: La lógica de `distributor.js` es prioritaria y sobreescribirá esto, lo cual es correcto.
+    // Esto se mantiene como un fallback.
     const urlParams = new URLSearchParams(window.location.search);
     const defaultSocioId = '573203415438';
     const socioIdFromUrl = urlParams.get('socio');
     const finalSocioId = socioIdFromUrl || defaultSocioId;
 
-    if (finalSocioId) {
+    if (finalSocioId && !urlParams.get('distribuidor')) { // Solo se ejecuta si no hay un distribuidor específico.
         const whatsappButton = document.getElementById('whatsapp-button');
         const whatsappLink = `https://wa.me/${finalSocioId}?text=${encodeURIComponent('Hola, estoy interesado(a) en los productos Gano Excel. ¿Me podrías dar más información?')}`;
 

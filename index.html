@@ -6,38 +6,31 @@
     <title>Catálogo de Bienestar - Gano Excel</title>
     <meta name="description" content="Descubre una vida de bienestar con los productos Gano Excel. Bebidas enriquecidas, suplementos potentes y cuidado personal con Ganoderma Lucidum.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/webp" sizes="32x32" href="assets/images/favicon-catalogo.webp">
     <link rel="icon" type="image/webp" sizes="16x16" href="assets/images/favicon-catalogo.webp">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon-catalogo.webp">
 
-   <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://catalogo.4millones.com/">
-<meta property="og:title" content="Catálogo de Bienestar - Gano Excel">
-<meta property="og:description" content="Descubre una vida de bienestar con los productos Gano Excel. Bebidas enriquecidas, suplementos potentes y cuidado personal con Ganoderma Lucidum.">
-<meta property="og:image" content="https://catalogo.4millones.com/assets/images/productos-gano-excel-estilo-de-vida.png">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="500">
-<meta property="og:image:height" content="300">
-<meta property="og:image:alt" content="Productos Gano Excel - Estilo de Vida Saludable">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://catalogo.4millones.com/">
+    <meta property="og:title" content="Catálogo de Bienestar - Gano Excel">
+    <meta property="og:description" content="Descubre una vida de bienestar con los productos Gano Excel. Bebidas enriquecidas, suplementos potentes y cuidado personal con Ganoderma Lucidum.">
+    <meta property="og:image" content="https://catalogo.4millones.com/assets/images/productos-gano-excel-estilo-de-vida.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="500">
+    <meta property="og:image:height" content="300">
+    <meta property="og:image:alt" content="Productos Gano Excel - Estilo de Vida Saludable">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@4millones">
-<meta name="twitter:title" content="Catálogo de Bienestar - Gano Excel">
-<meta name="twitter:description" content="Descubre una vida de bienestar con los productos Gano Excel. Bebidas enriquecidas, suplementos potentes y cuidado personal con Ganoderma Lucidum.">
-<meta name="twitter:image" content="https://catalogo.4millones.com/assets/images/productos-gano-excel-estilo-de-vida.png">
-<meta name="twitter:image:alt" content="Productos Gano Excel - Estilo de Vida Saludable">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@4millones">
+    <meta name="twitter:title" content="Catálogo de Bienestar - Gano Excel">
+    <meta name="twitter:description" content="Descubre una vida de bienestar con los productos Gano Excel. Bebidas enriquecidas, suplementos potentes y cuidado personal con Ganoderma Lucidum.">
+    <meta name="twitter:image" content="https://catalogo.4millones.com/assets/images/productos-gano-excel-estilo-de-vida.png">
+    <meta name="twitter:image:alt" content="Productos Gano Excel - Estilo de Vida Saludable">
 
-<!-- Eliminar cualquier meta tag que apunte al favicon para compartir -->
-
-    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- CSS Principal -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -45,16 +38,34 @@
  <header>
         <h1>Descubre el Poder del Bienestar</h1>
         <p>La Fusión Perfecta de Naturaleza y Ciencia con Gano Excel</p>
-        <!-- El badge del distribuidor se agregará aquí dinámicamente -->
-    </header>
+        </header>
 
     <nav class="main-nav">
         <a href="#innovacion">Innovación</a>
         <a href="#ingredientes-clave">Ingredientes</a>
-        <a href="#bebidas">Bebidas</a>
-        <a href="#capsulas">Cápsulas</a>
-        <a href="#cuidado-personal">Belleza</a>
+
+        <div class="dropdown">
+            <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                Productos
+                <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                    <path d="M6 9L1 4h10L6 9z"/>
+                </svg>
+            </button>
+            <div class="dropdown-menu" role="menu">
+                <a href="#bebidas" class="dropdown-item" role="menuitem">Bebidas (Café y Té)</a>
+                <a href="#capsulas" class="dropdown-item" role="menuitem">Suplementos Nutricionales</a>
+                <a href="#cuidado-personal" class="dropdown-item" role="menuitem">Belleza y Cuidado Personal</a>
+            </div>
+        </div>
+
         <a href="https://oportunidad.4millones.com/" target="_blank" class="oportunidad-link">Oportunidad</a>
+
+        <a href="#" class="cart-icon-wrapper" aria-label="Ver carrito de compras">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </svg>
+            <span class="cart-counter">0</span>
+        </a>
     </nav>
 
     <div class="container">
@@ -64,7 +75,6 @@
         </section>
     </div>
 
-    <!-- NUEVA SECCIÓN DE INNOVACIÓN TRANSFORMADA -->
     <section id="innovacion" class="innovation-section">
         <div class="innovation-container">
             <div class="section-title-wrapper">
@@ -77,123 +87,22 @@
                     en extracto 100% hidrosoluble con más de 200 fitonutrientes biodisponibles
                 </p>
             </div>
-
             <div class="innovation-grid">
-                <div class="innovation-card">
-                    <div class="innovation-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
-                        </svg>
-                    </div>
-                    <h3>100% Hidrosoluble: Máxima Absorción</h3>
-                    <p>Somos la única empresa en el mundo con tecnología patentada para crear extractos 100% hidrosolubles. Mientras otros usan polvo simple, nosotros garantizamos biodisponibilidad completa en cada sorbo.</p>
                 </div>
-
-                <div class="innovation-card">
-                    <div class="innovation-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                            <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
-                        </svg>
-                    </div>
-                    <h3>6 Variedades en 1 Solo Producto</h3>
-                    <p>Fusionamos las 6 variedades más potentes del Ganoderma Lucidum mundial. Esta combinación imposible de replicar crea un superalimento con más de 200 fitonutrientes activos.</p>
-                </div>
-
-                <div class="innovation-card">
-                    <div class="innovation-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641z"/>
-                        </svg>
-                    </div>
-                    <h3>200+ Fitonutrientes Biodisponibles</h3>
-                    <p>Cada producto contiene más de 200 fitonutrientes activos: betaglucanos, triterpenos, germanio orgánico, polisacáridos y aminoácidos esenciales trabajando en sinergia perfecta.</p>
-                </div>
-
-                <div class="innovation-card">
-                    <div class="innovation-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l-.601.602a.5.5 0 0 1-.707-.708l.6-.6a6.001 6.001 0 0 0-7.132 0l.6.6a.5.5 0 0 1-.707.708l-.601-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5M2 8a6 6 0 1 1 10.93 3.443l-.778-.777A5 5 0 1 0 3 8z"/>
-                        </svg>
-                    </div>
-                    <h3>Integrado a Tu Rutina Diaria</h3>
-                    <p>No creamos nuevos hábitos, mejoramos los existentes. Nuestra tecnología se integra perfectamente en tu café, chocolate y productos de uso diario.</p>
-                </div>
-            </div>
-
             <div class="innovation-proof">
-                <div class="proof-stat">
-                    <span class="innovation-stat" data-count="200">0</span>
-                    <span class="stat-label">Fitonutrientes Activos</span>
                 </div>
-                <div class="proof-stat">
-                    <span class="innovation-stat" data-count="6">0</span>
-                    <span class="stat-label">Variedades Fusionadas</span>
-                </div>
-                <div class="proof-stat">
-                    <span class="innovation-stat" data-count="100">0</span>
-                    <span class="stat-label">% Hidrosoluble</span>
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- SECCIÓN DE INGREDIENTES CLAVE -->
     <div class="container">
         <section id="ingredientes-clave" class="info-section">
-            <div class="section-title-wrapper">
-                <h2>Los Ingredientes que Hacen Posible la Innovación</h2>
-                <p class="section-subtitle">Conoce los superalimentos que fusionamos con nuestra tecnología patentada</p>
-            </div>
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1.5 8a6.5 6.5 0 0 1 1.445-4.017l.07-.098L4.35 5.423a.5.5 0 0 1 .18.823l-.06.052a4.5 4.5 0 0 0-.42 5.39l-.07.098a.5.5 0 0 1-.823.18L1.71 10.53A6.5 6.5 0 0 1 1.5 8m11.565-4.017a6.5 6.5 0 0 1 1.435 4.017 6.5 6.5 0 0 1-1.71 4.53l-1.445-1.332a.5.5 0 0 1-.18-.823l.06-.052a4.5 4.5 0 0 0 .42-5.39l.07-.098a.5.5 0 0 1 .823-.18z"/>
-                            <path d="M6.152 3.135a.5.5 0 0 1 .18.823l-.06.052a4.5 4.5 0 0 0-.42 5.39l-.07.098a.5.5 0 0 1-.823.18L3.54 8.35a6.5 6.5 0 0 1 4.017-1.445l.098.07a.5.5 0 0 1 .18.823l-.052.06a4.5 4.5 0 0 0-5.39.42l-.098.07a.5.5 0 0 1-.18-.823l1.332-1.445A6.5 6.5 0 0 1 6.152 3.135m5.133 9.73a.5.5 0 0 1 .823.18l-1.332 1.445a6.5 6.5 0 0 1-4.017 1.445l-.098-.07a.5.5 0 0 1-.18-.823l.052-.06a4.5 4.5 0 0 0 5.39-.42l.098-.07a.5.5 0 0 1 .18.823z"/>
-                        </svg>
-                    </div>
-                    <h3>Excellium</h3>
-                    <p>Conocido como el "tónico cerebral", es el extracto del hongo joven (micelio). Rico en germanio orgánico, apoya la oxigenación y la función del sistema nervioso, promoviendo la claridad mental y la concentración.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
-                        </svg>
-                    </div>
-                    <h3>Spirulina</h3>
-                    <p>Un superalimento completo. Esta alga es una fuente increíble de proteína vegetal, vitaminas y minerales. Es ideal para complementar la nutrición, aportar energía y apoyar los procesos de desintoxicación del cuerpo.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641z"/>
-                        </svg>
-                    </div>
-                    <h3>Cordy Gold (Cordyceps)</h3>
-                    <p>Un tesoro de la naturaleza utilizado por siglos para aumentar la energía, la resistencia y la vitalidad. Apoya la salud respiratoria y renal, siendo un aliado perfecto para un estilo de vida activo y dinámico.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M13.442 12.162a5.5 5.5 0 0 1-1.388-1.125L9.62 9.62l-1.388 1.387a.5.5 0 0 1-.707 0L6.138 9.62l-2.434 2.433a.5.5 0 0 1-.707-.707L5.43 8.914l-1.388-1.387a.5.5 0 0 1 0-.707l1.387-1.388L3.001 3.001a.5.5 0 0 1 .707-.707l2.434 2.434 1.387-1.388a.5.5 0 0 1 .707 0l1.388 1.387 2.433-2.434a.5.5 0 0 1 .707.707L10.35 5.43l1.387 1.387a.5.5 0 0 1 0 .707l-1.388 1.388 2.434 2.433a.5.5 0 0 1-.707.707z"/>
-                        </svg>
-                    </div>
-                    <h3>Té Rooibos</h3>
-                    <p>Una infusión sudafricana naturalmente libre de cafeína y rica en antioxidantes. Es conocida por sus propiedades relajantes y su capacidad para apoyar la salud digestiva, siendo una bebida ideal para cualquier momento del día.</p>
-                </div>
-            </div>
-        </section>
+             </section>
     </div>
 
     <div class="container">
         <section id="bebidas" class="category-section">
             <div class="section-title-wrapper">
-                <h2>Bebidas Enriquecidas</h2>
+                <h2>Bebidas (Café y Té)</h2>
             </div>
             <div class="product-grid">
                 <article class="product-card" id="ganocafe-3-en-1">
@@ -208,9 +117,10 @@
                             <li>Promueve un estado de ánimo positivo.</li>
                             <li>Disfruta de un delicioso y nutritivo sabor cremoso.</li>
                         </ul>
+                        <p class="product-price">$110.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="ganocafe-3-en-1">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="ganocafe-3-en-1">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="ganocafe-3-en-1">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="ganocafe-3-en-1">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -227,9 +137,10 @@
                             <li>Contribuye a la protección antioxidante del cuerpo.</li>
                             <li>Apoya un metabolismo saludable.</li>
                         </ul>
+                        <p class="product-price">$110.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="ganocafe-clasico">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="ganocafe-clasico">Compartir</button>
+                           <button class="btn btn-primary btn-add-to-cart" data-product-id="ganocafe-clasico">Añadir al carrito</button>
+                           <button class="btn btn-secondary btn-details" data-product-id="ganocafe-clasico">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -240,15 +151,16 @@
                         <h3>GANORICO LATTE RICO</h3>
                         <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
                         <ul class="benefits">
-                            <li>Disfruta de una experiencia de café latte premium.</li>
-                            <li>Textura espumosa y cremosa que deleita tus sentidos.</li>
-                            <li>Un gusto enriquecido para tu bienestar.</li>
-                            <li>Contribuye a un sistema digestivo saludable.</li>
-                            <li>Aporta una sensación de confort y relajación.</li>
+                             <li>Disfruta de una experiencia de café latte premium.</li>
+                             <li>Textura espumosa y cremosa que deleita tus sentidos.</li>
+                             <li>Un gusto enriquecido para tu bienestar.</li>
+                             <li>Contribuye a un sistema digestivo saludable.</li>
+                             <li>Aporta una sensación de confort y relajación.</li>
                         </ul>
+                        <p class="product-price">$119.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="ganorico-latte">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="ganorico-latte">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="ganorico-latte">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="ganorico-latte">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -259,15 +171,16 @@
                         <h3>GANORICO MOCHA RICO</h3>
                         <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
                         <ul class="benefits">
-                            <li>La combinación perfecta de café y cacao saludable.</li>
-                            <li>Un sabor indulgente que apoya tu bienestar.</li>
-                            <li>Con betaglucanos para apoyar tus defensas.</li>
-                            <li>Promueve la sensación de saciedad.</li>
-                            <li>Ideal para recargar energías a media tarde.</li>
+                             <li>La combinación perfecta de café y cacao saludable.</li>
+                             <li>Un sabor indulgente que apoya tu bienestar.</li>
+                             <li>Con betaglucanos para apoyar tus defensas.</li>
+                             <li>Promueve la sensación de saciedad.</li>
+                             <li>Ideal para recargar energías a media tarde.</li>
                         </ul>
+                        <p class="product-price">$119.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="ganorico-mocha">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="ganorico-mocha">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="ganorico-mocha">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="ganorico-mocha">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -284,9 +197,10 @@
                             <li>Contribuye al desarrollo de huesos fuertes.</li>
                             <li>Una opción inteligente para antojos de dulce.</li>
                         </ul>
+                        <p class="product-price">$124.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="ganorico-shoko">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="ganorico-shoko">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="ganorico-shoko">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="ganorico-shoko">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -303,9 +217,10 @@
                             <li>Rico en vitaminas y minerales esenciales.</li>
                             <li>Apoya la desintoxicación natural del organismo.</li>
                         </ul>
+                        <p class="product-price">$119.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="gano-cereal">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="gano-cereal">Compartir</button>
+                           <button class="btn btn-primary btn-add-to-cart" data-product-id="gano-cereal">Añadir al carrito</button>
+                           <button class="btn btn-secondary btn-details" data-product-id="gano-cereal">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -322,9 +237,10 @@
                             <li>Apoya la salud del sistema nervioso.</li>
                             <li>Contribuye a una correcta hidratación.</li>
                         </ul>
+                        <p class="product-price">$119.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="oleaf-rooibos">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="oleaf-rooibos">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="oleaf-rooibos">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="oleaf-rooibos">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -341,9 +257,10 @@
                             <li>Contribuye a un estado de ánimo equilibrado.</li>
                             <li>Fácil y rápido de preparar.</li>
                         </ul>
+                        <p class="product-price">$124.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="chocolate-gano">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="chocolate-gano">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="chocolate-gano">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="chocolate-gano">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -360,9 +277,10 @@
                             <li>Aroma y sabor intensos para conocedores.</li>
                             <li>Apoya la función antioxidante del cuerpo.</li>
                         </ul>
+                        <p class="product-price">$110.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="luvoco">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="luvoco">Compartir</button>
+                           <button class="btn btn-primary btn-add-to-cart" data-product-id="luvoco">Añadir al carrito</button>
+                           <button class="btn btn-secondary btn-details" data-product-id="luvoco">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -379,9 +297,10 @@
                             <li>Ayuda a mantener la salud de articulaciones.</li>
                             <li>Fórmula única con Colágeno y Ganoderma.</li>
                         </ul>
+                        <p class="product-price">$216.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="reskine-collagen">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="reskine-collagen">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="reskine-collagen">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="reskine-collagen">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -390,7 +309,7 @@
 
         <section id="capsulas" class="category-section">
             <div class="section-title-wrapper">
-                <h2>Suplementos Potentes</h2>
+                <h2>Suplementos Nutricionales</h2>
             </div>
             <div class="product-grid">
                 <article class="product-card" id="capsulas-ganoderma">
@@ -405,9 +324,10 @@
                             <li>Apoya la salud del sistema circulatorio.</li>
                             <li>Actúa como un adaptógeno natural.</li>
                         </ul>
+                        <p class="product-price">$272.500</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="capsulas-ganoderma">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="capsulas-ganoderma">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="capsulas-ganoderma">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="capsulas-ganoderma">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -424,9 +344,10 @@
                             <li>Promueve una óptima oxigenación celular.</li>
                             <li>Contribuye al desarrollo y función del cerebro.</li>
                         </ul>
+                        <p class="product-price">$272.500</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="capsulas-excellium">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="capsulas-excellium">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="capsulas-excellium">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="capsulas-excellium">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -443,9 +364,10 @@
                             <li>Mejora la vitalidad y apoya la función sexual.</li>
                             <li>Ayuda a regular el estrés y la fatiga crónica.</li>
                         </ul>
+                        <p class="product-price">$336.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="capsulas-cordygold">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="capsulas-cordygold">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="capsulas-cordygold">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="capsulas-cordygold">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -454,7 +376,7 @@
 
         <section id="cuidado-personal" class="category-section">
             <div class="section-title-wrapper">
-                <h2>Cuidado Personal Diario</h2>
+                <h2>Belleza y Cuidado Personal</h2>
             </div>
             <div class="product-grid">
                 <article class="product-card" id="gano-fresh">
@@ -469,9 +391,10 @@
                             <li>Ayuda a prevenir la formación de placa.</li>
                             <li>Contribuye a calmar la sensibilidad dental.</li>
                         </ul>
+                        <p class="product-price">$73.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="gano-fresh">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="gano-fresh">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="gano-fresh">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="gano-fresh">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -488,9 +411,10 @@
                             <li>Limpia sin resecar, ideal para pieles sensibles.</li>
                             <li>Propiedades antioxidantes que protegen la piel.</li>
                         </ul>
+                        <p class="product-price">$73.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="gano-soap">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="gano-soap">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="gano-soap">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="gano-soap">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -507,9 +431,10 @@
                             <li>Ayuda a mejorar la apariencia de la piel.</li>
                             <li>Deja una sensación de frescura y limpieza total.</li>
                         </ul>
+                        <p class="product-price">$78.500</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="gano-transparent-soap">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="gano-transparent-soap">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="gano-transparent-soap">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="gano-transparent-soap">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -526,9 +451,10 @@
                             <li>Ayuda a nutrir el folículo piloso.</li>
                             <li>Deja el cabello con una sensación de frescura.</li>
                         </ul>
+                        <p class="product-price">$73.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="shampoo-piel-brillo">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="shampoo-piel-brillo">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="shampoo-piel-brillo">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="shampoo-piel-brillo">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -545,9 +471,10 @@
                             <li>Sella la cutícula para un acabado pulido.</li>
                             <li>El complemento perfecto para un cabello sano.</li>
                         </ul>
+                        <p class="product-price">$73.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="acondicionador-piel-brillo">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="acondicionador-piel-brillo">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="acondicionador-piel-brillo">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="acondicionador-piel-brillo">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -564,9 +491,10 @@
                             <li>Estimula la circulación y regeneración celular.</li>
                             <li>Prepara la piel para una mejor hidratación.</li>
                         </ul>
+                        <p class="product-price">$73.900</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary btn-details" data-product-id="exfoliante-piel-brillo">Más Detalles</button>
-                            <button class="btn btn-secondary btn-share" data-product-id="exfoliante-piel-brillo">Compartir</button>
+                            <button class="btn btn-primary btn-add-to-cart" data-product-id="exfoliante-piel-brillo">Añadir al carrito</button>
+                            <button class="btn btn-secondary btn-details" data-product-id="exfoliante-piel-brillo">Más Detalles</button>
                         </div>
                     </div>
                 </article>
@@ -574,11 +502,65 @@
         </section>
     </div>
 
-    <!-- Modal y WhatsApp FAB -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
             <div id="modal-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="cart-overlay" class="cart-overlay"></div>
+    <div id="cart-panel" class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <div class="cart-panel-header">
+            <h3 id="cart-title">Mi Carrito</h3>
+            <button id="cart-close-btn" class="cart-close-btn" aria-label="Cerrar carrito">&times;</button>
+        </div>
+        <div id="cart-items-container" class="cart-items-container">
+            </div>
+        <div class="cart-panel-footer">
+            <div class="cart-summary">
+                <div class="summary-line">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">$0</span>
+                </div>
+                <div class="summary-line">
+                    <span>Costo de Envío:</span>
+                    <span id="cart-shipping">$12.000</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total a Pagar:</span>
+                    <span id="cart-total">$12.000</span>
+                </div>
+            </div>
+            <button id="checkout-btn" class="btn btn-primary" disabled>Finalizar Compra</button>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span id="checkout-close-btn" class="modal-close">&times;</span>
+            <div id="modal-body" class="modal-body">
+                <h3>Finalizar Pedido</h3>
+                <p>Completa tus datos para generar el mensaje de WhatsApp. El distribuidor se pondrá en contacto contigo.</p>
+                <form id="checkout-form" novalidate>
+                    <div class="form-group">
+                        <label for="customer-name">Nombre Completo</label>
+                        <input type="text" id="customer-name" name="customer-name" required placeholder="Ej: Ana Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-address">Dirección de Envío Completa</label>
+                        <input type="text" id="customer-address" name="customer-address" required placeholder="Ej: Calle 5 # 4-32, Bogotá">
+                    </div>
+                    <h4 class="modal-subtitle">Resumen del Pedido para WhatsApp:</h4>
+                    <textarea id="whatsapp-message" rows="11" readonly></textarea>
+                    <button type="submit" id="send-whatsapp-btn" class="btn btn-primary whatsapp-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                        </svg>
+                        Enviar Pedido por WhatsApp
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -594,10 +576,10 @@
         </p>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="js/distributor.js"></script>
     <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/main.js"></script>
 
 </body>
