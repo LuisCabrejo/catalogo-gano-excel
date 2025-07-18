@@ -81,7 +81,7 @@ header p {
 }
 
 /* =================================
-   MENÚ PRINCIPAL MEJORADO (V2.3)
+   MENÚ PRINCIPAL MEJORADO CON DROPDOWN (V2.4)
    ================================= */
 nav.main-nav {
     background-color: white;
@@ -92,12 +92,17 @@ nav.main-nav {
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 nav.main-nav a {
     color: var(--primary);
     text-decoration: none;
-    margin: 0 8px;
+    margin: 0 4px;
     font-weight: 700;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -111,6 +116,99 @@ nav.main-nav a:hover {
     color: var(--secondary);
     background: rgba(65, 90, 119, 0.05);
     transform: translateY(-1px);
+}
+
+/* Dropdown de Productos */
+.products-dropdown {
+    position: relative;
+    display: inline-block;
+    margin: 0 4px;
+}
+
+.products-dropdown > a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.products-dropdown > a:hover {
+    color: var(--secondary);
+    background: rgba(65, 90, 119, 0.05);
+    transform: translateY(-1px);
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.products-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border: 1px solid var(--border-light);
+    min-width: 180px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    z-index: 1001;
+}
+
+.products-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 12px 20px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    margin: 0;
+    letter-spacing: 0.2px;
+}
+
+.dropdown-menu a:first-child {
+    border-radius: 12px 12px 0 0;
+}
+
+.dropdown-menu a:last-child {
+    border-radius: 0 0 12px 12px;
+}
+
+.dropdown-menu a:hover {
+    background: var(--accent);
+    color: var(--primary);
+    transform: none;
+    padding-left: 25px;
+}
+
+/* Separador visual entre items del dropdown */
+.dropdown-menu a:not(:last-child) {
+    border-bottom: 1px solid var(--border-light);
 }
 
 /* Estilo discreto para el enlace "Oportunidad" */
@@ -167,18 +265,37 @@ nav.main-nav .oportunidad-link:hover {
 @media (max-width: 768px) {
     nav.main-nav {
         padding: 10px 15px;
+        flex-direction: column;
+        gap: 5px;
     }
 
     nav.main-nav a {
-        margin: 0 5px;
+        margin: 2px 3px;
         font-size: 0.95rem;
         padding: 6px 10px;
     }
 
+    .products-dropdown > a {
+        font-size: 0.95rem;
+        padding: 6px 10px;
+    }
+
+    .dropdown-menu {
+        position: static;
+        transform: none;
+        margin-top: 5px;
+        min-width: 100%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .products-dropdown:hover .dropdown-menu {
+        transform: none;
+    }
+
     nav.main-nav .oportunidad-link,
     nav.main-nav .cart-button {
-        margin-left: 8px;
-        margin-top: 5px;
+        margin: 5px 3px;
+        font-size: 0.95rem;
     }
 }
 
@@ -186,20 +303,31 @@ nav.main-nav .oportunidad-link:hover {
 @media (max-width: 600px) {
     nav.main-nav {
         padding: 8px 10px;
-        line-height: 1.4;
     }
 
     nav.main-nav a {
-        margin: 2px 3px;
+        margin: 2px 2px;
         font-size: 0.9rem;
         padding: 5px 8px;
-        display: inline-block;
+    }
+
+    .products-dropdown > a {
+        font-size: 0.9rem;
+        padding: 5px 8px;
+    }
+
+    .dropdown-menu {
+        margin-top: 3px;
+    }
+
+    .dropdown-menu a {
+        padding: 10px 15px;
+        font-size: 0.9rem;
     }
 
     nav.main-nav .oportunidad-link,
     nav.main-nav .cart-button {
-        margin-left: 5px;
-        margin-top: 5px;
+        margin: 3px 2px;
         font-size: 0.9rem;
     }
 }
@@ -211,17 +339,51 @@ nav.main-nav .oportunidad-link:hover {
     }
 
     nav.main-nav a {
-        margin: 1px 2px;
+        margin: 1px 1px;
         font-size: 0.85rem;
         padding: 4px 6px;
     }
 
+    .products-dropdown > a {
+        font-size: 0.85rem;
+        padding: 4px 6px;
+    }
+
+    .dropdown-menu a {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
     nav.main-nav .oportunidad-link,
     nav.main-nav .cart-button {
-        margin-left: 3px;
-        margin-top: 4px;
+        margin: 2px 1px;
         font-size: 0.85rem;
         padding: 5px 8px;
+    }
+}
+
+/* Funcionalidad móvil - Click para abrir dropdown en móviles */
+@media (max-width: 768px) {
+    .products-dropdown {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        opacity: 0;
+        visibility: hidden;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .products-dropdown.active .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        max-height: 200px;
+    }
+
+    .products-dropdown.active .dropdown-arrow {
+        transform: rotate(180deg);
     }
 }
 

@@ -45,6 +45,34 @@ if (proofSection) {
 // Configuración del catálogo completo
 document.addEventListener('DOMContentLoaded', function() {
 
+    // --- FUNCIONALIDAD DEL MENÚ DROPDOWN ---
+    const productsDropdown = document.querySelector('.products-dropdown');
+    if (productsDropdown) {
+        const dropdownLink = productsDropdown.querySelector('a');
+
+        // Funcionalidad para móviles (click)
+        dropdownLink.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                productsDropdown.classList.toggle('active');
+            }
+        });
+
+        // Cerrar dropdown al hacer click fuera (solo móvil)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && !productsDropdown.contains(e.target)) {
+                productsDropdown.classList.remove('active');
+            }
+        });
+
+        // Cerrar dropdown al redimensionar ventana
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                productsDropdown.classList.remove('active');
+            }
+        });
+    }
+
     // --- LÓGICA DEL MODAL ---
     const modal = document.getElementById('product-modal');
     const modalBody = document.getElementById('modal-body');
