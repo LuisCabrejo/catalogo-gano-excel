@@ -45,85 +45,6 @@ if (proofSection) {
 // Configuración del catálogo completo
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- FUNCIONALIDAD DEL MENÚ DROPDOWN ---
-    const productsDropdown = document.querySelector('.products-dropdown');
-    if (productsDropdown) {
-        const dropdownLink = productsDropdown.querySelector('a');
-        const dropdownMenu = productsDropdown.querySelector('.dropdown-menu');
-        const dropdownOptions = dropdownMenu.querySelectorAll('a');
-
-        // Funcionalidad para móviles (click)
-        dropdownLink.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                productsDropdown.classList.toggle('active');
-            }
-        });
-
-        // Cerrar dropdown al hacer click en una opción (solo móvil)
-        dropdownOptions.forEach(option => {
-            option.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    // Cerrar el dropdown
-                    productsDropdown.classList.remove('active');
-
-                    // Esperar un poco para que se cierre el dropdown antes del scroll
-                    setTimeout(() => {
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-
-                        if (targetElement) {
-                            // Calcular offset considerando el menú sticky
-                            const menuHeight = document.querySelector('.main-nav').offsetHeight;
-                            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                            const offsetPosition = elementPosition - menuHeight - 20; // 20px extra de padding
-
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }, 300); // Tiempo de la animación de cierre
-                }
-            });
-        });
-
-        // Cerrar dropdown al hacer click fuera (solo móvil)
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768 && !productsDropdown.contains(e.target)) {
-                productsDropdown.classList.remove('active');
-            }
-        });
-
-        // Cerrar dropdown al redimensionar ventana
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                productsDropdown.classList.remove('active');
-            }
-        });
-
-        // Manejar scroll suave para todos los enlaces de anclaje
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement && !this.closest('.dropdown-menu')) {
-                    // Solo aplicar offset si no es un enlace del dropdown (ya manejado arriba)
-                    const menuHeight = document.querySelector('.main-nav').offsetHeight;
-                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                    const offsetPosition = elementPosition - menuHeight - 20;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    }
-
     // --- LÓGICA DEL MODAL ---
     const modal = document.getElementById('product-modal');
     const modalBody = document.getElementById('modal-body');
@@ -154,10 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Cerrar modal
-    if (closeModal) {
-        closeModal.addEventListener('click', () => modal.style.display = 'none');
-    }
-
+    closeModal.addEventListener('click', () => modal.style.display = 'none');
     window.addEventListener('click', (event) => {
         if (event.target == modal) {
             modal.style.display = 'none';
@@ -201,9 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- CONFIGURACIÓN DEL BOTÓN DE WHATSAPP (MANTENER FUNCIONALIDAD EXISTENTE) ---
-    // Esta funcionalidad se mantiene para el botón flotante de WhatsApp
-    // El carrito tendrá su propia gestión de WhatsApp
+    // --- CONFIGURACIÓN DEL BOTÓN DE WHATSAPP ---
     const urlParams = new URLSearchParams(window.location.search);
     const defaultSocioId = '573203415438';
     const socioIdFromUrl = urlParams.get('socio');
@@ -211,15 +127,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (finalSocioId) {
         const whatsappButton = document.getElementById('whatsapp-button');
-        if (whatsappButton) {
-            const whatsappLink = `https://wa.me/${finalSocioId}?text=${encodeURIComponent('Hola, estoy interesado(a) en los productos Gano Excel. ¿Me podrías dar más información?')}`;
+        const whatsappLink = `https://wa.me/${finalSocioId}?text=${encodeURIComponent('Hola, estoy interesado(a) en los productos Gano Excel. ¿Me podrías dar más información?')}`;
 
-            whatsappButton.href = whatsappLink;
-            whatsappButton.style.display = 'flex';
-        }
+        whatsappButton.href = whatsappLink;
+        whatsappButton.style.display = 'flex';
     }
-
-    // Log de confirmación
-    console.log('🎯 Sistema principal del catálogo inicializado');
-    console.log('🛒 El sistema de carrito se inicializará después...');
 });
