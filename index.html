@@ -6,23 +6,10 @@
     <title>Catálogo de Bienestar - Gano Excel</title>
     <meta name="description" content="Descubre una vida de bienestar con los productos Gano Excel. Bebidas enriquecidas, suplementos potentes y cuidado personal con Ganoderma Lucidum.">
 
-    <!-- Preconnect crítico para optimizar carga de recursos externos -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
-    <link rel="preconnect" href="https://unpkg.com" crossorigin>
-
-    <!-- DNS Prefetch para optimización adicional -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//raw.githubusercontent.com">
-    <link rel="dns-prefetch" href="//unpkg.com">
-
-    <!-- Favicon optimizado -->
     <link rel="icon" type="image/webp" sizes="32x32" href="assets/images/favicon-catalogo.webp">
     <link rel="icon" type="image/webp" sizes="16x16" href="assets/images/favicon-catalogo.webp">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon-catalogo.webp">
 
-    <!-- Meta tags de redes sociales -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://catalogo.4millones.com/">
     <meta property="og:title" content="Catálogo de Bienestar - Gano Excel">
@@ -39,318 +26,13 @@
     <meta name="twitter:image" content="https://catalogo.4millones.com/assets/images/productos-gano-excel-estilo-de-vida.png">
     <meta name="twitter:image:alt" content="Productos Gano Excel - Estilo de Vida Saludable">
 
-    <!-- CSS crítico inline para evitar bloqueo de renderizado -->
-    <style>
-        /* CSS crítico para above-the-fold - Evita bloqueo de 1,330ms */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fafafa;
-            font-display: swap;
-        }
-
-        /* Header crítico */
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="1000,100 1000,0 0,100"/></svg>') no-repeat;
-            background-size: cover;
-        }
-
-        header h1 {
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
-        }
-
-        header p {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            opacity: 0.95;
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Navegación crítica - Sticky optimizada */
-        .main-nav {
-            background: white;
-            padding: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            background: rgba(255,255,255,0.95);
-        }
-
-        .main-nav a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .main-nav a:hover {
-            background: #f0f0f0;
-            transform: translateY(-1px);
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: #333;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .dropdown-toggle:hover {
-            background: #f0f0f0;
-        }
-
-        .dropdown-arrow {
-            transition: transform 0.2s ease;
-        }
-
-        .dropdown[aria-expanded="true"] .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            border-radius: 8px;
-            overflow: hidden;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.2s ease;
-            min-width: 180px;
-        }
-
-        .dropdown[aria-expanded="true"] .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: #333;
-            text-decoration: none;
-            transition: background 0.2s ease;
-        }
-
-        .dropdown-item:hover {
-            background: #f8f9fa;
-        }
-
-        .oportunidad-link {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white !important;
-            border-radius: 25px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.9rem;
-        }
-
-        .oportunidad-link:hover {
-            background: linear-gradient(135deg, #5a67d8, #6b46c1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .cart-icon-wrapper {
-            position: relative;
-            padding: 0.5rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .cart-icon-wrapper:hover {
-            background: #f0f0f0;
-        }
-
-        .cart-counter {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: #e53e3e;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* Container optimizado */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        /* Welcome section crítica */
-        .welcome-section {
-            padding: 3rem 0;
-            text-align: center;
-            background: white;
-        }
-
-        .welcome-section h2 {
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #2d3748;
-        }
-
-        .welcome-section p {
-            font-size: 1.1rem;
-            color: #4a5568;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        /* Loading skeletons optimizados */
-        .product-skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            border-radius: 12px;
-            height: 400px;
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Imagen lazy loading placeholder */
-        .lazy-image {
-            background: linear-gradient(135deg, #f7fafc, #edf2f7);
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .lazy-image.loaded {
-            background: none;
-        }
-
-        /* Responsive optimizado */
-        @media (max-width: 768px) {
-            header {
-                padding: 1.5rem 1rem;
-            }
-            .main-nav {
-                gap: 1rem;
-                padding: 0.75rem;
-                flex-direction: column;
-            }
-            .container {
-                padding: 0 0.75rem;
-            }
-            .welcome-section {
-                padding: 2rem 0;
-            }
-            .dropdown-menu {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                box-shadow: none;
-                background: #f8f9fa;
-                margin-top: 0.5rem;
-            }
-        }
-
-        /* Preload indicator */
-        .loading-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            z-index: 9999;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .loading-indicator.active {
-            transform: scaleX(1);
-        }
-    </style>
-
-    <!-- Preload de fuentes críticas para mejorar FCP -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&display=swap" as="style">
-
-    <!-- Carga asíncrona de fuentes completas -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap"></noscript>
-
-    <!-- CSS no crítico cargado de forma asíncrona para evitar bloqueo -->
-    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Indicador de carga para mejor UX -->
-    <div id="loading-indicator" class="loading-indicator"></div>
 
     <header>
         <h1>Descubre el Poder del Bienestar</h1>
@@ -371,8 +53,10 @@
             </div>
         </div>
         <a href="https://oportunidad.4millones.com/" target="_blank" class="oportunidad-link">Oportunidad</a>
-        <a href="#" target="_blank" id="affiliate-menu-link" class="oportunidad-link" style="display: none; background: #c497b2;">Obtén tu Membresía</a>
-        <a href="#" class="cart-icon-wrapper" aria-label="Ver carrito de compras">
+
+    <a href="#" target="_blank" id="affiliate-menu-link" class="oportunidad-link" style="display: none; background: #c497b2;">Obtén tu Membresía</a>
+
+    <a href="#" class="cart-icon-wrapper" aria-label="Ver carrito de compras">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
             <span class="cart-counter">0</span>
         </a>
@@ -523,7 +207,7 @@
             <div class="section-title-wrapper"><h2>Bebidas (Café y Té)</h2></div>
             <div class="product-grid">
                 <article class="product-card" id="ganocafe-3-en-1">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/ganocafe-3-en-1-catalogo-min.png" alt="Imagen de GANOCAFÉ 3 EN 1" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/ganocafe-3-en-1-catalogo-min.png" alt="Imagen de GANOCAFÉ 3 EN 1">
                     <div class="product-info">
                         <h3>GANOCAFÉ 3 EN 1</h3>
                         <div class="invima-registro">Registro INVIMA: SD2012-0002589</div>
@@ -543,7 +227,7 @@
                 </article>
 
                 <article class="product-card" id="ganocafe-clasico">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-cafe-clasico-catalogo-min.png" alt="Imagen de GANOCAFÉ CLÁSICO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-cafe-clasico-catalogo-min.png" alt="Imagen de GANOCAFÉ CLÁSICO">
                     <div class="product-info">
                         <h3>GANOCAFÉ CLÁSICO</h3>
                         <div class="invima-registro">Registro INVIMA: SD2013-0002947</div>
@@ -563,7 +247,7 @@
                 </article>
 
                 <article class="product-card" id="ganorico-latte">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/latte-rico-catalogo-min.png" alt="Imagen de GANORICO LATTE RICO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/latte-rico-catalogo-min.png" alt="Imagen de GANORICO LATTE RICO">
                     <div class="product-info">
                         <h3>GANORICO LATTE RICO</h3>
                         <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
@@ -583,7 +267,7 @@
                 </article>
 
                 <article class="product-card" id="ganorico-mocha">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/mocha-rico-catalogo-min.png" alt="Imagen de GANORICO MOCHA RICO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/mocha-rico-catalogo-min.png" alt="Imagen de GANORICO MOCHA RICO">
                     <div class="product-info">
                         <h3>GANORICO MOCHA RICO</h3>
                         <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
@@ -603,7 +287,7 @@
                 </article>
 
                 <article class="product-card" id="ganorico-shoko">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/shoko-rico-catalogo-min.png" alt="Imagen de GANORICO SHOKO RICO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/shoko-rico-catalogo-min.png" alt="Imagen de GANORICO SHOKO RICO">
                     <div class="product-info">
                         <h3>GANORICO SHOKO RICO</h3>
                         <div class="invima-registro">Registro INVIMA: NSA-0010766-2021</div>
@@ -623,7 +307,7 @@
                 </article>
 
                 <article class="product-card" id="gano-cereal">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/ganocereal-spirulina-catalogo-min.png" alt="Imagen de ESPIRULINA GANO C'REAL" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/ganocereal-spirulina-catalogo-min.png" alt="Imagen de ESPIRULINA GANO C'REAL">
                     <div class="product-info">
                         <h3>ESPIRULINA GANO C'REAL</h3>
                         <div class="invima-registro">Registro INVIMA: SD2014-0003291</div>
@@ -643,7 +327,7 @@
                 </article>
 
                 <article class="product-card" id="oleaf-rooibos">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/te-rooibos-catalogo-min.png" alt="Imagen de BEBIDA DE OLEAF GANO ROOIBOS" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/te-rooibos-catalogo-min.png" alt="Imagen de BEBIDA DE OLEAF GANO ROOIBOS">
                     <div class="product-info">
                         <h3>BEBIDA DE OLEAF GANO ROOIBOS</h3>
                         <div class="invima-registro">Registro INVIMA: SD2017-0004109</div>
@@ -663,7 +347,7 @@
                 </article>
 
                 <article class="product-card" id="chocolate-gano">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-schokolade-catalogo-min.png" alt="Imagen de CHOCOLATE GANO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-schokolade-catalogo-min.png" alt="Imagen de CHOCOLATE GANO">
                     <div class="product-info">
                         <h3>CHOCOLATE GANO</h3>
                         <div class="invima-registro">Registro INVIMA: SD2013-0002947</div>
@@ -683,7 +367,7 @@
                 </article>
 
                 <article class="product-card" id="luvoco">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/luvoco-catalogo-min.png" alt="Imagen de LUVOCO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/luvoco-catalogo-min.png" alt="Imagen de LUVOCO">
                     <div class="product-info">
                         <h3>LUVOCO</h3>
                         <div class="invima-registro">Registro INVIMA: NSA-0012966-2022</div>
@@ -703,7 +387,7 @@
                 </article>
 
                 <article class="product-card" id="reskine-collagen">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-plus-reskine-collagen-drinkcatalogo-min.png" alt="Imagen de BEBIDA DE COLÁGENO RESKINE" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-plus-reskine-collagen-drinkcatalogo-min.png" alt="Imagen de BEBIDA DE COLÁGENO RESKINE">
                     <div class="product-info">
                         <h3>BEBIDA DE COLÁGENO RESKINE</h3>
                         <div class="invima-registro">Registro INVIMA: SD20210004889</div>
@@ -728,7 +412,7 @@
             <div class="section-title-wrapper"><h2>Suplementos Nutricionales</h2></div>
             <div class="product-grid">
                 <article class="product-card" id="capsulas-ganoderma">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-ganoderma.webp" alt="Imagen de Cápsulas de Ganoderma" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-ganoderma.webp" alt="Imagen de Cápsulas de Ganoderma">
                     <div class="product-info">
                         <h3>Cápsulas de Ganoderma</h3>
                         <div class="invima-registro">Registro INVIMA: SD2013-0002860</div>
@@ -748,7 +432,7 @@
                 </article>
 
                 <article class="product-card" id="capsulas-excellium">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-excellium.webp" alt="Imagen de CÁPSULAS EXCELLIUM" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-excellium.webp" alt="Imagen de CÁPSULAS EXCELLIUM">
                     <div class="product-info">
                         <h3>CÁPSULAS EXCELLIUM</h3>
                         <div class="invima-registro">Registro INVIMA: SD2013-0002822</div>
@@ -768,7 +452,7 @@
                 </article>
 
                 <article class="product-card" id="capsulas-cordygold">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-cordy-gold.webp" alt="Imagen de CÁPSULAS CORDYGOLD" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-cordy-gold.webp" alt="Imagen de CÁPSULAS CORDYGOLD">
                     <div class="product-info">
                         <h3>CÁPSULAS CORDYGOLD</h3>
                         <div class="invima-registro">Registro INVIMA: SD2017-0004056</div>
@@ -793,7 +477,7 @@
             <div class="section-title-wrapper"><h2>Belleza y Cuidado Personal</h2></div>
             <div class="product-grid">
                 <article class="product-card" id="gano-fresh">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-fresh.webp" alt="Imagen de PASTA DE DIENTES GANO FRESH" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-fresh.webp" alt="Imagen de PASTA DE DIENTES GANO FRESH">
                     <div class="product-info">
                         <h3>PASTA DE DIENTES GANO FRESH</h3>
                         <div class="invima-registro">Notificación Sanitaria: NSOC58855-14CO</div>
@@ -813,7 +497,7 @@
                 </article>
 
                 <article class="product-card" id="gano-soap">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-jabon.webp" alt="Imagen de JABÓN GANO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-jabon.webp" alt="Imagen de JABÓN GANO">
                     <div class="product-info">
                         <h3>JABÓN GANO</h3>
                         <div class="invima-registro">Notificación Sanitaria: NSOC99970-20CO</div>
@@ -833,7 +517,7 @@
                 </article>
 
                 <article class="product-card" id="gano-transparent-soap">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/jabon-transparent-soap.webp" alt="Imagen de JABÓN TRANSPARENTE GANO" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/jabon-transparent-soap.webp" alt="Imagen de JABÓN TRANSPARENTE GANO">
                     <div class="product-info">
                         <h3>JABÓN TRANSPARENTE GANO</h3>
                         <div class="invima-registro">Notificación Sanitaria: NSO09915-21CO</div>
@@ -853,7 +537,7 @@
                 </article>
 
                 <article class="product-card" id="shampoo-piel-brillo">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/shampoo-p&b.webp" alt="Imagen de Champú Piel&Brillo" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/shampoo-p&b.webp" alt="Imagen de Champú Piel&Brillo">
                     <div class="product-info">
                         <h3>Champú Piel&Brillo</h3>
                         <div class="invima-registro">Notificación Sanitaria: NSOC96485-19CO</div>
@@ -873,7 +557,7 @@
                 </article>
 
                 <article class="product-card" id="acondicionador-piel-brillo">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/acondicionador-p&b.webp" alt="Imagen de ACONDICIONADOR Piel&Brillo" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/acondicionador-p&b.webp" alt="Imagen de ACONDICIONADOR Piel&Brillo">
                     <div class="product-info">
                         <h3>ACONDICIONADOR Piel&Brillo</h3>
                         <div class="invima-registro">Notificación Sanitaria: NSOC96486-19CO</div>
@@ -893,7 +577,7 @@
                 </article>
 
                 <article class="product-card" id="exfoliante-piel-brillo">
-                    <img data-src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/exfoliante_p&b.webp" alt="Imagen de EXFOLIANTE CORPORAL Piel&Brillo" class="lazy-image" loading="lazy" width="375" height="250">
+                    <img src="https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/exfoliante_p&b.webp" alt="Imagen de EXFOLIANTE CORPORAL Piel&Brillo">
                     <div class="product-info">
                         <h3>EXFOLIANTE CORPORAL Piel&Brillo</h3>
                         <div class="invima-registro">Notificación Sanitaria: NSOC96487-19CO</div>
@@ -915,7 +599,6 @@
         </section>
     </div>
 
-    <!-- Modales mantenidos del original -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
@@ -930,7 +613,7 @@
             <button id="cart-close-btn" class="cart-close-btn" aria-label="Cerrar carrito">&times;</button>
         </div>
         <div id="cart-items-container" class="cart-items-container">
-        </div>
+            </div>
         <div class="cart-panel-footer">
             <div class="cart-summary">
                 <div class="summary-line">
@@ -978,7 +661,6 @@
         </div>
     </div>
 
-    <!-- WhatsApp FAB optimizado -->
     <a id="whatsapp-button" class="whatsapp-fab" href="#" target="_blank" rel="noopener noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
             <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
@@ -991,271 +673,12 @@
         </p>
     </footer>
 
-    <!-- Scripts optimizados con carga inteligente -->
-    <script>
-        // Optimizaciones críticas inline para evitar FOUC
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/distributor.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/advisor.js"></script>
+    <script src="js/main.js"></script>
 
-        // 1. Service Worker registration optimizado
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', async () => {
-                try {
-                    const registration = await navigator.serviceWorker.register('/sw.js');
-                    console.log('✅ Service Worker registered successfully');
-
-                    // Auto-update cuando hay nueva versión
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing;
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // Mostrar notificación de actualización
-                                if ('Notification' in window && Notification.permission === 'granted') {
-                                    new Notification('Nueva versión disponible', {
-                                        body: 'Recarga la página para obtener las últimas mejoras',
-                                        icon: '/assets/images/favicon-catalogo.webp'
-                                    });
-                                }
-                            }
-                        });
-                    });
-                } catch (error) {
-                    console.warn('❌ Service Worker registration failed:', error);
-                }
-            });
-        }
-
-        // 2. Lazy loading de imágenes optimizado con Intersection Observer
-        class LazyImageLoader {
-            constructor() {
-                this.imageObserver = null;
-                this.loadedImages = new Set();
-                this.init();
-            }
-
-            init() {
-                if (!('IntersectionObserver' in window)) {
-                    // Fallback para navegadores sin soporte
-                    this.loadAllImages();
-                    return;
-                }
-
-                this.imageObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            this.loadImage(entry.target);
-                            this.imageObserver.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    rootMargin: '50px' // Cargar 50px antes de ser visible
-                });
-
-                this.observeImages();
-            }
-
-            observeImages() {
-                document.querySelectorAll('img[data-src]').forEach(img => {
-                    this.imageObserver.observe(img);
-                });
-            }
-
-            loadImage(img) {
-                if (this.loadedImages.has(img.dataset.src)) return;
-
-                const imageLoader = new Image();
-
-                imageLoader.onload = () => {
-                    img.src = imageLoader.src;
-                    img.classList.remove('lazy-image');
-                    img.classList.add('loaded');
-                    this.loadedImages.add(img.dataset.src);
-                };
-
-                imageLoader.onerror = () => {
-                    console.warn('Failed to load image:', img.dataset.src);
-                    img.style.background = '#f0f0f0';
-                };
-
-                imageLoader.src = img.dataset.src;
-            }
-
-            loadAllImages() {
-                document.querySelectorAll('img[data-src]').forEach(img => {
-                    img.src = img.dataset.src;
-                });
-            }
-        }
-
-        // 3. Loading indicator
-        class LoadingIndicator {
-            constructor() {
-                this.indicator = document.getElementById('loading-indicator');
-                this.init();
-            }
-
-            init() {
-                this.show();
-
-                // Ocultar cuando se complete la carga
-                if (document.readyState === 'complete') {
-                    this.hide();
-                } else {
-                    window.addEventListener('load', () => this.hide());
-                }
-            }
-
-            show() {
-                if (this.indicator) {
-                    this.indicator.classList.add('active');
-                }
-            }
-
-            hide() {
-                if (this.indicator) {
-                    setTimeout(() => {
-                        this.indicator.classList.remove('active');
-                    }, 500);
-                }
-            }
-        }
-
-        // 4. Optimización de dropdown
-        function initializeDropdown() {
-            const dropdown = document.querySelector('.dropdown');
-            const toggle = dropdown?.querySelector('.dropdown-toggle');
-
-            if (!toggle) return;
-
-            toggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                const isOpen = dropdown.getAttribute('aria-expanded') === 'true';
-                dropdown.setAttribute('aria-expanded', !isOpen);
-            });
-
-            // Cerrar al hacer click fuera
-            document.addEventListener('click', (e) => {
-                if (!dropdown.contains(e.target)) {
-                    dropdown.setAttribute('aria-expanded', 'false');
-                }
-            });
-        }
-
-        // 5. Script loader optimizado
-        class ScriptLoader {
-            constructor() {
-                this.loadedScripts = new Set();
-                this.loadingPromises = new Map();
-            }
-
-            async loadScript(src, critical = false) {
-                if (this.loadedScripts.has(src)) return Promise.resolve();
-                if (this.loadingPromises.has(src)) return this.loadingPromises.get(src);
-
-                const promise = new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    script.src = src;
-                    script.async = !critical;
-                    script.defer = !critical;
-
-                    script.onload = () => {
-                        this.loadedScripts.add(src);
-                        this.loadingPromises.delete(src);
-                        resolve();
-                    };
-
-                    script.onerror = () => {
-                        this.loadingPromises.delete(src);
-                        reject(new Error(`Failed to load script: ${src}`));
-                    };
-
-                    document.head.appendChild(script);
-                });
-
-                this.loadingPromises.set(src, promise);
-                return promise;
-            }
-
-            async loadCriticalScripts() {
-                const criticalScripts = [
-                    'js/products.js',
-                    'js/cart.js'
-                ];
-
-                return Promise.allSettled(
-                    criticalScripts.map(script => this.loadScript(script, true))
-                );
-            }
-
-            async loadSecondaryScripts() {
-                const secondaryScripts = [
-                    'js/advisor.js',
-                    'js/distributor.js',
-                    'js/main.js'
-                ];
-
-                return Promise.allSettled(
-                    secondaryScripts.map(script => this.loadScript(script))
-                );
-            }
-
-            async loadExternalScripts() {
-                // Solo cargar Supabase si es necesario
-                const needsSupabase = document.querySelector('[data-needs-supabase]');
-
-                if (needsSupabase) {
-                    return this.loadScript('https://unpkg.com/@supabase/supabase-js@2');
-                }
-            }
-        }
-
-        // 6. Inicialización optimizada
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('🚀 Iniciando catálogo optimizado...');
-
-            // Inicializar componentes críticos inmediatamente
-            const loadingIndicator = new LoadingIndicator();
-            const lazyLoader = new LazyImageLoader();
-            const scriptLoader = new ScriptLoader();
-
-            initializeDropdown();
-
-            try {
-                // Cargar scripts críticos primero
-                await scriptLoader.loadCriticalScripts();
-                console.log('✅ Scripts críticos cargados');
-
-                // Cargar scripts secundarios después de 100ms
-                setTimeout(async () => {
-                    await scriptLoader.loadSecondaryScripts();
-                    console.log('✅ Scripts secundarios cargados');
-                }, 100);
-
-                // Cargar scripts externos al final
-                setTimeout(async () => {
-                    await scriptLoader.loadExternalScripts();
-                    console.log('✅ Scripts externos cargados');
-                }, 500);
-
-            } catch (error) {
-                console.warn('⚠️ Error loading scripts:', error);
-            }
-        });
-
-        // 7. Performance monitoring
-        if ('performance' in window && 'PerformanceObserver' in window) {
-            // Monitorear LCP
-            try {
-                const observer = new PerformanceObserver((list) => {
-                    for (const entry of list.getEntries()) {
-                        if (entry.entryType === 'largest-contentful-paint') {
-                            console.log('📊 LCP:', entry.startTime);
-                        }
-                    }
-                });
-                observer.observe({ entryTypes: ['largest-contentful-paint'] });
-            } catch (e) {
-                // Silenciar errores de soporte
-            }
-        }
-    </script>
 </body>
 </html>
