@@ -4,15 +4,11 @@
  */
 function personalizarEnlaceOportunidad(distribuidor) {
     try {
-        console.log('🔗 Personalizando enlace de oportunidad...');
         const oportunidadLink = document.querySelector('.oportunidad-link');
         if (oportunidadLink) {
             const urlOportunidad = `https://oportunidad.4millones.com/?distribuidor=${distribuidor.slug}`;
             oportunidadLink.href = urlOportunidad;
             oportunidadLink.title = `Ver oportunidad empresarial - Referido por ${distribuidor.primer_nombre}`;
-            console.log('🔗 Enlace de oportunidad personalizado:', urlOportunidad);
-        } else {
-            console.warn('⚠️ No se encontró enlace de oportunidad (.oportunidad-link)');
         }
     } catch (error) {
         console.error('❌ Error personalizando enlace de oportunidad:', error);
@@ -25,15 +21,11 @@ function personalizarEnlaceOportunidad(distribuidor) {
  */
 function personalizarEnlaceAfiliacion(distribuidor) {
     try {
-        console.log('🔗 Personalizando enlace de afiliación...');
         const affiliateLinkButton = document.getElementById('affiliate-menu-link');
         if (affiliateLinkButton) {
             if (distribuidor.affiliate_link && distribuidor.affiliate_link.startsWith('http')) {
                 affiliateLinkButton.href = distribuidor.affiliate_link;
                 affiliateLinkButton.style.display = 'inline-flex';
-                console.log('🔗 Enlace de afiliación personalizado:', distribuidor.affiliate_link);
-            } else {
-                console.log('🔗 No se encontró enlace de afiliación para este distribuidor.');
             }
         }
     } catch (error) {
@@ -42,70 +34,32 @@ function personalizarEnlaceAfiliacion(distribuidor) {
 }
 
 /**
- * 🎯 SISTEMA DE DISTRIBUIDORES PARA CATÁLOGO - VERSIÓN CORREGIDA
- * Este archivo personaliza el catálogo según el distribuidor que lo comparte
+ * 🎯 SISTEMA DE DISTRIBUIDORES PARA CATÁLOGO
  */
 const SUPABASE_URL = 'https://ovsvocjvjnqfaaugwnxg.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92c3ZvY2p2am5xZmFhdWd3bnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3ODEyMzcsImV4cCI6MjA2NzM1NzIzN30.ZErzsooaSXnS-NdmMYD0JcZFupFgrXfMLH-nOvU1NTE';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /**
- * 🎯 Generar slug desde nombre completo
- * @param {string} fullName - Nombre completo del usuario
- * @returns {string} Slug amigable
- */
-function generarSlugDesdNombre(fullName) {
-    if (!fullName) return null;
-    try {
-        const parts = fullName.trim().split(' ').filter(part => part.length > 0);
-        let nombreParaSlug = (parts.length >= 2) ? `${parts[0]} ${parts[1]}` : (parts[0] || '');
-        const slug = nombreParaSlug.toLowerCase().trim()
-            .replace(/[áàä]/g, 'a').replace(/[éèë]/g, 'e').replace(/[íìï]/g, 'i').replace(/[óòö]/g, 'o').replace(/[úùü]/g, 'u')
-            .replace(/ñ/g, 'n').replace(/ç/g, 'c')
-            .replace(/[^a-z0-9\s]/g, '')
-            .replace(/\s+/g, ' ').replace(/\s/g, '-')
-            .replace(/-+/g, '-').replace(/^-+|-+$/g, '');
-        return slug;
-    } catch (error) {
-        console.error('❌ Error generando slug:', error);
-        return null;
-    }
-}
-
-/**
- * 🔍 Buscar distribuidor por slug en Supabase
+ * 🔍 Buscar distribuidor por slug en Supabase (Versión Optimizada)
  * @param {string} slug - Slug del distribuidor
  * @returns {Object|null} Datos del distribuidor o null
  */
 async function buscarDistribuidor(slug) {
     try {
-        if (!slug || slug.trim() === '') {
-            console.warn('⚠️ Slug vacío o inválido');
-            return null;
-        }
-        console.log('📡 Consultando base de datos Supabase...');
-        const { data: perfiles, error } = await supabaseClient
+        if (!slug) return null;
+
+        console.log(`📡 Consultando perfil específico '${slug}' en Supabase...`);
+
+        const { data: distribuidorEncontrado, error } = await supabaseClient
             .from('profiles')
             .select('full_name, whatsapp, email, affiliate_link')
-            .not('full_name', 'is', null);
+            .eq('slug', slug) // Pedimos DIRECTAMENTE el perfil con el slug que necesitamos
+            .single(); // Indicamos que solo esperamos un resultado. ¡Esto es súper rápido!
 
         if (error) {
-            console.error('❌ ERROR EN CONSULTA SUPABASE:', error);
+            console.error('❌ No se encontró el distribuidor o hubo un error:', error.message);
             return null;
-        }
-        if (!perfiles || perfiles.length === 0) {
-            console.warn('⚠️ No se encontraron perfiles en la base de datos');
-            return null;
-        }
-
-        let distribuidorEncontrado = null;
-        for (const perfil of perfiles) {
-            const slugGenerado = generarSlugDesdNombre(perfil.full_name);
-            if (slugGenerado && slugGenerado === slug) {
-                distribuidorEncontrado = perfil;
-                console.log('🎉 ¡DISTRIBUIDOR ENCONTRADO! Nombre:', perfil.full_name);
-                break;
-            }
         }
 
         if (distribuidorEncontrado) {
@@ -120,8 +74,7 @@ async function buscarDistribuidor(slug) {
             }
             const nombreParts = distribuidorEncontrado.full_name.trim().split(' ').filter(part => part.length > 0);
             const primerNombre = nombreParts[0] || '';
-            const primerApellido = nombreParts[1] || '';
-            const nombreApellido = primerApellido ? `${primerNombre} ${primerApellido}` : primerNombre;
+            const nombreApellido = (nombreParts[1]) ? `${primerNombre} ${nombreParts[1]}` : primerNombre;
 
             return {
                 nombre: distribuidorEncontrado.full_name,
@@ -133,7 +86,6 @@ async function buscarDistribuidor(slug) {
                 nombre_apellido: nombreApellido
             };
         }
-        console.log('❌ NO SE ENCONTRÓ DISTRIBUIDOR');
         return null;
     } catch (error) {
         console.error('❌ ERROR CRÍTICO en búsqueda de distribuidor:', error);
@@ -157,15 +109,10 @@ function personalizarCatalogo(distribuidor) {
         const headerSubtitle = document.querySelector('header p');
         if (headerSubtitle) headerSubtitle.textContent = `Transforma tu bienestar con productos que nutren cuerpo, mente y espíritu`;
 
-        /* Mensaje de bienvenida comentado por decisión de diseño
-        const welcomeSection = document.querySelector('.welcome-section');
-        if (welcomeSection) { ... }
-        */
-
         configurarWhatsAppPersonalizado(distribuidor);
         agregarBadgeDistribuidor(distribuidor);
         personalizarEnlaceOportunidad(distribuidor);
-        personalizarEnlaceAfiliacion(distribuidor); // Se activa la nueva función
+        personalizarEnlaceAfiliacion(distribuidor);
 
         console.log('✅ PERSONALIZACIÓN COMPLETADA EXITOSAMENTE');
     } catch (error) {
@@ -180,8 +127,8 @@ function personalizarCatalogo(distribuidor) {
 function configurarWhatsAppPersonalizado(distribuidor) {
     try {
         const whatsappButton = document.getElementById('whatsapp-button');
-        if (!whatsappButton) return;
-        if (!distribuidor.whatsapp) return;
+        if (!whatsappButton || !distribuidor.whatsapp) return;
+
         const mensaje = `Hola ${distribuidor.primer_nombre}, vi tu catálogo de productos Gano Excel y me interesan. ¿Me podrías dar más información?`;
         const whatsappUrl = `https://api.whatsapp.com/send?phone=${distribuidor.whatsapp}&text=${encodeURIComponent(mensaje)}`;
         whatsappButton.href = whatsappUrl;
@@ -277,4 +224,4 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(inicializarDistribuidor, 500);
 });
 
-console.log('✅ SISTEMA DE DISTRIBUIDORES CARGADO');
+console.log('✅ SISTEMA DE DISTRIBUIDORES OPTIMIZADO CARGADO');
