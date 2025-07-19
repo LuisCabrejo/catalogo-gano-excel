@@ -380,3 +380,29 @@ body.no-scroll { overflow: hidden; }
 .wellness-goal-btn.active { background-color: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(13, 27, 42, 0.2); transform: translateY(-2px); }
 .product-card[style*="display: none"] { animation: fadeOut 0.4s ease forwards; }
 @keyframes fadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
+/* =================================
+   MEJORA VISUAL DE BOTONES EN MÓVIL
+   ================================= */
+
+@media (max-width: 768px) {
+    /* Damos una apariencia de botón a los enlaces base del menú */
+    nav.main-nav a,
+    nav.main-nav .dropdown-toggle {
+        background-color: var(--bg-light);
+        border: 1px solid var(--border-medium);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    /* Mantenemos los estilos especiales para los botones de Oportunidad y Membresía */
+    nav.main-nav .oportunidad-link {
+        background: var(--secondary); /* Fondo oscuro como ya estaba */
+        border-color: var(--secondary);
+        box-shadow: none; /* Quitamos la sombra para que no se vea raro */
+    }
+
+    nav.main-nav a#affiliate-menu-link {
+        background: #c497b2; /* Fondo de acento como ya estaba */
+        border-color: #c497b2;
+        box-shadow: none;
+    }
+}
