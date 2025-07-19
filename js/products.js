@@ -1,10 +1,10 @@
-// Base de datos de productos con precios, imágenes y objetivos de bienestar
+// Base de datos de productos con precios, imágenes locales .webp y objetivos de bienestar
 const productData = {
     // Bebidas
     'ganocafe-3-en-1': {
         name: 'GANOCAFÉ 3 EN 1',
         price: 110900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/ganocafe-3-en-1-catalogo-min.png',
+        image: 'assets/images/ganocafe-3-en-1-catalogo.webp',
         goals: ['energia', 'defensas', 'digestivo'],
         description: 'Una deliciosa mezcla de café premium con Ganoderma Lucidum, cremoso y azúcar...',
         usage: 'Mezcla 1 sobre (21g) en 150ml de agua caliente...',
@@ -13,7 +13,7 @@ const productData = {
     'ganocafe-clasico': {
         name: 'GANOCAFÉ CLÁSICO',
         price: 110900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-cafe-clasico-catalogo-min.png',
+        image: 'assets/images/gano-cafe-clasico-catalogo.webp',
         goals: ['energia', 'concentracion', 'defensas'],
         description: 'Para los amantes del café puro, esta fórmula combina café negro de alta calidad con extracto de Ganoderma...',
         usage: 'Mezcla 1 sobre (4.5g) en 150ml de agua caliente...',
@@ -22,7 +22,7 @@ const productData = {
     'ganorico-latte': {
         name: 'GANORICO LATTE RICO',
         price: 119900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/latte-rico-catalogo-min.png',
+        image: 'assets/images/latte-rico-catalogo.webp',
         goals: ['energia', 'relajacion', 'digestivo'],
         description: 'Una experiencia de latte premium con textura cremosa y espumosa...',
         usage: 'Disuelve 1 sobre (25g) en 180ml de agua caliente...',
@@ -31,7 +31,7 @@ const productData = {
     'ganorico-mocha': {
         name: 'GANORICO MOCHA RICO',
         price: 119900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/mocha-rico-catalogo-min.png',
+        image: 'assets/images/mocha-rico-catalogo.webp',
         goals: ['energia', 'relajacion', 'defensas'],
         description: 'La combinación perfecta de café y chocolate enriquecida con Ganoderma...',
         usage: 'Mezcla 1 sobre (25g) en 180ml de agua caliente...',
@@ -40,7 +40,7 @@ const productData = {
     'ganorico-shoko': {
         name: 'GANORICO SHOKO RICO',
         price: 124900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/shoko-rico-catalogo-min.png',
+        image: 'assets/images/shoko-rico-catalogo.webp',
         goals: ['energia', 'relajacion', 'defensas'],
         description: 'Chocolate caliente nutritivo enriquecido con Ganoderma...',
         usage: 'Disuelve 1 sobre (25g) en 180ml de agua caliente o leche...',
@@ -49,7 +49,7 @@ const productData = {
     'gano-cereal': {
         name: 'ESPIRULINA GANO C\'REAL',
         price: 119900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/ganocereal-spirulina-catalogo-min.png',
+        image: 'assets/images/ganocereal-spirulina-catalogo.webp',
         goals: ['energia', 'digestivo', 'defensas'],
         description: 'Un cereal nutritivo que combina Spirulina y Ganoderma...',
         usage: 'Mezcla 2 cucharadas (30g) con leche, yogur o agua...',
@@ -58,7 +58,7 @@ const productData = {
     'oleaf-rooibos': {
         name: 'BEBIDA DE OLEAF GANO ROOIBOS',
         price: 119900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/te-rooibos-catalogo-min.png',
+        image: 'assets/images/te-rooibos-catalogo.webp',
         goals: ['relajacion', 'defensas', 'digestivo'],
         description: 'Té rooibos sudafricano naturalmente libre de cafeína, enriquecido con Ganoderma...',
         usage: 'Disuelve 1 sobre en agua caliente y deja reposar 3-5 minutos...',
@@ -67,8 +67,8 @@ const productData = {
     'chocolate-gano': {
         name: 'CHOCOLATE GANO',
         price: 124900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-schokolade-catalogo-min.png',
-        goals: ['energia', 'concentracion', 'defensas' , 'relajacion'],
+        image: 'assets/images/gano-schokolade-catalogo.webp',
+        goals: ['energia', 'concentracion', 'defensas', 'relajacion'],
         description: 'Bebida de chocolate concentrada con extracto puro de Ganoderma...',
         usage: 'Disuelve 1 sobre en agua caliente...',
         ingredients: ['Extracto concentrado de Ganoderma Lucidum', 'Cacao puro', 'Edulcorante natural']
@@ -76,7 +76,7 @@ const productData = {
     'luvoco': {
         name: 'LUVOCO',
         price: 110900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/luvoco-catalogo-min.png',
+        image: 'assets/images/luvoco-catalogo.webp',
         goals: ['energia', 'concentracion', 'defensas'],
         description: 'Café molido gourmet enriquecido con Ganoderma para preparar en casa...',
         usage: 'Prepara como café tradicional en cafetera o prensa francesa...',
@@ -85,7 +85,7 @@ const productData = {
     'reskine-collagen': {
         name: 'BEBIDA DE COLÁGENO RESKINE',
         price: 216900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-plus-reskine-collagen-drinkcatalogo-min.png',
+        image: 'assets/images/gano-plus-reskine-collagen-drinkcatalogo.webp',
         goals: ['belleza'],
         description: 'Bebida revolucionaria que combina colágeno hidrolizado con Ganoderma...',
         usage: 'Disuelve 1 sobre en agua fría o al tiempo...',
@@ -95,7 +95,7 @@ const productData = {
     'capsulas-ganoderma': {
         name: 'Cápsulas de Ganoderma',
         price: 272500,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-ganoderma.webp',
+        image: 'assets/images/capsulas-de-ganoderma.webp',
         goals: ['defensas', 'energia', 'relajacion'],
         description: 'Extracto concentrado de Ganoderma Lucidum en cápsulas...',
         usage: 'Tomar 2 cápsulas al día con agua...',
@@ -104,7 +104,7 @@ const productData = {
     'capsulas-excellium': {
         name: 'CÁPSULAS EXCELLIUM',
         price: 272500,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-excellium.webp',
+        image: 'assets/images/capsulas-de-excellium.webp',
         goals: ['concentracion', 'energia'],
         description: 'Conocido como el "tónico cerebral", contiene extracto del micelio joven del Ganoderma...',
         usage: 'Tomar 1-2 cápsulas al día con agua...',
@@ -113,7 +113,7 @@ const productData = {
     'capsulas-cordygold': {
         name: 'CÁPSULAS CORDYGOLD',
         price: 336900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/capsulas-de-cordy-gold.webp',
+        image: 'assets/images/capsulas-de-cordy-gold.webp',
         goals: ['energia', 'defensas'],
         description: 'Cordyceps sinensis de alta calidad para aumentar la energía...',
         usage: 'Tomar 2 cápsulas al día...',
@@ -123,8 +123,8 @@ const productData = {
     'gano-fresh': {
         name: 'PASTA DE DIENTES GANO FRESH',
         price: 73900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-fresh.webp',
-        goals: ['belleza', 'digestivo'], // El Ganoderma puede ayudar con llagas bucales
+        image: 'assets/images/gano-fresh.webp',
+        goals: ['belleza', 'digestivo'],
         description: 'Pasta dental enriquecida con Ganoderma, libre de flúor...',
         usage: 'Usar como pasta dental regular...',
         ingredients: ['Extracto de Ganoderma Lucidum', 'Bicarbonato de sodio', 'Aceites esenciales naturales', 'Agentes limpiadores suaves', 'Sin flúor']
@@ -132,7 +132,7 @@ const productData = {
     'gano-soap': {
         name: 'JABÓN GANO',
         price: 73900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/gano-jabon.webp',
+        image: 'assets/images/gano-jabon.webp',
         goals: ['belleza'],
         description: 'Jabón artesanal enriquecido con Ganoderma y leche de cabra...',
         usage: 'Humedecer la piel, aplicar el jabón...',
@@ -141,7 +141,7 @@ const productData = {
     'gano-transparent-soap': {
         name: 'JABÓN TRANSPARENTE GANO',
         price: 78500,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/jabon-transparent-soap.webp',
+        image: 'assets/images/jabon-transparent-soap.webp',
         goals: ['belleza'],
         description: 'Jabón transparente con papaya y aloe vera, enriquecido con Ganoderma...',
         usage: 'Aplicar sobre piel húmeda...',
@@ -150,7 +150,7 @@ const productData = {
     'shampoo-piel-brillo': {
         name: 'Champú Piel&Brillo',
         price: 73900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/shampoo-p&b.webp',
+        image: 'assets/images/shampoo-p&b.webp',
         goals: ['belleza'],
         description: 'Champú revitalizante que fortalece el cabello desde la raíz...',
         usage: 'Aplicar sobre cabello húmedo...',
@@ -159,7 +159,7 @@ const productData = {
     'acondicionador-piel-brillo': {
         name: 'ACONDICIONADOR Piel&Brillo',
         price: 73900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/acondicionador-p&b.webp',
+        image: 'assets/images/acondicionador-p&b.webp',
         goals: ['belleza'],
         description: 'Acondicionador que complementa el champú...',
         usage: 'Después del champú, aplicar de medios a puntas...',
@@ -168,7 +168,7 @@ const productData = {
     'exfoliante-piel-brillo': {
         name: 'EXFOLIANTE CORPORAL Piel&Brillo',
         price: 73900,
-        image: 'https://raw.githubusercontent.com/LuisCabrejo/catalogo-gano-excel/main/assets/images/exfoliante_p&b.webp',
+        image: 'assets/images/exfoliante_p&b.webp',
         goals: ['belleza'],
         description: 'Exfoliante corporal que elimina células muertas...',
         usage: 'Aplicar sobre piel húmeda con movimientos circulares suaves...',
